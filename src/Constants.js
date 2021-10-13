@@ -1,12 +1,17 @@
 import { DefaultTheme } from 'react-native-paper'
+import axios from 'axios'
 
-export const url = 'https://google.ru/'
+const url = 'https://messys.ru/api/'
+
+export const axiosConfig = axios.create({
+  baseURL: url
+})
 
 export const theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: 'tomato',
+    primary: 'black',
     accent: 'yellow'
   }
 }
