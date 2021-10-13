@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { View, Text, Pressable, Image } from 'react-native'
+import * as Animatable from 'react-native-animatable'
 import { TextInput } from 'react-native-paper'
 import * as SplashScreen from 'expo-splash-screen'
 import * as Font from 'expo-font'
+import axios from 'axios'
 
 import styles from '../styles/Styles'
-
-import { axiosConfig } from '../Constants'
 
 let customFonts = {
   Roboto: require('../assets/fonts/Roboto-Regular.ttf'),
@@ -45,7 +45,7 @@ function Auth({ navigation }) {
   }
 
   const tryAuth = () => {
-    axiosConfig
+    axios
       .post('users/login', {
         user: {
           name: login,
@@ -54,19 +54,19 @@ function Auth({ navigation }) {
       })
       .then((res) => {
         console.log(res)
-        // axiosConfig.put(
-        //   'worker_in',
-        //   {
-        //     _id: this.state.hehe.u_id,
+        // axios
+        //   .put('worker_in', {
+        //     _id: res.data.user.u_id,
         //     at_work: true
-        //   },
-        //   {
-        //     headers: {
-        //       Authorization: 'Token ' + this.state.hehe.token
-        //     }
-        //   }
-        // )
+        //   })
+        //   .then((res) => {
+        //     console.log(res)
+        //     localStorage.setItem('role', res.data.role)
+        //     localStorage.setItem('user', JSON.stringify(res.data.user))
+        //     navigation.navigate('Orders')
+        //   })
       })
+      .catch(() => setShowError(true))
   }
 
   return (
@@ -91,6 +91,7 @@ function Auth({ navigation }) {
           style={styles.authInput}
           underlineColor={'#B1B1B1'}
           error={false}
+          secureTextEntry={true}
         />
         <Pressable onPress={() => tryAuth()} style={styles.authButton}>
           <Text style={styles.authText}>Sign in</Text>
@@ -98,7 +99,11 @@ function Auth({ navigation }) {
       </View>
 
       {showError && (
-        <View style={styles.authError}>
+        <Animatable.View
+          style={styles.authError}
+          animation='wobble'
+          onAnimationEnd={() => setTimeout(() => setShowError(false), 3000)}
+        >
           <Text style={{ fontSize: 18, fontFamily: 'Roboto', color: '#fff' }}>
             The login or password is incorrect.
           </Text>
@@ -107,7 +112,7 @@ function Auth({ navigation }) {
           >
             Please try again or contact your administrator.
           </Text>
-        </View>
+        </Animatable.View>
       )}
     </View>
   )

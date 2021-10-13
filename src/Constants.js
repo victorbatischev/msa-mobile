@@ -3,9 +3,22 @@ import axios from 'axios'
 
 const url = 'https://messys.ru/api/'
 
-export const axiosConfig = axios.create({
-  baseURL: url
-})
+axios.defaults.baseURL = url
+
+axios.interceptors.request.use(
+  (config) => {
+    if (!config.headers.Authorization) {
+      const token = JSON.parse(localStorage.getItem('user')).token
+
+      if (token) {
+        config.headers.Authorization = `Token ${token}`
+      }
+    }
+
+    return config
+  },
+  (error) => Promise.reject(error)
+)
 
 export const theme = {
   ...DefaultTheme,

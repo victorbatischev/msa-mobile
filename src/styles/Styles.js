@@ -33,7 +33,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     backgroundColor: '#E31E24',
-    padding: 20
+    padding: 20,
+    width: '100%'
   },
   authContainer: {
     width: '100%',
