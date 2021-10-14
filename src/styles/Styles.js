@@ -1,6 +1,11 @@
 import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
+  center: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   container: {
     flex: 1,
     height: '100%',
@@ -42,6 +47,28 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     paddingTop: -50
+  },
+  headerContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#000',
+    width: '100%',
+    height: 42,
+    padding: 10
+  },
+  headerName: {
+    fontFamily: 'Roboto',
+    fontSize: 15,
+    color: '#fff',
+    marginLeft: 10
+  },
+  headerComplete: {
+    fontFamily: 'Roboto',
+    fontSize: 15,
+    color: '#707070',
+    marginRight: 10
   }
 })
 

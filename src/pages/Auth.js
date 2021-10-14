@@ -46,8 +46,8 @@ function Auth({ navigation }) {
     return null
   }
 
-  const tryAuth = () => {
-    axios
+  const tryAuth = async () => {
+    await axios
       .post('users/login', {
         user: {
           name: login,

@@ -4,6 +4,11 @@
     "slug": "msa-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
+    "androidStatusBar": {
+      "barStyle": "light-content",
+      "backgroundColor": "#000000",
+      "translucent": false
+    },
     "icon": "./src/assets/icons/icon.png",
     "splash": {
       "image": "./src/assets/images/splash.png",
