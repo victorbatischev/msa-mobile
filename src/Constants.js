@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { DefaultTheme } from 'react-native-paper'
 import axios from 'axios'
 
@@ -6,12 +7,14 @@ const url = 'https://messys.ru/api/'
 axios.defaults.baseURL = url
 
 axios.interceptors.request.use(
-  (config) => {
+  async (config) => {
     if (!config.headers.Authorization) {
-      const token = JSON.parse(localStorage.getItem('user')).token
+      if (await AsyncStorage.getItem('user')) {
+        const token = JSON.parse(await AsyncStorage.getItem('user')).token
 
-      if (token) {
-        config.headers.Authorization = `Token ${token}`
+        if (token) {
+          config.headers.Authorization = `Token ${token}`
+        }
       }
     }
 

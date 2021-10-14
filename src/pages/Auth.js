@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { View, Text, Pressable, Image } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Animatable from 'react-native-animatable'
 import { TextInput } from 'react-native-paper'
 import * as SplashScreen from 'expo-splash-screen'
@@ -24,6 +25,7 @@ function Auth({ navigation }) {
       try {
         await SplashScreen.preventAutoHideAsync()
         await Font.loadAsync(customFonts)
+        await AsyncStorage.clear()
       } catch (e) {
         console.warn(e)
       } finally {
@@ -52,21 +54,22 @@ function Auth({ navigation }) {
           password: password
         }
       })
-      .then((res) => {
-        console.log(res)
-        // axios
-        //   .put('worker_in', {
-        //     _id: res.data.user.u_id,
-        //     at_work: true
-        //   })
-        //   .then((res) => {
-        //     console.log(res)
-        //     localStorage.setItem('role', res.data.role)
-        //     localStorage.setItem('user', JSON.stringify(res.data.user))
-        //     navigation.navigate('Orders')
-        //   })
+      .then(async (res) => {
+        await AsyncStorage.setItem('role', res.data.role)
+        await AsyncStorage.setItem('user', JSON.stringify(res.data.user))
+        axios
+          .put('worker_in', {
+            _id: res.data.user.u_id,
+            at_work: true
+          })
+          .then(() => {
+            navigation.navigate('Orders')
+          })
       })
-      .catch(() => setShowError(true))
+      .catch((err) => {
+        console.warn(err)
+        setShowError(true)
+      })
   }
 
   return (
