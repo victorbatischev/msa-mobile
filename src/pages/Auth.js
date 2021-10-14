@@ -48,24 +48,17 @@ function Auth({ navigation }) {
 
   const tryAuth = async () => {
     await axios
-      .post('users/login', {
-        user: {
-          name: login,
-          password: password
-        }
-      })
+      .post('users/login', { user: { name: login, password } })
       .then(async (res) => {
-        setLogin('')
-        setPassword('')
         await AsyncStorage.setItem('role', res.data.role)
         await AsyncStorage.setItem('user', JSON.stringify(res.data.user))
+        const userData = await axios.get(`worker_name/${res.data.user.u_id}`)
         axios
-          .put('worker_in', {
-            _id: res.data.user.u_id,
-            at_work: true
-          })
+          .put('worker_in', { _id: res.data.user.u_id, at_work: true })
           .then(() => {
-            navigation.navigate('Orders')
+            setLogin('')
+            setPassword('')
+            navigation.navigate('Orders', { userName: userData.data[0].name })
           })
       })
       .catch((err) => {

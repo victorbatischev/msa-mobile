@@ -5,10 +5,22 @@ import axios from 'axios'
 
 import Header from '../components/Header'
 
-function Orders({ navigation }) {
+function Orders({ route, navigation }) {
   const [role, setRole] = useState(null)
   const [user, setUser] = useState(null)
-  const [userName, setUserName] = useState(null)
+  const [orders, setOrders] = useState([])
+
+  const logOut = async () => {
+    axios
+      .put('worker_in', {
+        _id: user.u_id,
+        at_work: false
+      })
+      .then(async () => {
+        await AsyncStorage.clear()
+        navigation.navigate('Auth')
+      })
+  }
 
   useEffect(() => {
     async function getData() {
@@ -17,9 +29,18 @@ function Orders({ navigation }) {
       setRole(tempRole)
       setUser(tempUser)
 
-      await axios.get(`worker_name/${tempUser.u_id}`).then((res) => {
-        setUserName(res.data[0].name)
-      })
+      let checkLogout = setInterval(async () => {
+        await axios.get(`worker_logout/${tempUser.u_id}`).then((res) => {
+          if (res.data[0].at_work === false) {
+            clearInterval(checkLogout)
+            logOut()
+          }
+        })
+
+        axios.get(`order_worker/${tempUser.u_id}`).then((res) => {
+          setOrders(res.data)
+        })
+      }, 10000)
     }
 
     getData()
@@ -27,8 +48,20 @@ function Orders({ navigation }) {
 
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
-      <Header navigation={navigation} user={user} userName={userName} />
+      <Header logOut={logOut} userName={route.params.userName} />
       <Text>{role}</Text>
+      {orders.map((item, idx) => {
+        return (
+          <View style={{ padding: 10 }} key={idx}>
+            <Text style={{ fontFamily: 'Roboto', color: '#8F8F8F' }}>
+              {item._id}
+            </Text>
+            <Text style={{ fontFamily: 'Roboto', fontSize: 16 }}>
+              {item.name}
+            </Text>
+          </View>
+        )
+      })}
     </View>
   )
 }
