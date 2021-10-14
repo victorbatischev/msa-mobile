@@ -55,6 +55,8 @@ function Auth({ navigation }) {
         }
       })
       .then(async (res) => {
+        setLogin('')
+        setPassword('')
         await AsyncStorage.setItem('role', res.data.role)
         await AsyncStorage.setItem('user', JSON.stringify(res.data.user))
         axios
@@ -86,6 +88,7 @@ function Auth({ navigation }) {
           style={styles.authInput}
           underlineColor={'#B1B1B1'}
           error={false}
+          autoFocus={true}
         />
         <TextInput
           label='Password'

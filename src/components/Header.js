@@ -1,5 +1,7 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import React from 'react'
 import { View, Text, Image, Pressable, Alert } from 'react-native'
+import axios from 'axios'
 
 import styles from '../styles/Styles'
 
@@ -13,10 +15,22 @@ const Header = ({ navigation, user, userName }) => {
           text: 'Cancel',
           style: 'cancel'
         },
-        { text: 'Yes', onPress: () => navigation.navigate('Auth') }
+        { text: 'Yes', onPress: () => tryLogOut() }
       ],
       { cancelable: false }
     )
+  }
+
+  const tryLogOut = async () => {
+    axios
+      .put('worker_in', {
+        _id: user.u_id,
+        at_work: false
+      })
+      .then(async () => {
+        await AsyncStorage.clear()
+        navigation.navigate('Auth')
+      })
   }
 
   return (

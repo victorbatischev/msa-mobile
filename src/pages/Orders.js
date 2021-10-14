@@ -27,7 +27,7 @@ function Orders({ navigation }) {
 
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
-      <Header navigation={navigation} userName={userName} />
+      <Header navigation={navigation} user={user} userName={userName} />
       <Text>{role}</Text>
     </View>
   )
