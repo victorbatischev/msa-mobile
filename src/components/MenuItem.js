@@ -8,7 +8,7 @@ const MenuItem = ({ item, index, activeIndex }) => {
     <View
       style={{
         ...styles.container,
-        backgroundColor: 'green',
+        backgroundColor: 'transparent',
         height: 10,
         padding: 0,
         margin: 0
