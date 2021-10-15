@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Alert, ScrollView, ActivityIndicator } from 'react-native'
+import Carousel from 'react-native-snap-carousel'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 
 import Header from '../components/Header'
+import Order from '../components/Order'
+import MenuItem from '../components/MenuItem'
+import styles from '../styles/Styles'
+import { carouselItems, windowWidth } from '../Constants'
 
 function Orders({ route, navigation }) {
   const [role, setRole] = useState(null)
   const [user, setUser] = useState(null)
   const [orders, setOrders] = useState([])
+  const [activeIndex, setActiveIndex] = useState(1)
 
   const logOut = async () => {
     axios
@@ -30,10 +36,15 @@ function Orders({ route, navigation }) {
       setUser(tempUser)
 
       let checkLogout = setInterval(async () => {
-        await axios.get(`worker_logout/${tempUser.u_id}`).then((res) => {
+        await axios.get(`worker_logout/${tempUser.u_id}`).then(async (res) => {
           if (res.data[0].at_work === false) {
             clearInterval(checkLogout)
-            logOut()
+            await AsyncStorage.clear()
+            navigation.navigate('Auth')
+            Alert.alert(
+              'MSA Mobile',
+              'You have been logged out by the administrator.'
+            )
           }
         })
 
@@ -46,22 +57,46 @@ function Orders({ route, navigation }) {
     getData()
   }, [])
 
+  const renderCarouselItem = ({ item, index }) => {
+    return <MenuItem item={item} index={index} activeIndex={activeIndex} />
+  }
+
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
       <Header logOut={logOut} userName={route.params.userName} />
-      <Text>{role}</Text>
-      {orders.map((item, idx) => {
-        return (
-          <View style={{ padding: 10 }} key={idx}>
-            <Text style={{ fontFamily: 'Roboto', color: '#8F8F8F' }}>
-              {item._id}
-            </Text>
-            <Text style={{ fontFamily: 'Roboto', fontSize: 16 }}>
-              {item.name}
+      <Text style={{ display: 'none' }}>{role}</Text>
+      <View style={{ height: 60 }}>
+        <Carousel
+          firstItem={1}
+          data={carouselItems}
+          sliderWidth={windowWidth}
+          itemWidth={windowWidth / 2.5}
+          sliderHeight={60}
+          itemHeight={60}
+          renderItem={renderCarouselItem}
+          onSnapToItem={(index) => setTimeout(() => setActiveIndex(index), 1)}
+        />
+      </View>
+      <ScrollView
+        horizontal={true}
+        decelerationRate={0}
+        snapToInterval={windowWidth}
+        snapToAlignment={'center'}
+        style={{ height: 60 }}
+      >
+        {orders.length ? (
+          orders.map((item, idx) => {
+            return <Order item={item} key={idx} idx={idx} />
+          })
+        ) : (
+          <View style={styles.center}>
+            <ActivityIndicator size='large' color='#000088' />
+            <Text style={{ fontFamily: 'Roboto', fontSize: 18, padding: 15 }}>
+              Searching for available orders
             </Text>
           </View>
-        )
-      })}
+        )}
+      </ScrollView>
     </View>
   )
 }

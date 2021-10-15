@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native'
 
+import { windowWidth } from '../Constants'
+
 const styles = StyleSheet.create({
   center: {
     flexDirection: 'row',
@@ -69,6 +71,15 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#707070',
     marginRight: 10
+  },
+  orderContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 60,
+    width: windowWidth,
+    padding: 10
   }
 })
 

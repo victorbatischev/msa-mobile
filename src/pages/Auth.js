@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { View, Text, Pressable, Image } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Animatable from 'react-native-animatable'
@@ -19,6 +19,8 @@ function Auth({ navigation }) {
   const [password, setPassword] = useState('')
   const [appIsReady, setAppIsReady] = useState(false)
   const [showError, setShowError] = useState(false)
+
+  const passwordTextInput = useRef()
 
   useEffect(() => {
     async function prepare() {
@@ -82,6 +84,9 @@ function Auth({ navigation }) {
           underlineColor={'#B1B1B1'}
           error={false}
           autoFocus={true}
+          returnKeyType={'next'}
+          onSubmitEditing={() => passwordTextInput.current.focus()}
+          blurOnSubmit={false}
         />
         <TextInput
           label='Password'
@@ -91,6 +96,7 @@ function Auth({ navigation }) {
           underlineColor={'#B1B1B1'}
           error={false}
           secureTextEntry={true}
+          ref={passwordTextInput}
         />
         <Pressable onPress={() => tryAuth()} style={styles.authButton}>
           <Text style={styles.authText}>Sign in</Text>
