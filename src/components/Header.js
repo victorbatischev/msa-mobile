@@ -7,7 +7,7 @@ const Header = ({ logOut, userName }) => {
   const tryCompleteWorkShift = () => {
     Alert.alert(
       'MSA Mobile',
-      'Are you sure you want to complete your work shift?',
+      'Do you really want to complete your work shift?',
       [
         {
           text: 'Cancel',

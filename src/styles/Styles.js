@@ -80,6 +80,25 @@ const styles = StyleSheet.create({
     height: 60,
     width: windowWidth,
     padding: 10
+  },
+  printButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    width: 76,
+    height: 36,
+    backgroundColor: '#F5F5F5',
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  orderHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fff',
+    width: '100%',
+    padding: 20
   }
 })
 

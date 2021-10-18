@@ -1,11 +1,11 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { Text, Pressable } from 'react-native'
 
 import styles from '../styles/Styles'
 
-const MenuItem = ({ item, index, activeIndex }) => {
+const MenuItem = ({ item, index, activeIndex, carousel }) => {
   return (
-    <View
+    <Pressable
       style={{
         ...styles.container,
         backgroundColor: 'transparent',
@@ -13,6 +13,7 @@ const MenuItem = ({ item, index, activeIndex }) => {
         padding: 0,
         margin: 0
       }}
+      onPress={() => carousel.snapToItem(index, true, true)}
     >
       <Text
         style={{
@@ -23,7 +24,7 @@ const MenuItem = ({ item, index, activeIndex }) => {
       >
         {item.title}
       </Text>
-    </View>
+    </Pressable>
   )
 }
 

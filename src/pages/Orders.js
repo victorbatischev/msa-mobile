@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { View, Text, Alert, ScrollView, ActivityIndicator } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -7,6 +7,8 @@ import axios from 'axios'
 import Header from '../components/Header'
 import Order from '../components/Order'
 import MenuItem from '../components/MenuItem'
+import ActiveOrder from '../components/ActiveOrder'
+
 import styles from '../styles/Styles'
 import { carouselItems, windowWidth } from '../Constants'
 
@@ -15,6 +17,8 @@ function Orders({ route, navigation }) {
   const [user, setUser] = useState(null)
   const [orders, setOrders] = useState([])
   const [activeIndex, setActiveIndex] = useState(1)
+
+  const carousel = useRef()
 
   const logOut = async () => {
     axios
@@ -58,7 +62,14 @@ function Orders({ route, navigation }) {
   }, [])
 
   const renderCarouselItem = ({ item, index }) => {
-    return <MenuItem item={item} index={index} activeIndex={activeIndex} />
+    return (
+      <MenuItem
+        item={item}
+        index={index}
+        activeIndex={activeIndex}
+        carousel={carousel.current}
+      />
+    )
   }
 
   return (
@@ -67,36 +78,45 @@ function Orders({ route, navigation }) {
       <Text style={{ display: 'none' }}>{role}</Text>
       <View style={{ height: 60 }}>
         <Carousel
+          ref={carousel}
           firstItem={1}
+          activeSlideOffset={0}
+          swipeThreshold={0}
+          callbackOffsetMargin={20}
           data={carouselItems}
           sliderWidth={windowWidth}
           itemWidth={windowWidth / 2.5}
           sliderHeight={60}
           itemHeight={60}
           renderItem={renderCarouselItem}
-          onSnapToItem={(index) => setTimeout(() => setActiveIndex(index), 1)}
+          onSnapToItem={(index) => setActiveIndex(index)}
         />
       </View>
-      <ScrollView
-        horizontal={true}
-        decelerationRate={0}
-        snapToInterval={windowWidth}
-        snapToAlignment={'center'}
-        style={{ height: 60 }}
-      >
-        {orders.length ? (
-          orders.map((item, idx) => {
-            return <Order item={item} key={idx} idx={idx} />
-          })
-        ) : (
-          <View style={styles.center}>
-            <ActivityIndicator size='large' color='#000088' />
-            <Text style={{ fontFamily: 'Roboto', fontSize: 18, padding: 15 }}>
-              Searching for available orders
-            </Text>
-          </View>
-        )}
-      </ScrollView>
+      <View style={{ height: 60 }}>
+        <ScrollView
+          horizontal={true}
+          decelerationRate={0}
+          snapToInterval={windowWidth}
+          snapToAlignment={'center'}
+          style={{ height: 60 }}
+        >
+          {orders.length ? (
+            orders.map((item, idx) => {
+              return <Order item={item} key={idx} idx={idx} />
+            })
+          ) : (
+            <View style={styles.center}>
+              <ActivityIndicator size='large' color='#000088' />
+              <Text style={{ fontFamily: 'Roboto', fontSize: 18, padding: 15 }}>
+                Searching for available orders
+              </Text>
+            </View>
+          )}
+        </ScrollView>
+      </View>
+      {orders.length ? (
+        <ActiveOrder activeOrderId={orders[0]._id} userId={user.u_id} />
+      ) : null}
     </View>
   )
 }
