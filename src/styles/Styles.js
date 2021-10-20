@@ -82,9 +82,6 @@ const styles = StyleSheet.create({
     padding: 10
   },
   printButton: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
     width: 76,
     height: 36,
     backgroundColor: '#F5F5F5',
@@ -94,11 +91,25 @@ const styles = StyleSheet.create({
   },
   orderHeader: {
     display: 'flex',
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     backgroundColor: '#fff',
     width: '100%',
     padding: 20
+  },
+  operationContainer: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: -5
+    },
+    shadowOpacity: 0.34,
+    shadowRadius: 6.27,
+    elevation: 10,
+    padding: 12,
+    backgroundColor: '#F5F5F5',
+    width: '100%'
   }
 })
 
