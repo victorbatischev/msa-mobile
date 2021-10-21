@@ -11,9 +11,10 @@ import ActiveOrder from '../components/ActiveOrder'
 
 import styles from '../styles/Styles'
 import { carouselItems, windowWidth } from '../Constants'
+import Messages from '../components/Messages'
+import TechMaps from '../components/TechMaps'
 
 function Orders({ route, navigation }) {
-  const [role, setRole] = useState(null)
   const [user, setUser] = useState(null)
   const [orders, setOrders] = useState([])
   const [activeIndex, setActiveIndex] = useState(1)
@@ -34,9 +35,7 @@ function Orders({ route, navigation }) {
 
   useEffect(() => {
     async function getData() {
-      const tempRole = await AsyncStorage.getItem('role')
       const tempUser = JSON.parse(await AsyncStorage.getItem('user'))
-      setRole(tempRole)
       setUser(tempUser)
 
       let checkLogout = setInterval(async () => {
@@ -75,8 +74,36 @@ function Orders({ route, navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
       <Header logOut={logOut} userName={route.params.userName} />
-      <Text style={{ display: 'none' }}>{role}</Text>
-      <View style={{ height: 60 }}>
+      <View style={{ ...styles.shadow, height: 60 }}>
+        <ScrollView
+          horizontal={true}
+          decelerationRate={0}
+          snapToInterval={windowWidth}
+          snapToAlignment={'center'}
+          style={{ height: 60, width: windowWidth }}
+        >
+          {orders.length ? (
+            orders.map((item, idx) => {
+              return <Order item={item} key={idx} idx={idx} />
+            })
+          ) : (
+            <View
+              style={{
+                ...styles.center,
+                flex: 1,
+                width: windowWidth,
+                backgroundColor: '#fff'
+              }}
+            >
+              <ActivityIndicator size='large' color='#000088' />
+              <Text style={{ fontFamily: 'Roboto', fontSize: 18, padding: 15 }}>
+                Searching for available orders
+              </Text>
+            </View>
+          )}
+        </ScrollView>
+      </View>
+      <View style={{ height: 60, backgroundColor: '#fff' }}>
         <Carousel
           ref={carousel}
           firstItem={1}
@@ -92,31 +119,11 @@ function Orders({ route, navigation }) {
           onSnapToItem={(index) => setActiveIndex(index)}
         />
       </View>
-      <View style={{ height: 60 }}>
-        <ScrollView
-          horizontal={true}
-          decelerationRate={0}
-          snapToInterval={windowWidth}
-          snapToAlignment={'center'}
-          style={{ height: 60 }}
-        >
-          {orders.length ? (
-            orders.map((item, idx) => {
-              return <Order item={item} key={idx} idx={idx} />
-            })
-          ) : (
-            <View style={styles.center}>
-              <ActivityIndicator size='large' color='#000088' />
-              <Text style={{ fontFamily: 'Roboto', fontSize: 18, padding: 15 }}>
-                Searching for available orders
-              </Text>
-            </View>
-          )}
-        </ScrollView>
-      </View>
-      {orders.length ? (
+      {activeIndex === 0 && <Messages />}
+      {activeIndex === 1 && orders.length ? (
         <ActiveOrder activeOrderId={orders[0]._id} userId={user.u_id} />
       ) : null}
+      {activeIndex === 2 && <TechMaps />}
     </View>
   )
 }
