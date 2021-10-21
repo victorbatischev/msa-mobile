@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, Pressable } from 'react-native'
+import { View, Text, Image, Pressable, ScrollView } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
+import JSONTree from 'react-native-json-tree'
 
 import axios from 'axios'
 import styles from '../styles/Styles'
-import { windowWidth } from '../Constants'
+import { windowWidth, jsonTreeTheme } from '../Constants'
 
 const ActiveOrder = ({ activeOrderId, userId }) => {
   const [orderData, setOrderData] = useState(null)
   const [description, setDescription] = useState(null)
   const [workTime, setWorkTime] = useState(null)
+  const [orderStarted, setOrderStarted] = useState(false)
 
   useEffect(() => {
     axios.get(`order_id_worker/${activeOrderId}/${userId}`).then((res) => {
@@ -41,21 +43,49 @@ const ActiveOrder = ({ activeOrderId, userId }) => {
         </Pressable>
       </View>
       <View style={styles.container}>
-        <Image
-          style={{ width: 60, height: 60, marginBottom: 20 }}
-          source={require('../assets/images/warning.png')}
-        />
-        <Text
-          style={{
-            fontFamily: 'Roboto',
-            fontSize: 20,
-            color: '#282A2D',
-            textAlign: 'center',
-            paddingHorizontal: 50
-          }}
-        >
-          Complete order information will appear after clicking "START"
-        </Text>
+        {orderStarted ? (
+          <ScrollView style={{ maxHeight: windowWidth }}>
+            <JSONTree
+              data={orderData.list}
+              theme={{
+                extend: jsonTreeTheme,
+                nestedNodeLabel: ({ style }, nodeType, expanded) => ({
+                  style: {
+                    ...style,
+                    textTransform: expanded ? 'uppercase' : style.textTransform
+                  }
+                })
+              }}
+              hideRoot={true}
+              invertTheme={false}
+              getItemString={() => <Text></Text>}
+              labelRenderer={([label]) => (
+                <Text style={{ fontSize: 14, color: 'black' }}>{label}:</Text>
+              )}
+              valueRenderer={(raw) => (
+                <Text style={{ fontSize: 14, color: 'black' }}>{raw}</Text>
+              )}
+            />
+          </ScrollView>
+        ) : (
+          <>
+            <Image
+              style={{ width: 60, height: 60, marginBottom: 20 }}
+              source={require('../assets/images/warning.png')}
+            />
+            <Text
+              style={{
+                fontFamily: 'Roboto',
+                fontSize: 20,
+                color: '#282A2D',
+                textAlign: 'center',
+                paddingHorizontal: 50
+              }}
+            >
+              Complete order information will appear after clicking "START"
+            </Text>
+          </>
+        )}
       </View>
       <View style={styles.operationContainer}>
         <Text style={{ fontFamily: 'Roboto', fontSize: 12, color: '#8F8F8F' }}>
@@ -76,13 +106,29 @@ const ActiveOrder = ({ activeOrderId, userId }) => {
             {workTime}
           </Text>
         </View>
-        <Pressable style={{ ...styles.container, backgroundColor: '#0080FF' }}>
-          <Text
-            style={{ fontFamily: 'Montserrat', fontSize: 30, color: '#fff' }}
+        {orderStarted ? (
+          <Pressable
+            style={{ ...styles.container, backgroundColor: '#009C6D' }}
+            onPress={() => setOrderStarted(false)}
           >
-            START
-          </Text>
-        </Pressable>
+            <Text
+              style={{ fontFamily: 'Montserrat', fontSize: 30, color: '#fff' }}
+            >
+              FINISH
+            </Text>
+          </Pressable>
+        ) : (
+          <Pressable
+            style={{ ...styles.container, backgroundColor: '#0080FF' }}
+            onPress={() => setOrderStarted(true)}
+          >
+            <Text
+              style={{ fontFamily: 'Montserrat', fontSize: 30, color: '#fff' }}
+            >
+              START
+            </Text>
+          </Pressable>
+        )}
       </View>
     </View>
   )
