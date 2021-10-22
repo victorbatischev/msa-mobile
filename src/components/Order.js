@@ -36,7 +36,7 @@ const Order = ({ item, idx }) => {
         }}
         size={28}
         onPress={() => print()}
-      ></Icon.Button>
+      />
     </View>
   )
 }

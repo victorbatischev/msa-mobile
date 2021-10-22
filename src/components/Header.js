@@ -1,5 +1,6 @@
 import React from 'react'
-import { View, Text, Image, Pressable, Alert } from 'react-native'
+import { View, Text, Image, Alert } from 'react-native'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 import styles from '../styles/Styles'
 
@@ -28,13 +29,17 @@ const Header = ({ logOut, userName }) => {
         />
         <Text style={styles.headerName}>{userName}</Text>
       </View>
-      <Pressable style={styles.center} onPress={() => tryCompleteWorkShift()}>
-        <Text style={styles.headerComplete}>Complete work shift</Text>
-        <Image
-          style={{ width: 20, height: 20 }}
-          source={require('../assets/images/close.png')}
-        />
-      </Pressable>
+      <Icon.Button
+        name='exit-outline'
+        color={'#000'}
+        backgroundColor={'#fff'}
+        style={{
+          padding: 2,
+          marginRight: -10
+        }}
+        size={20}
+        onPress={() => tryCompleteWorkShift()}
+      />
     </View>
   )
 }

@@ -121,6 +121,23 @@ const styles = StyleSheet.create({
     shadowRadius: 6.27,
     elevation: 10,
     backgroundColor: '#fff'
+  },
+  serverMessage: {
+    margin: 10,
+    padding: 10,
+    backgroundColor: '#F5F5F5',
+    borderRadius: 7,
+    borderTopLeftRadius: 0,
+    width: '90%'
+  },
+  myMessage: {
+    margin: 10,
+    padding: 10,
+    backgroundColor: '#0080FF',
+    borderRadius: 7,
+    borderTopRightRadius: 0,
+    width: '90%',
+    alignSelf: 'flex-end'
   }
 })
 
