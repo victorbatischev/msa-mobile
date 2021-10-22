@@ -1,8 +1,15 @@
 import React from 'react'
-import { View, Text, Image } from 'react-native'
+import { View, Text, Pressable } from 'react-native'
+import QRCode from 'react-native-qrcode-svg'
+import Icon from 'react-native-vector-icons/FontAwesome'
+
 import styles from '../styles/Styles'
 
 const Order = ({ item, idx }) => {
+  const print = () => {
+    console.log('print')
+  }
+
   return (
     <View
       style={{
@@ -10,26 +17,26 @@ const Order = ({ item, idx }) => {
         backgroundColor: idx === 0 ? '#EEEEEE' : '#F8F8F8'
       }}
     >
-      <Text style={{ fontFamily: 'Roboto', color: '#8F8F8F', marginLeft: 31 }}>
-        {item._id}
-      </Text>
-      <View style={styles.center}>
-        {idx === 0 ? (
-          <Image
-            style={{ width: 24, height: 32 }}
-            source={require('../assets/images/work_active_process.png')}
-          />
-        ) : (
-          <Image
-            style={{ width: 24, height: 32 }}
-            source={require('../assets/images/work_active.png')}
-          />
-        )}
-
-        <Text style={{ fontFamily: 'Roboto', fontSize: 16, marginLeft: 10 }}>
-          {item.name}
+      <QRCode value={item._id} size={40} logoMargin={2} />
+      <View style={{ ...styles.center, flexDirection: 'column' }}>
+        <Text style={{ fontFamily: 'Roboto', color: '#8F8F8F' }}>
+          {item._id}
         </Text>
+        <Text style={{ fontFamily: 'Roboto', fontSize: 16 }}>{item.name}</Text>
       </View>
+      <Icon.Button
+        name='print'
+        color={'#000'}
+        backgroundColor={'#fff'}
+        style={{
+          paddingLeft: 10,
+          paddingRight: 0,
+          borderColor: '#999',
+          borderWidth: 1
+        }}
+        size={28}
+        onPress={() => print()}
+      ></Icon.Button>
     </View>
   )
 }

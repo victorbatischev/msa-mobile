@@ -74,9 +74,9 @@ const styles = StyleSheet.create({
   },
   orderContainer: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     height: 60,
     width: windowWidth,
     padding: 10
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   printButton: {
     width: 76,
     height: 36,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#FFF',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center'

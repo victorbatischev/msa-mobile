@@ -119,11 +119,13 @@ function Orders({ route, navigation }) {
           onSnapToItem={(index) => setActiveIndex(index)}
         />
       </View>
-      {activeIndex === 0 && <Messages />}
+      {activeIndex === 0 && orders.length ? (
+        <Messages activeOrderId={orders[0]._id} />
+      ) : null}
       {activeIndex === 1 && orders.length ? (
         <ActiveOrder activeOrderId={orders[0]._id} userId={user.u_id} />
       ) : null}
-      {activeIndex === 2 && <TechMaps />}
+      {activeIndex === 2 && orders.length ? <TechMaps /> : null}
     </View>
   )
 }

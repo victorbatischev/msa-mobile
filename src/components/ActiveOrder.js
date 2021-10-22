@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, Image, Pressable, ScrollView } from 'react-native'
-import QRCode from 'react-native-qrcode-svg'
 import JSONTree from 'react-native-json-tree'
 
 import axios from 'axios'
@@ -21,27 +20,8 @@ const ActiveOrder = ({ activeOrderId, userId }) => {
     })
   }, [])
 
-  const print = () => {
-    console.log('print')
-  }
-
   return (
     <View style={{ ...styles.container, width: '100%' }}>
-      <View style={styles.orderHeader}>
-        <QRCode value={activeOrderId} size={50} logoMargin={2} />
-        <View style={{ textAlign: 'left', maxWidth: windowWidth - 150 }}>
-          <Text style={{ fontFamily: 'Roboto', fontSize: 16 }}>
-            {orderData?.auto?.Марка} {orderData?.auto?.Модель}{' '}
-            {orderData?.auto?.Поколение}
-          </Text>
-          <Text style={{ fontFamily: 'Roboto', color: '#8F8F8F' }}>
-            {activeOrderId}
-          </Text>
-        </View>
-        <Pressable style={styles.printButton} onPress={() => print()}>
-          <Text>print</Text>
-        </Pressable>
-      </View>
       <View style={styles.container}>
         {orderStarted ? (
           <ScrollView style={{ maxHeight: windowWidth }}>
