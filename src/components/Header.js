@@ -33,10 +33,7 @@ const Header = ({ logOut, userName }) => {
         name='exit-outline'
         color={'#000'}
         backgroundColor={'#fff'}
-        style={{
-          padding: 2,
-          marginRight: -10
-        }}
+        style={{ padding: 2, marginRight: -10 }}
         size={20}
         onPress={() => tryCompleteWorkShift()}
       />

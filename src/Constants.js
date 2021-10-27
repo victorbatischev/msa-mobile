@@ -62,3 +62,16 @@ export const jsonTreeTheme = {
   base0E: '#ae81ff',
   base0F: '#cc6633'
 }
+
+export const options = {
+  container: {
+    backgroundColor: '#000',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  text: {
+    fontFamily: 'Montserrat',
+    fontSize: 30,
+    color: '#fff'
+  }
+}

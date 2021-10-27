@@ -80,21 +80,13 @@ const Messages = ({ activeOrderId }) => {
               source={require('../assets/images/avatar_server.png')}
             />
             <Text
-              style={{
-                fontFamily: 'Roboto',
-                fontSize: 17,
-                color: '#8F8F8F'
-              }}
+              style={{ fontFamily: 'Roboto', fontSize: 17, color: '#8F8F8F' }}
             >
               {message.worker}
             </Text>
           </View>
           <Text
-            style={{
-              fontFamily: 'Roboto',
-              fontSize: 14,
-              color: '#A2A2A2'
-            }}
+            style={{ fontFamily: 'Roboto', fontSize: 14, color: '#A2A2A2' }}
           >
             {message.m_data}
           </Text>
