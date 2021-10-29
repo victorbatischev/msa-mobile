@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, Pressable, ScrollView } from 'react-native'
+import {
+  View,
+  Text,
+  Image,
+  Pressable,
+  ScrollView,
+  Modal,
+  Alert
+} from 'react-native'
 import { Stopwatch } from '../lib/react-native-stopwatch-timer'
 import JSONTree from 'react-native-json-tree'
 
@@ -12,22 +20,30 @@ var checkCancelOrder = null
 const ActiveOrder = ({ activeOrderId, userId }) => {
   const [orderInfo, setOrderInfo] = useState(null)
   const [orderData, setOrderData] = useState(null)
+  const [orderOperation, setOrderOperation] = useState(null)
   const [description, setDescription] = useState(null)
   const [orderStarted, setOrderStarted] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
 
   useEffect(() => {
+    getOrderInfo()
+  }, [])
+
+  const getOrderInfo = () => {
     axios.get(`order_id_worker/${activeOrderId}/${userId}`).then((res) => {
+      console.log(res.data)
       setOrderInfo({
         order_id: res.data[0]?._id,
         stream_id: res.data[0]?.s_id,
         operation_id: res.data[0]?.operation?._id,
-        next_operation_id: res.data[0]?.operation?.relation[0]?.so_id,
-        relation_id: res.data[0]?.operation.relation[0]?._id
+        next_operation_id: res.data[0]?.operation?.relation[0].so_id,
+        relation_id: res.data[0]?.operation?.relation[0]._id
       })
+      setOrderOperation(res.data[0].operation)
       setOrderData(res.data[0].order)
       setDescription(res.data[0].description?.name)
     })
-  }, [])
+  }
 
   const startOrder = () => {
     axios
@@ -36,8 +52,7 @@ const ActiveOrder = ({ activeOrderId, userId }) => {
         stream_id: orderInfo.stream_id,
         operation_id: orderInfo.operation_id
       })
-      .then((res) => {
-        console.log(res.data)
+      .then(() => {
         setOrderStarted(true)
         checkCancelOrder = setInterval(async () => {
           await axios.get(`order_worker_active/${userId}`).then(async (res) => {
@@ -49,6 +64,7 @@ const ActiveOrder = ({ activeOrderId, userId }) => {
           })
         }, 10000)
       })
+      .catch((err) => console.error(err))
   }
 
   const finishOrder = () => {
@@ -61,10 +77,13 @@ const ActiveOrder = ({ activeOrderId, userId }) => {
         relation_id: orderInfo.relation_id
       })
       .then(() => {
+        setOrderStarted(false)
+        setModalVisible(false)
         clearInterval(checkCancelOrder)
         Alert.alert('MSA Mobile', 'Your order has been completed.')
-        setOrderStarted(false)
+        getOrderInfo()
       })
+      .catch((err) => console.error(err))
   }
 
   return (
@@ -127,12 +146,16 @@ const ActiveOrder = ({ activeOrderId, userId }) => {
           <Text style={{ fontFamily: 'Roboto', fontSize: 12, color: '#888' }}>
             Work time on the order
           </Text>
-          <Stopwatch start={orderStarted} options={options} />
+          <Stopwatch
+            reset={!orderStarted}
+            start={orderStarted}
+            options={options}
+          />
         </View>
         {orderStarted ? (
           <Pressable
             style={{ ...styles.container, backgroundColor: '#009C6D' }}
-            onPress={() => finishOrder()}
+            onPress={() => setModalVisible(true)}
           >
             <Text
               style={{ fontFamily: 'Montserrat', fontSize: 30, color: '#fff' }}
@@ -153,6 +176,59 @@ const ActiveOrder = ({ activeOrderId, userId }) => {
           </Pressable>
         )}
       </View>
+      <Modal
+        animationType='slide'
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={{ ...styles.container, backgroundColor: '#000' }}>
+          {orderOperation?.relation.map((item) => (
+            <Pressable
+              onPress={() => finishOrder()}
+              key={item._id}
+              style={{
+                ...styles.center,
+                ...styles.operationItem,
+                backgroundColor: item.bgr_color
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: 'Montserrat',
+                  fontSize: 18,
+                  color: '#fff'
+                }}
+              >
+                {item.result}
+              </Text>
+              <Image
+                style={{ width: 20, height: 20 }}
+                source={require('../assets/images/arrow_white.png')}
+              />
+            </Pressable>
+          ))}
+          <View style={{ marginTop: 100 }}>
+            <Pressable
+              style={{
+                ...styles.center,
+                ...styles.cancelContainer
+              }}
+              onPress={() => setModalVisible(false)}
+            >
+              <Image
+                style={{ width: 20, height: 20, marginRight: 15 }}
+                source={require('../assets/images/close.png')}
+              />
+              <Text
+                style={{ fontFamily: 'Roboto', fontSize: 18, color: '#6C6F72' }}
+              >
+                Cancel
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   )
 }

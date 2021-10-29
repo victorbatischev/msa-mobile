@@ -138,6 +138,20 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 0,
     width: '90%',
     alignSelf: 'flex-end'
+  },
+  operationItem: {
+    justifyContent: 'space-between',
+    width: '90%',
+    padding: 20,
+    marginVertical: 10,
+    borderRadius: 4
+  },
+  cancelContainer: {
+    borderRadius: 20,
+    borderColor: '#707070',
+    borderWidth: 1,
+    padding: 10,
+    width: 150
   }
 })
 
