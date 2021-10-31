@@ -39,9 +39,9 @@ const ActiveOrder = ({ activeOrderId, userId }) => {
         next_operation_id: res.data[0]?.operation?.relation[0].so_id,
         relation_id: res.data[0]?.operation?.relation[0]._id
       })
-      setOrderOperation(res.data[0].operation)
-      setOrderData(res.data[0].order)
-      setDescription(res.data[0].description?.name)
+      setOrderOperation(res.data[0]?.operation)
+      setOrderData(res.data[0]?.order)
+      setDescription(res.data[0]?.description?.name)
     })
   }
 
@@ -80,8 +80,12 @@ const ActiveOrder = ({ activeOrderId, userId }) => {
         setOrderStarted(false)
         setModalVisible(false)
         clearInterval(checkCancelOrder)
-        Alert.alert('MSA Mobile', 'Your order has been completed.')
-        getOrderInfo()
+        Alert.alert(
+          'MSA Mobile',
+          'Your order has been completed.',
+          [{ text: 'Ok', onPress: () => getOrderInfo() }],
+          { cancelable: false }
+        )
       })
       .catch((err) => console.error(err))
   }

@@ -125,9 +125,18 @@ const Messages = ({ activeOrderId }) => {
               <MessageItem message={item} key={index} index={index} />
             ))
           ) : (
-            <Text style={{ fontFamily: 'Roboto', color: '#8F8F8F' }}>
-              You have not messages
-            </Text>
+            <View
+              style={{
+                ...styles.center,
+                flex: 1,
+                width: windowWidth,
+                backgroundColor: '#fff'
+              }}
+            >
+              <Text style={{ fontFamily: 'Roboto', fontSize: 18, padding: 15 }}>
+                You have not messages
+              </Text>
+            </View>
           )
         ) : (
           <View
