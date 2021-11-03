@@ -17,6 +17,7 @@ import TechMaps from '../components/TechMaps'
 function Orders({ route, navigation }) {
   const [user, setUser] = useState(null)
   const [orders, setOrders] = useState([])
+  const [activeOrder, setActiveOrder] = useState(null)
   const [activeIndex, setActiveIndex] = useState(1)
 
   const carousel = useRef()
@@ -33,10 +34,27 @@ function Orders({ route, navigation }) {
       })
   }
 
+  const getOrders = (user) => {
+    axios.get(`order_worker/${user.u_id}`).then((res) => {
+      setOrders(res.data)
+      if (res.data.length) {
+        getOrderInfo(res.data[0]._id, user.u_id)
+      }
+    })
+  }
+
+  const getOrderInfo = (activeOrderId, userId) => {
+    axios.get(`order_id_worker/${activeOrderId}/${userId}`).then((res) => {
+      setActiveOrder(res.data[0])
+    })
+  }
+
   useEffect(() => {
     async function getData() {
       const tempUser = JSON.parse(await AsyncStorage.getItem('user'))
       setUser(tempUser)
+
+      getOrders(tempUser) // получаем список заказов при авторизации
 
       let checkLogout = setInterval(async () => {
         await axios.get(`worker_logout/${tempUser.u_id}`).then(async (res) => {
@@ -50,11 +68,7 @@ function Orders({ route, navigation }) {
             )
           }
         })
-
-        axios.get(`order_worker/${tempUser.u_id}`).then((res) => {
-          setOrders(res.data)
-        })
-      }, 10000)
+      }, 1000)
     }
 
     getData()
@@ -123,7 +137,11 @@ function Orders({ route, navigation }) {
         <Messages activeOrderId={orders[0]._id} />
       ) : null}
       {activeIndex === 1 && orders.length ? (
-        <ActiveOrder activeOrderId={orders[0]._id} userId={user.u_id} />
+        <ActiveOrder
+          order={activeOrder}
+          userId={user.u_id}
+          getOrders={() => getOrders(user)}
+        />
       ) : null}
       {activeIndex === 2 && orders.length ? <TechMaps /> : null}
     </View>

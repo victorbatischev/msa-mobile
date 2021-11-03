@@ -17,40 +17,16 @@ import { windowWidth, jsonTreeTheme, options } from '../Constants'
 
 var checkCancelOrder = null
 
-const ActiveOrder = ({ activeOrderId, userId }) => {
-  const [orderInfo, setOrderInfo] = useState(null)
-  const [orderData, setOrderData] = useState(null)
-  const [orderOperation, setOrderOperation] = useState(null)
-  const [description, setDescription] = useState(null)
+const order = ({ order, userId, getOrders }) => {
   const [orderStarted, setOrderStarted] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
-
-  useEffect(() => {
-    getOrderInfo()
-  }, [])
-
-  const getOrderInfo = () => {
-    axios.get(`order_id_worker/${activeOrderId}/${userId}`).then((res) => {
-      console.log(res.data)
-      setOrderInfo({
-        order_id: res.data[0]?._id,
-        stream_id: res.data[0]?.s_id,
-        operation_id: res.data[0]?.operation?._id,
-        next_operation_id: res.data[0]?.operation?.relation[0].so_id,
-        relation_id: res.data[0]?.operation?.relation[0]._id
-      })
-      setOrderOperation(res.data[0]?.operation)
-      setOrderData(res.data[0]?.order)
-      setDescription(res.data[0]?.description?.name)
-    })
-  }
 
   const startOrder = () => {
     axios
       .put('order_worker_start', {
-        order_id: orderInfo.order_id,
-        stream_id: orderInfo.stream_id,
-        operation_id: orderInfo.operation_id
+        order_id: order?._id,
+        stream_id: order?.s_id,
+        operation_id: order?.operation?._id
       })
       .then(() => {
         setOrderStarted(true)
@@ -67,23 +43,29 @@ const ActiveOrder = ({ activeOrderId, userId }) => {
       .catch((err) => console.error(err))
   }
 
-  const finishOrder = () => {
+  const finishOrder = (nextOperationId, relationId) => {
     axios
       .put('order_worker_finish', {
-        order_id: orderInfo.order_id,
-        stream_id: orderInfo.stream_id,
-        next_operation_id: orderInfo.next_operation_id,
-        current_operation_id: orderInfo.operation_id,
-        relation_id: orderInfo.relation_id
+        order_id: order?._id,
+        stream_id: order?.s_id,
+        next_operation_id: nextOperationId,
+        current_operation_id: order?.operation?._id,
+        relation_id: relationId
       })
       .then(() => {
         setOrderStarted(false)
         setModalVisible(false)
         clearInterval(checkCancelOrder)
+        // обновляем список заказов после завершения активной операции
         Alert.alert(
           'MSA Mobile',
           'Your order has been completed.',
-          [{ text: 'Ok', onPress: () => getOrderInfo() }],
+          [
+            {
+              text: 'Ok',
+              onPress: () => getOrders()
+            }
+          ],
           { cancelable: false }
         )
       })
@@ -96,7 +78,7 @@ const ActiveOrder = ({ activeOrderId, userId }) => {
         {orderStarted ? (
           <ScrollView style={{ maxHeight: windowWidth }}>
             <JSONTree
-              data={orderData.list}
+              data={order?.order?.list}
               theme={{
                 extend: jsonTreeTheme,
                 nestedNodeLabel: ({ style }, nodeType, expanded) => ({
@@ -142,7 +124,7 @@ const ActiveOrder = ({ activeOrderId, userId }) => {
           Operation
         </Text>
         <Text style={{ fontFamily: 'Montserrat', fontSize: 18 }}>
-          {description}
+          {order?.description?.name}
         </Text>
       </View>
       <View style={{ ...styles.center, height: 70 }}>
@@ -187,9 +169,9 @@ const ActiveOrder = ({ activeOrderId, userId }) => {
         onRequestClose={() => setModalVisible(false)}
       >
         <View style={{ ...styles.container, backgroundColor: '#000' }}>
-          {orderOperation?.relation.map((item) => (
+          {order?.operation?.relation.map((item) => (
             <Pressable
-              onPress={() => finishOrder()}
+              onPress={() => finishOrder(item.so_id, item._id)}
               key={item._id}
               style={{
                 ...styles.center,
@@ -237,4 +219,4 @@ const ActiveOrder = ({ activeOrderId, userId }) => {
   )
 }
 
-export default ActiveOrder
+export default order
