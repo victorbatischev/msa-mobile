@@ -5,7 +5,7 @@ import styles from '../styles/Styles'
 const TechMaps = () => {
   return (
     <View style={styles.center}>
-      <Text style={{ fontFamily: 'Roboto', color: '#8F8F8F', marginLeft: 31 }}>
+      <Text style={{ fontFamily: 'Roboto', color: '#8F8F8F', margin: 31 }}>
         TechMaps
       </Text>
     </View>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   View,
   Text,
@@ -59,7 +59,7 @@ const order = ({ order, userId, getOrders }) => {
         // обновляем список заказов после завершения активной операции
         Alert.alert(
           'MSA Mobile',
-          'Your order has been completed.',
+          'Your operation has been completed.',
           [
             {
               text: 'Ok',
