@@ -134,7 +134,11 @@ function Orders({ route, navigation }) {
         />
       </View>
       {activeIndex === 0 && orders.length ? (
-        <Messages activeOrderId={orders[0]._id} />
+        <Messages
+          userName={route.params.userName}
+          userId={user.id}
+          activeOrderId={orders[0]._id}
+        />
       ) : null}
       {activeIndex === 1 && orders.length ? (
         <ActiveOrder

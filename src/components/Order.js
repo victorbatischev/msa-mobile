@@ -1,7 +1,6 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Pressable, Image } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
-import Icon from 'react-native-vector-icons/FontAwesome'
 
 import styles from '../styles/Styles'
 
@@ -14,7 +13,7 @@ const Order = ({ item, idx }) => {
     <View
       style={{
         ...styles.orderContainer,
-        backgroundColor: idx === 0 ? '#EEEEEE' : '#F8F8F8'
+        backgroundColor: idx === 0 ? '#FFFFFF' : '#F8F8F8'
       }}
     >
       <QRCode value={item._id} size={40} logoMargin={2} />
@@ -24,19 +23,13 @@ const Order = ({ item, idx }) => {
         </Text>
         <Text style={{ fontFamily: 'Roboto', fontSize: 16 }}>{item.name}</Text>
       </View>
-      <Icon.Button
-        name='print'
-        color={'#000'}
-        backgroundColor={'#fff'}
-        style={{
-          paddingLeft: 10,
-          paddingRight: 0,
-          borderColor: '#999',
-          borderWidth: 1
-        }}
-        size={28}
-        onPress={() => print()}
-      />
+      <Pressable>
+        <Image
+          onPress={() => print()}
+          style={{ width: 40, height: 40 }}
+          source={require('../assets/images/print.png')}
+        />
+      </Pressable>
     </View>
   )
 }

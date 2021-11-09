@@ -122,6 +122,12 @@ const styles = StyleSheet.create({
     elevation: 10,
     backgroundColor: '#fff'
   },
+  sendContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginRight: 15
+  },
   serverMessage: {
     margin: 10,
     padding: 10,

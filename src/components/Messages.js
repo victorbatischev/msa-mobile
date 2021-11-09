@@ -1,36 +1,36 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import {
-  View,
-  Text,
-  Image,
-  Pressable,
-  ActivityIndicator,
-  Platform
-} from 'react-native'
-import { GiftedChat } from 'react-native-gifted-chat'
-
+import { View, Text, Image, ActivityIndicator } from 'react-native'
+import { GiftedChat, Send, Bubble } from 'react-native-gifted-chat'
+import moment from 'moment'
 import axios from 'axios'
 import styles from '../styles/Styles'
-import {
-  windowHeight,
-  windowWidth,
-  currentMessages,
-  earlierMessages
-} from '../Constants'
+import { windowWidth } from '../Constants'
 
-const Messages = ({ activeOrderId }) => {
-  const [messages, setMessages] = useState(currentMessages)
+const Messages = ({ userName, userId, activeOrderId }) => {
+  const [messages, setMessages] = useState([])
 
-  // useEffect(() => {
-  //   axios.get(`order_worker_message/${activeOrderId}`).then((res) => {
-  //     console.log(res.data)
-  //     if (res.data) {
-  //       setMessages(res.data)
-  //     } else {
-  //       setMessages(currentMessages)
-  //     }
-  //   })
-  // }, [])
+  useEffect(() => {
+    axios.get(`order_worker_message/${activeOrderId}`).then((res) => {
+      console.log(res.data)
+      if (res.data && res.data.length) {
+        const newMessages = res.data.map((item, index) => {
+          return {
+            _id: index,
+            text: `${item.operation}|${item.w_id}`,
+            createdAt: moment(item.m_data, 'DD.MM.YYYY hh:mm'),
+            user: {
+              _id: item.w_m_id,
+              name: item.worker
+            },
+            system: true,
+            sent: false,
+            received: true
+          }
+        })
+        setMessages(newMessages)
+      }
+    })
+  }, [])
 
   const onSend = useCallback((messages = []) => {
     setMessages((previousMessages) =>
@@ -162,14 +162,25 @@ const Messages = ({ activeOrderId }) => {
     )
   }
 
-  const MessageSend = () => {
+  const MessageSend = (props) => {
     return (
-      <Pressable>
+      <Send {...props} containerStyle={styles.sendContainer}>
         <Image
-          style={{ width: 46, height: 46, margin: 10 }}
+          style={{ width: 23, height: 23 }}
           source={require('../assets/images/send.png')}
+          resizeMode={'center'}
         />
-      </Pressable>
+      </Send>
+    )
+  }
+
+  const MessageBubble = (props) => {
+    return (
+      <Bubble
+        {...props}
+        textStyle={{ right: { color: 'white' } }}
+        wrapperStyle={{ right: { backgroundColor: '#0080FF' } }}
+      />
     )
   }
 
@@ -179,23 +190,22 @@ const Messages = ({ activeOrderId }) => {
     >
       <GiftedChat
         messages={messages}
+        placeholder={'New message...'}
         onSend={(messages) => onSend(messages)}
-        user={{ _id: 1, name: 'Developer' }}
+        user={{ _id: userId, name: userName }}
         scrollToBottom={true}
         infiniteScroll={true}
-        alwaysShowSend={true}
         showAvatarForEveryMessage={true}
+        showUserAvatar={true}
         isTyping={false}
-        isLoadingEarlier={false}
         renderUsernameOnMessage={true}
         renderAvatarOnTop={true}
-        inverted={Platform.OS !== 'web'}
-        quickReplyStyle={{ borderRadius: 2 }}
         renderChatEmpty={EmptyChat}
         renderLoading={LoadingChat}
         renderSend={MessageSend}
+        renderBubble={MessageBubble}
         renderSystemMessage={ServerMessage}
-        renderMessage={MyMessage}
+        // renderMessage={MyMessage}
       />
     </View>
   )
