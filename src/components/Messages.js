@@ -1,26 +1,42 @@
-import React, { useState, useEffect } from 'react'
-import { View, Text, Image, ScrollView, ActivityIndicator } from 'react-native'
+import React, { useState, useEffect, useCallback } from 'react'
+import {
+  View,
+  Text,
+  Image,
+  Pressable,
+  ActivityIndicator,
+  Platform
+} from 'react-native'
+import { GiftedChat } from 'react-native-gifted-chat'
 
 import axios from 'axios'
 import styles from '../styles/Styles'
-import { windowHeight, windowWidth } from '../Constants'
+import {
+  windowHeight,
+  windowWidth,
+  currentMessages,
+  earlierMessages
+} from '../Constants'
 
 const Messages = ({ activeOrderId }) => {
-  const [messages, setMessages] = useState(null)
+  const [messages, setMessages] = useState(currentMessages)
 
-  useEffect(() => {
-    axios.get(`order_worker_message/${activeOrderId}`).then((res) => {
-      setMessages(res.data)
-    })
-  }, [])
+  // useEffect(() => {
+  //   axios.get(`order_worker_message/${activeOrderId}`).then((res) => {
+  //     console.log(res.data)
+  //     if (res.data) {
+  //       setMessages(res.data)
+  //     } else {
+  //       setMessages(currentMessages)
+  //     }
+  //   })
+  // }, [])
 
-  const MessageItem = ({ message, index }) => {
-    return index % 2 ? (
-      <MyMessage message={message} />
-    ) : (
-      <ServerMessage message={message} />
+  const onSend = useCallback((messages = []) => {
+    setMessages((previousMessages) =>
+      GiftedChat.append(previousMessages, messages)
     )
-  }
+  }, [])
 
   const MyMessage = ({ message }) => {
     return (
@@ -38,7 +54,7 @@ const Messages = ({ activeOrderId }) => {
                 color: 'rgba(255, 255, 255, 0.6)'
               }}
             >
-              {message.worker}
+              test
             </Text>
           </View>
           <Text
@@ -48,7 +64,7 @@ const Messages = ({ activeOrderId }) => {
               color: 'rgba(255, 255, 255, 0.6)'
             }}
           >
-            {message.m_data}
+            test2
           </Text>
         </View>
         <View style={{ marginLeft: 35 }}>
@@ -60,10 +76,10 @@ const Messages = ({ activeOrderId }) => {
               marginTop: 8
             }}
           >
-            Operation: {message.operation}
+            Operation: test3
           </Text>
           <Text style={{ fontFamily: 'Roboto', fontSize: 18, color: '#fff' }}>
-            {message.w_id}
+            test4
           </Text>
         </View>
       </View>
@@ -82,13 +98,13 @@ const Messages = ({ activeOrderId }) => {
             <Text
               style={{ fontFamily: 'Roboto', fontSize: 17, color: '#8F8F8F' }}
             >
-              {message.worker}
+              test
             </Text>
           </View>
           <Text
             style={{ fontFamily: 'Roboto', fontSize: 14, color: '#A2A2A2' }}
           >
-            {message.m_data}
+            test2
           </Text>
         </View>
         <View style={{ marginLeft: 35 }}>
@@ -100,61 +116,88 @@ const Messages = ({ activeOrderId }) => {
               marginTop: 8
             }}
           >
-            Operation: {message.operation}
+            Operation: test3
           </Text>
           <Text style={{ fontFamily: 'Roboto', fontSize: 18, color: '#000' }}>
-            {message.w_id}
+            test4
           </Text>
         </View>
       </View>
     )
   }
 
-  return (
-    <ScrollView
-      style={{
-        width: windowWidth,
-        height: windowHeight,
-        backgroundColor: '#fff'
-      }}
-    >
-      <View style={{ ...styles.container, alignItems: 'flex-start' }}>
-        {messages ? (
-          messages.length ? (
-            messages.map((item, index) => (
-              <MessageItem message={item} key={index} index={index} />
-            ))
-          ) : (
-            <View
-              style={{
-                ...styles.center,
-                flex: 1,
-                width: windowWidth,
-                backgroundColor: '#fff'
-              }}
-            >
-              <Text style={{ fontFamily: 'Roboto', fontSize: 18, padding: 15 }}>
-                You have not messages
-              </Text>
-            </View>
-          )
-        ) : (
-          <View
-            style={{
-              ...styles.center,
-              flex: 1,
-              width: windowWidth,
-              backgroundColor: '#fff'
-            }}
-          >
-            <ActivityIndicator size='large' color='#000088' />
-            <Text style={{ fontFamily: 'Roboto', fontSize: 18, padding: 15 }}>
-              Loading messages
-            </Text>
-          </View>
-        )}
+  const EmptyChat = () => {
+    return (
+      <View
+        style={{
+          ...styles.center,
+          flex: 1,
+          width: windowWidth,
+          transform: [{ rotateX: '180deg' }],
+          backgroundColor: '#fff'
+        }}
+      >
+        <Text style={{ fontFamily: 'Roboto', fontSize: 18, padding: 15 }}>
+          You have not messages
+        </Text>
       </View>
-    </ScrollView>
+    )
+  }
+
+  const LoadingChat = () => {
+    return (
+      <View
+        style={{
+          ...styles.center,
+          flex: 1,
+          width: windowWidth,
+          backgroundColor: '#fff'
+        }}
+      >
+        <ActivityIndicator size='large' color='#000088' />
+        <Text style={{ fontFamily: 'Roboto', fontSize: 18, padding: 15 }}>
+          Loading messages
+        </Text>
+      </View>
+    )
+  }
+
+  const MessageSend = () => {
+    return (
+      <Pressable>
+        <Image
+          style={{ width: 46, height: 46, margin: 10 }}
+          source={require('../assets/images/send.png')}
+        />
+      </Pressable>
+    )
+  }
+
+  return (
+    <View
+      style={{ ...styles.container, width: '100%', backgroundColor: '#888' }}
+    >
+      <GiftedChat
+        messages={messages}
+        onSend={(messages) => onSend(messages)}
+        user={{ _id: 1, name: 'Developer' }}
+        scrollToBottom={true}
+        infiniteScroll={true}
+        alwaysShowSend={true}
+        showAvatarForEveryMessage={true}
+        isTyping={false}
+        isLoadingEarlier={false}
+        renderUsernameOnMessage={true}
+        renderAvatarOnTop={true}
+        inverted={Platform.OS !== 'web'}
+        quickReplyStyle={{ borderRadius: 2 }}
+        renderChatEmpty={EmptyChat}
+        renderLoading={LoadingChat}
+        renderSend={MessageSend}
+        renderSystemMessage={ServerMessage}
+        renderMessage={MyMessage}
+      />
+    </View>
   )
 }
 

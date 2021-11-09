@@ -75,3 +75,42 @@ export const options = {
     color: '#fff'
   }
 }
+
+export const currentMessages = [
+  {
+    _id: 9,
+    text: '#awesome 3',
+    createdAt: new Date(),
+    user: {
+      _id: 1,
+      name: 'Developer'
+    }
+  },
+  {
+    _id: 8,
+    text: '#awesome 2',
+    createdAt: new Date(),
+    user: {
+      _id: 1,
+      name: 'Developer'
+    }
+  },
+  {
+    _id: 7,
+    text: '#awesome',
+    createdAt: new Date(),
+    user: {
+      _id: 1,
+      name: 'Developer'
+    }
+  }
+]
+
+export const earlierMessages = [
+  {
+    _id: Math.round(Math.random() * 1000000),
+    text: 'This is a system message.',
+    createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
+    system: true
+  }
+]
