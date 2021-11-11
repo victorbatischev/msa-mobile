@@ -22,9 +22,8 @@ const Messages = ({ userName, userId, activeOrderId }) => {
               _id: item.w_m_id,
               name: item.worker
             },
-            system: true,
-            sent: false,
-            received: true
+            system: false,
+            sent: false
           }
         })
         setMessages(newMessages)
@@ -204,7 +203,6 @@ const Messages = ({ userName, userId, activeOrderId }) => {
         renderLoading={LoadingChat}
         renderSend={MessageSend}
         renderBubble={MessageBubble}
-        renderSystemMessage={ServerMessage}
         // renderMessage={MyMessage}
       />
     </View>
