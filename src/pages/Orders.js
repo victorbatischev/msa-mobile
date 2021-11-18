@@ -3,6 +3,7 @@ import { View, Text, Alert, ScrollView, ActivityIndicator } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
+import { StatusBar } from 'expo-status-bar'
 
 import Header from '../components/Header'
 import Order from '../components/Order'
@@ -36,6 +37,7 @@ function Orders({ route, navigation }) {
 
   const getOrders = (user) => {
     axios.get(`order_worker/${user.u_id}`).then((res) => {
+      console.log(res.data)
       setOrders(res.data)
       if (res.data.length) {
         getOrderInfo(res.data[0]._id, user.u_id)
@@ -54,7 +56,9 @@ function Orders({ route, navigation }) {
       const tempUser = JSON.parse(await AsyncStorage.getItem('user'))
       setUser(tempUser)
 
-      getOrders(tempUser) // получаем список заказов при авторизации
+      setInterval(() => {
+        getOrders(tempUser)
+      }, 2000)
 
       let checkLogout = setInterval(async () => {
         await axios.get(`worker_logout/${tempUser.u_id}`).then(async (res) => {
@@ -68,7 +72,7 @@ function Orders({ route, navigation }) {
             )
           }
         })
-      }, 1000)
+      }, 10000)
     }
 
     getData()
@@ -87,6 +91,7 @@ function Orders({ route, navigation }) {
 
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
+      <StatusBar style='light' translucent={false} />
       <Header logOut={logOut} userName={route.params.userName} />
       <View style={{ ...styles.shadow, height: 60 }}>
         <ScrollView
@@ -141,11 +146,7 @@ function Orders({ route, navigation }) {
         />
       ) : null}
       {activeIndex === 1 && orders.length ? (
-        <ActiveOrder
-          order={activeOrder}
-          userId={user.u_id}
-          getOrders={() => getOrders(user)}
-        />
+        <ActiveOrder order={activeOrder} userId={user.u_id} />
       ) : null}
       {activeIndex === 2 && orders.length ? <TechMaps /> : null}
     </View>

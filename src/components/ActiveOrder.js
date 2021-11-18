@@ -17,7 +17,7 @@ import { windowWidth, jsonTreeTheme, options } from '../Constants'
 
 var checkCancelOrder = null
 
-const order = ({ order, userId, getOrders }) => {
+const order = ({ order, userId }) => {
   const [orderStarted, setOrderStarted] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
 
@@ -57,17 +57,7 @@ const order = ({ order, userId, getOrders }) => {
         setModalVisible(false)
         clearInterval(checkCancelOrder)
         // обновляем список заказов после завершения активной операции
-        Alert.alert(
-          'MSA Mobile',
-          'Your operation has been completed.',
-          [
-            {
-              text: 'Ok',
-              onPress: () => getOrders()
-            }
-          ],
-          { cancelable: false }
-        )
+        Alert.alert('MSA Mobile', 'Your operation has been completed.')
       })
       .catch((err) => console.error(err))
   }
