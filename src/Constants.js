@@ -3,7 +3,7 @@ import { DefaultTheme } from 'react-native-paper'
 import { Dimensions } from 'react-native'
 import axios from 'axios'
 
-const url = 'https://messys.ru/api/'
+const url = 'https://demomsa.com/api/'
 
 axios.defaults.baseURL = url
 
