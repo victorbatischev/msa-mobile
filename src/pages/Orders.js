@@ -131,7 +131,7 @@ function Orders({ route, navigation }) {
           callbackOffsetMargin={20}
           data={carouselItems}
           sliderWidth={windowWidth}
-          itemWidth={windowWidth / 2.5}
+          itemWidth={windowWidth / 3}
           sliderHeight={60}
           itemHeight={60}
           renderItem={renderCarouselItem}

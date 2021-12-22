@@ -17,11 +17,17 @@ const Order = ({ item, idx }) => {
       }}
     >
       <QRCode value={item._id} size={40} logoMargin={2} />
-      <View style={{ ...styles.center, flexDirection: 'column' }}>
+      <View style={{ ...styles.center, flexDirection: 'column', width: '70%' }}>
         <Text style={{ fontFamily: 'Roboto', color: '#8F8F8F' }}>
           {item._id}
         </Text>
-        <Text style={{ fontFamily: 'Roboto', fontSize: 16 }}>{item.name}</Text>
+        <Text
+          style={{ fontFamily: 'Roboto', fontSize: 16 }}
+          numberOfLines={2}
+          ellipsizeMode={'middle'}
+        >
+          {item.name}
+        </Text>
       </View>
       <Pressable>
         <Image
