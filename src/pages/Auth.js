@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
-import { View, Text, Pressable, Image } from 'react-native'
+import { View, Text, Pressable, Image, Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Animatable from 'react-native-animatable'
 import { TextInput } from 'react-native-paper'
 import * as SplashScreen from 'expo-splash-screen'
 import * as Font from 'expo-font'
+import * as Updates from 'expo-updates'
 import axios from 'axios'
 
 import styles from '../styles/Styles'
@@ -24,6 +25,27 @@ function Auth({ navigation }) {
 
   useEffect(() => {
     async function prepare() {
+      try {
+        const update = await Updates.checkForUpdateAsync()
+        if (update.isAvailable) {
+          Alert.alert(
+            'MSA Mobile',
+            'A new update is available. The application will be reloaded.',
+            [
+              {
+                text: 'Ok',
+                onPress: async () => {
+                  await Updates.fetchUpdateAsync()
+                  Updates.reloadAsync()
+                }
+              }
+            ],
+            { cancelable: false }
+          )
+        }
+      } catch (e) {
+        console.log(e)
+      }
       try {
         await SplashScreen.preventAutoHideAsync()
         await Font.loadAsync(customFonts)
