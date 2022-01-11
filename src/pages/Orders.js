@@ -9,6 +9,7 @@ import Header from '../components/Header'
 import Order from '../components/Order'
 import MenuItem from '../components/MenuItem'
 import ActiveOrder from '../components/ActiveOrder'
+import BarCode from '../components/BarCode'
 
 import styles from '../styles/Styles'
 import { carouselItems, windowWidth } from '../Constants'
@@ -20,6 +21,7 @@ function Orders({ route, navigation }) {
   const [orders, setOrders] = useState([])
   const [activeOrder, setActiveOrder] = useState(null)
   const [activeIndex, setActiveIndex] = useState(1)
+  const [activeBarCode, setActiveBarCode] = useState(false)
 
   const carousel = useRef()
 
@@ -103,7 +105,15 @@ function Orders({ route, navigation }) {
         >
           {orders.length ? (
             orders.map((item, idx) => {
-              return <Order item={item} key={idx} idx={idx} />
+              return (
+                <Order
+                  item={item}
+                  key={idx}
+                  idx={idx}
+                  activeBarCode={activeBarCode}
+                  setActiveBarCode={setActiveBarCode}
+                />
+              )
             })
           ) : (
             <View
@@ -122,33 +132,38 @@ function Orders({ route, navigation }) {
           )}
         </ScrollView>
       </View>
-      <View style={{ height: 60, backgroundColor: '#fff' }}>
-        <Carousel
-          ref={carousel}
-          firstItem={1}
-          activeSlideOffset={0}
-          swipeThreshold={0}
-          callbackOffsetMargin={20}
-          data={carouselItems}
-          sliderWidth={windowWidth}
-          itemWidth={windowWidth / 3}
-          sliderHeight={60}
-          itemHeight={60}
-          renderItem={renderCarouselItem}
-          onSnapToItem={(index) => setActiveIndex(index)}
-        />
-      </View>
-      {activeIndex === 0 && orders.length ? (
+      {!activeBarCode && (
+        <View style={{ height: 60, backgroundColor: '#fff' }}>
+          <Carousel
+            ref={carousel}
+            firstItem={1}
+            activeSlideOffset={0}
+            swipeThreshold={0}
+            callbackOffsetMargin={20}
+            data={carouselItems}
+            sliderWidth={windowWidth}
+            itemWidth={windowWidth / 3}
+            sliderHeight={60}
+            itemHeight={60}
+            renderItem={renderCarouselItem}
+            onSnapToItem={(index) => setActiveIndex(index)}
+          />
+        </View>
+      )}
+      {activeIndex === 0 && orders.length && !activeBarCode ? (
         <Messages
           userName={route.params.userName}
           userId={user.id}
           activeOrderId={orders[0]._id}
         />
       ) : null}
-      {activeIndex === 1 && orders.length ? (
+      {activeIndex === 1 && orders.length && !activeBarCode ? (
         <ActiveOrder order={activeOrder} userId={user.u_id} />
       ) : null}
-      {activeIndex === 2 && orders.length ? <TechMaps /> : null}
+      {activeIndex === 2 && orders.length && !activeBarCode ? (
+        <TechMaps />
+      ) : null}
+      {activeBarCode && orders.length ? <BarCode item={activeBarCode} /> : null}
     </View>
   )
 }

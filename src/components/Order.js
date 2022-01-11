@@ -4,7 +4,7 @@ import QRCode from 'react-native-qrcode-svg'
 
 import styles from '../styles/Styles'
 
-const Order = ({ item, idx }) => {
+const Order = ({ item, idx, activeBarCode, setActiveBarCode }) => {
   const print = () => {
     console.log('print')
   }
@@ -16,7 +16,13 @@ const Order = ({ item, idx }) => {
         backgroundColor: idx === 0 ? '#FFFFFF' : '#F8F8F8'
       }}
     >
-      <QRCode value={item._id} size={40} logoMargin={2} />
+      <Pressable
+        onPress={() => {
+          activeBarCode ? setActiveBarCode(null) : setActiveBarCode(item)
+        }}
+      >
+        <QRCode value={item._id} size={40} logoMargin={2} />
+      </Pressable>
       <View style={{ ...styles.center, flexDirection: 'column', width: '70%' }}>
         <Text style={{ fontFamily: 'Roboto', color: '#8F8F8F' }}>
           {item._id}
