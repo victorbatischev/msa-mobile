@@ -18,7 +18,7 @@ const Order = ({ item, idx, activeBarCode, setActiveBarCode }) => {
     >
       <Pressable
         onPress={() => {
-          activeBarCode ? setActiveBarCode(null) : setActiveBarCode(item)
+          activeBarCode ? setActiveBarCode(null) : setActiveBarCode(item._id)
         }}
       >
         <QRCode value={item._id} size={40} logoMargin={2} />

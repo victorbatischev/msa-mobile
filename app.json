@@ -18,21 +18,12 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./src/assets/icons/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      },
       "package": "com.radian.msamobile"
-    },
-    "web": {
-      "favicon": "./src/assets/icons/favicon.png"
     }
   }
 }

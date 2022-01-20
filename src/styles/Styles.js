@@ -159,6 +159,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     width: 150
+  },
+  barCodeResult: {
+    height: 40,
+    width: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10
   }
 })
 

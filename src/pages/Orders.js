@@ -39,7 +39,6 @@ function Orders({ route, navigation }) {
 
   const getOrders = (user) => {
     axios.get(`order_worker/${user.u_id}`).then((res) => {
-      console.log(res.data)
       setOrders(res.data)
       if (res.data.length) {
         getOrderInfo(res.data[0]._id, user.u_id)
@@ -163,7 +162,9 @@ function Orders({ route, navigation }) {
       {activeIndex === 2 && orders.length && !activeBarCode ? (
         <TechMaps />
       ) : null}
-      {activeBarCode && orders.length ? <BarCode item={activeBarCode} /> : null}
+      {activeBarCode && orders.length ? (
+        <BarCode activeBarCode={activeBarCode} orders={orders} />
+      ) : null}
     </View>
   )
 }
