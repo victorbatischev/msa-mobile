@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View, Text, Pressable } from 'react-native'
 import { options, windowWidth } from '../Constants'
 // import { StopWatch } from '../lib/react-native-stopwatch-timer'
-import StopWatch from '../lib/react-native-stopwatch-timer/lib/stopwatch.js'
+import StopWatch from '../lib/react-native-stopwatch-timer/lib/stopwatch'
 import styles from '../styles/Styles'
 
 const StartBlock = ({ orderStarted, startOrder, setModalVisible }) => {
