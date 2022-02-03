@@ -51,7 +51,7 @@ const ActiveOrder = ({
       <View style={{ ...styles.container, justifyContent: 'flex-start' }}>
         {orderStarted ? (
           <ScrollView style={{ maxHeight: windowWidth }}>
-            <JSONTreeimport
+            <JSONTree
               data={order?.order?.list}
               theme={{
                 extend: jsonTreeTheme,

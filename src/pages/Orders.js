@@ -67,9 +67,9 @@ function Orders({ route, navigation }) {
   const startOrder = () => {
     axios
       .put('order_worker_start', {
-        order_id: order?._id,
-        stream_id: order?.s_id,
-        operation_id: order?.operation?._id
+        order_id: activeOrder?._id,
+        stream_id: activeOrder?.s_id,
+        operation_id: activeOrder?.operation?._id
       })
       .then(() => {
         setOrderStarted(true)
