@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { View, Text, Alert, ScrollView, ActivityIndicator } from 'react-native'
+import {
+  View,
+  Text,
+  Alert,
+  ScrollView,
+  ActivityIndicator,
+  Dimensions
+} from 'react-native'
 import Carousel from 'react-native-snap-carousel'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
@@ -15,8 +22,11 @@ import styles from '../styles/Styles'
 import { carouselItems, windowWidth } from '../Constants'
 import Messages from '../components/Messages'
 import TechMaps from '../components/TechMaps'
+import OrderActive from '../components/Adaptive/OrderActive'
+import RightBlock from '../components/Adaptive/RightBlock'
 
 function Orders({ route, navigation }) {
+  const { width } = Dimensions.get('window')
   const [user, setUser] = useState(null)
   const [orders, setOrders] = useState([])
   const [activeOrder, setActiveOrder] = useState(null)
@@ -95,76 +105,138 @@ function Orders({ route, navigation }) {
       <StatusBar style='light' translucent={false} />
       <Header logOut={logOut} userName={route.params.userName} />
       <View style={{ ...styles.shadow, height: 60 }}>
-        <ScrollView
-          horizontal={true}
-          decelerationRate={0}
-          snapToInterval={windowWidth}
-          snapToAlignment={'center'}
-          style={{ height: 60, width: windowWidth }}
-        >
-          {orders.length ? (
-            orders.map((item, idx) => {
-              return (
-                <Order
-                  item={item}
-                  key={idx}
-                  idx={idx}
-                  activeBarCode={activeBarCode}
-                  setActiveBarCode={setActiveBarCode}
-                />
-              )
-            })
-          ) : (
-            <View
-              style={{
-                ...styles.center,
-                flex: 1,
-                width: windowWidth,
-                backgroundColor: '#fff'
-              }}
-            >
-              <ActivityIndicator size='large' color='#000088' />
-              <Text style={{ fontFamily: 'Roboto', fontSize: 18, padding: 15 }}>
-                Searching for available orders
-              </Text>
+        {width <= 480 ? (
+          <ScrollView
+            horizontal={true}
+            decelerationRate={0}
+            snapToInterval={windowWidth}
+            snapToAlignment={'center'}
+            style={{ height: 60, width: windowWidth }}
+          >
+            {orders.length ? (
+              orders.map((item, idx) => {
+                return (
+                  <Order
+                    item={item}
+                    key={idx}
+                    idx={idx}
+                    activeBarCode={activeBarCode}
+                    setActiveBarCode={setActiveBarCode}
+                  />
+                )
+              })
+            ) : (
+              <View
+                style={{
+                  ...styles.center,
+                  flex: 1,
+                  width: windowWidth,
+                  backgroundColor: '#fff'
+                }}
+              >
+                <ActivityIndicator size='large' color='#000088' />
+                <Text
+                  style={{
+                    fontFamily: 'Roboto',
+                    fontSize: 18,
+                    padding: 15
+                  }}
+                >
+                  Searching for available orders
+                </Text>
+              </View>
+            )}
+          </ScrollView>
+        ) : (
+          <View style={{ width: windowWidth }}>
+            {orders.length ? (
+              orders.map((item, idx) => {
+                return (
+                  <Order
+                    item={item}
+                    key={idx}
+                    idx={idx}
+                    activeBarCode={activeBarCode}
+                    setActiveBarCode={setActiveBarCode}
+                  />
+                )
+              })
+            ) : (
+              <View
+                style={{
+                  ...styles.center,
+                  flex: 1,
+                  width: windowWidth,
+                  backgroundColor: '#fff'
+                }}
+              >
+                <ActivityIndicator size='large' color='#000088' />
+                <Text
+                  style={{
+                    fontFamily: 'Roboto',
+                    fontSize: 18,
+                    padding: 15
+                  }}
+                >
+                  Searching for available orders
+                </Text>
+              </View>
+            )}
+          </View>
+        )}
+      </View>
+      <View style={{ flexDirection: 'row', width: '100%', height: '100%' }}>
+        <View style={{ width: '75%' }}>
+          {!activeBarCode && (
+            <View style={{ height: 60, backgroundColor: '#fff' }}>
+              <Carousel
+                ref={carousel}
+                firstItem={1}
+                activeSlideOffset={0}
+                swipeThreshold={0}
+                callbackOffsetMargin={20}
+                data={carouselItems}
+                sliderWidth={
+                  windowWidth > 480
+                    ? windowWidth - windowWidth / 4
+                    : windowWidth
+                }
+                itemWidth={
+                  windowWidth > 480
+                    ? (windowWidth - windowWidth / 4) / 3
+                    : windowWidth / 3
+                }
+                sliderHeight={60}
+                itemHeight={60}
+                renderItem={renderCarouselItem}
+                onSnapToItem={(index) => setActiveIndex(index)}
+              />
             </View>
           )}
-        </ScrollView>
-      </View>
-      {!activeBarCode && (
-        <View style={{ height: 60, backgroundColor: '#fff' }}>
-          <Carousel
-            ref={carousel}
-            firstItem={1}
-            activeSlideOffset={0}
-            swipeThreshold={0}
-            callbackOffsetMargin={20}
-            data={carouselItems}
-            sliderWidth={windowWidth}
-            itemWidth={windowWidth / 3}
-            sliderHeight={60}
-            itemHeight={60}
-            renderItem={renderCarouselItem}
-            onSnapToItem={(index) => setActiveIndex(index)}
-          />
+          {activeIndex === 0 && orders.length && !activeBarCode ? (
+            <Messages
+              userName={route.params.userName}
+              userId={user.id}
+              activeOrderId={orders[0]._id}
+            />
+          ) : null}
+          {activeIndex === 1 && orders.length && !activeBarCode ? (
+            <>
+              <OrderActive item={orders[0]} />
+              <ActiveOrder order={activeOrder} userId={user.u_id} />
+            </>
+          ) : null}
+          {activeIndex === 2 && orders.length && !activeBarCode ? (
+            <TechMaps />
+          ) : null}
+          {activeBarCode && orders.length ? (
+            <BarCode activeBarCode={activeBarCode} orders={orders} />
+          ) : null}
         </View>
-      )}
-      {activeIndex === 0 && orders.length && !activeBarCode ? (
-        <Messages
-          userName={route.params.userName}
-          userId={user.id}
-          activeOrderId={orders[0]._id}
-        />
-      ) : null}
-      {activeIndex === 1 && orders.length && !activeBarCode ? (
-        <ActiveOrder order={activeOrder} userId={user.u_id} />
-      ) : null}
-      {activeIndex === 2 && orders.length && !activeBarCode ? (
-        <TechMaps />
-      ) : null}
-      {activeBarCode && orders.length ? (
-        <BarCode activeBarCode={activeBarCode} orders={orders} />
-      ) : null}
+        <View style={{ width: '25%' }}>
+          <RightBlock order={activeOrder} />
+        </View>
+      </View>
     </View>
   )
 }
