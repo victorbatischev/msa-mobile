@@ -74,13 +74,15 @@ function Orders({ route, navigation }) {
       .then(() => {
         setOrderStarted(true)
         checkCancelOrder = setInterval(async () => {
-          await axios.get(`order_worker_active/${userId}`).then(async (res) => {
-            if (res.data.length) {
-              clearInterval(checkCancelOrder)
-              Alert.alert('MSA Mobile', 'Your order has been cancelled.')
-              setOrderStarted(false)
-            }
-          })
+          await axios
+            .get(`order_worker_active/${user.u_id}`)
+            .then(async (res) => {
+              if (res.data.length) {
+                clearInterval(checkCancelOrder)
+                Alert.alert('MSA Mobile', 'Your order has been cancelled.')
+                setOrderStarted(false)
+              }
+            })
         }, 10000)
       })
       .catch((err) => console.error(err))
@@ -158,7 +160,6 @@ function Orders({ route, navigation }) {
                   backgroundColor: '#fff'
                 }}
               >
-                import
                 <ActivityIndicator size='large' color='#000088' />
                 <Text
                   style={{
@@ -190,8 +191,6 @@ function Orders({ route, navigation }) {
               <View
                 style={{
                   ...styles.center,
-                  flex: 1,
-                  width: windowWidth,
                   backgroundColor: '#fff'
                 }}
               >
@@ -210,69 +209,71 @@ function Orders({ route, navigation }) {
           </View>
         )}
       </View>
-      <View style={{ flexDirection: 'row', width: '100%', height: '100%' }}>
-        <View style={{ flex: 3 }}>
-          {!activeBarCode && (
-            <View style={{ height: 60, backgroundColor: '#fff' }}>
-              <Carousel
-                ref={carousel}
-                firstItem={1}
-                activeSlideOffset={0}
-                swipeThreshold={0}
-                callbackOffsetMargin={20}
-                data={carouselItems}
-                sliderWidth={
-                  windowWidth > 480 ? windowWidth * 0.75 : windowWidthimport
-                }
-                itemWidth={
-                  windowWidth > 480 ? windowWidth * 0.25 : windowWidth / 3
-                }
-                sliderHeight={60}
-                itemHeight={60}
-                renderItem={renderCarouselItem}
-                onSnapToItem={(index) => setActiveIndex(index)}
+      {orders.length ? (
+        <View style={{ flexDirection: 'row', width: '100%', height: '100%' }}>
+          <View style={{ flex: 3 }}>
+            {!activeBarCode && (
+              <View style={{ height: 60, backgroundColor: '#fff' }}>
+                <Carousel
+                  ref={carousel}
+                  firstItem={1}
+                  activeSlideOffset={0}
+                  swipeThreshold={0}
+                  callbackOffsetMargin={20}
+                  data={carouselItems}
+                  sliderWidth={
+                    windowWidth > 480 ? windowWidth * 0.75 : windowWidthimport
+                  }
+                  itemWidth={
+                    windowWidth > 480 ? windowWidth * 0.25 : windowWidth / 3
+                  }
+                  sliderHeight={60}
+                  itemHeight={60}
+                  renderItem={renderCarouselItem}
+                  onSnapToItem={(index) => setActiveIndex(index)}
+                />
+              </View>
+            )}
+            {activeIndex === 0 && orders.length && !activeBarCode ? (
+              <Messages
+                userName={route.params.userName}
+                userId={user.id}
+                activeOrderId={orders[0]._id}
               />
-            </View>
-          )}
-          {activeIndex === 0 && orders.length && !activeBarCode ? (
-            <Messages
-              userName={route.params.userName}
-              userId={user.id}
-              activeOrderId={orders[0]._id}
+            ) : null}
+            {activeIndex === 1 && orders.length && !activeBarCode ? (
+              <>
+                <ActiveOrderHeader item={orders[0]} />
+                <ActiveOrder
+                  order={activeOrder}
+                  userId={user.u_id}
+                  orderStarted={orderStarted}
+                  setOrderStarted={setOrderStarted}
+                  startOrder={startOrder}
+                  modalVisible={modalVisible}
+                  setModalVisible={setModalVisible}
+                />
+              </>
+            ) : null}
+            {activeIndex === 2 && orders.length && !activeBarCode ? (
+              <TechMaps />
+            ) : null}
+            {activeBarCode && orders.length ? (
+              <BarCode activeBarCode={activeBarCode} orders={orders} />
+            ) : null}
+          </View>
+          <View style={{ flex: 1 }}>
+            <RightBlock
+              order={activeOrder}
+              orderStarted={orderStarted}
+              setOrderStarted={setOrderStarted}
+              startOrder={startOrder}
+              modalVisible={modalVisible}
+              setModalVisible={setModalVisible}
             />
-          ) : null}
-          {activeIndex === 1 && orders.length && !activeBarCode ? (
-            <>
-              <ActiveOrderHeader item={orders[0]} />
-              <ActiveOrder
-                order={activeOrder}
-                userId={user.u_id}
-                orderStarted={orderStarted}
-                setOrderStarted={setOrderStarted}
-                startOrder={startOrder}
-                modalVisible={modalVisible}
-                setModalVisible={setModalVisible}
-              />
-            </>
-          ) : null}
-          {activeIndex === 2 && orders.length && !activeBarCode ? (
-            <TechMaps />
-          ) : null}
-          {activeBarCode && orders.length ? (
-            <BarCode activeBarCode={activeBarCode} orders={orders} />
-          ) : null}
+          </View>
         </View>
-        <View style={{ flex: 1 }}>
-          <RightBlock
-            order={activeOrder}
-            orderStarted={orderStarted}
-            setOrderStarted={setOrderStarted}
-            startOrder={startOrder}
-            modalVisible={modalVisible}
-            setModalVisible={setModalVisible}
-          />
-        </View>
-      </View>
+      ) : null}
     </View>
   )
 }
