@@ -4,7 +4,7 @@ import { windowHeight } from '../../Constants'
 import OperationContainer from '../OperationContainer'
 import StartBlock from '../StartBlock'
 
-const RightBlock = ({ order }) => {
+const RightBlock = ({ order, orderStarted, startOrder, setModalVisible }) => {
   return (
     <View style={styles.container}>
       <View>
@@ -27,10 +27,9 @@ const RightBlock = ({ order }) => {
         </View>
       </View>
       <StartBlock
-      //orderStarted={orderStarted}
-      //startOrder={startOrder}
-      //setModalVisible={setModalVisible}
-      //options={options}
+        orderStarted={orderStarted}
+        startOrder={startOrder}
+        setModalVisible={setModalVisible}
       />
     </View>
   )
@@ -40,12 +39,11 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#000000',
     height: windowHeight - 125,
-    paddingTop: 20,
+    paddingTop: 10,
     paddingHorizontal: 15,
     justifyContent: 'space-between'
   },
   previousOperation: {
-    marginTop: 20,
     paddingHorizontal: 10
   },
   previusOperationTitle: {
@@ -63,7 +61,7 @@ const styles = StyleSheet.create({
     marginTop: 7
   },
   resultPreviousOperation: {
-    marginTop: 20
+    marginTop: 10
   }
 })
 

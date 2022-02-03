@@ -22,7 +22,7 @@ import styles from '../styles/Styles'
 import { carouselItems, windowWidth } from '../Constants'
 import Messages from '../components/Messages'
 import TechMaps from '../components/TechMaps'
-import OrderActive from '../components/Adaptive/OrderActive'
+import ActiveOrderHeader from '../components/Adaptive/ActiveOrderHeader'
 import RightBlock from '../components/Adaptive/RightBlock'
 
 function Orders({ route, navigation }) {
@@ -32,6 +32,8 @@ function Orders({ route, navigation }) {
   const [activeOrder, setActiveOrder] = useState(null)
   const [activeIndex, setActiveIndex] = useState(1)
   const [activeBarCode, setActiveBarCode] = useState(false)
+  const [orderStarted, setOrderStarted] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
 
   const carousel = useRef()
 
@@ -60,6 +62,28 @@ function Orders({ route, navigation }) {
     axios.get(`order_id_worker/${activeOrderId}/${userId}`).then((res) => {
       setActiveOrder(res.data[0])
     })
+  }
+
+  const startOrder = () => {
+    axios
+      .put('order_worker_start', {
+        order_id: order?._id,
+        stream_id: order?.s_id,
+        operation_id: order?.operation?._id
+      })
+      .then(() => {
+        setOrderStarted(true)
+        checkCancelOrder = setInterval(async () => {
+          await axios.get(`order_worker_active/${userId}`).then(async (res) => {
+            if (res.data.length) {
+              clearInterval(checkCancelOrder)
+              Alert.alert('MSA Mobile', 'Your order has been cancelled.')
+              setOrderStarted(false)
+            }
+          })
+        }, 10000)
+      })
+      .catch((err) => console.error(err))
   }
 
   useEffect(() => {
@@ -134,6 +158,7 @@ function Orders({ route, navigation }) {
                   backgroundColor: '#fff'
                 }}
               >
+                import
                 <ActivityIndicator size='large' color='#000088' />
                 <Text
                   style={{
@@ -186,7 +211,7 @@ function Orders({ route, navigation }) {
         )}
       </View>
       <View style={{ flexDirection: 'row', width: '100%', height: '100%' }}>
-        <View style={{ width: '75%' }}>
+        <View style={{ flex: 3 }}>
           {!activeBarCode && (
             <View style={{ height: 60, backgroundColor: '#fff' }}>
               <Carousel
@@ -197,14 +222,10 @@ function Orders({ route, navigation }) {
                 callbackOffsetMargin={20}
                 data={carouselItems}
                 sliderWidth={
-                  windowWidth > 480
-                    ? windowWidth - windowWidth / 4
-                    : windowWidth
+                  windowWidth > 480 ? windowWidth * 0.75 : windowWidthimport
                 }
                 itemWidth={
-                  windowWidth > 480
-                    ? (windowWidth - windowWidth / 4) / 3
-                    : windowWidth / 3
+                  windowWidth > 480 ? windowWidth * 0.25 : windowWidth / 3
                 }
                 sliderHeight={60}
                 itemHeight={60}
@@ -222,8 +243,16 @@ function Orders({ route, navigation }) {
           ) : null}
           {activeIndex === 1 && orders.length && !activeBarCode ? (
             <>
-              <OrderActive item={orders[0]} />
-              <ActiveOrder order={activeOrder} userId={user.u_id} />
+              <ActiveOrderHeader item={orders[0]} />
+              <ActiveOrder
+                order={activeOrder}
+                userId={user.u_id}
+                orderStarted={orderStarted}
+                setOrderStarted={setOrderStarted}
+                startOrder={startOrder}
+                modalVisible={modalVisible}
+                setModalVisible={setModalVisible}
+              />
             </>
           ) : null}
           {activeIndex === 2 && orders.length && !activeBarCode ? (
@@ -233,8 +262,15 @@ function Orders({ route, navigation }) {
             <BarCode activeBarCode={activeBarCode} orders={orders} />
           ) : null}
         </View>
-        <View style={{ width: '25%' }}>
-          <RightBlock order={activeOrder} />
+        <View style={{ flex: 1 }}>
+          <RightBlock
+            order={activeOrder}
+            orderStarted={orderStarted}
+            setOrderStarted={setOrderStarted}
+            startOrder={startOrder}
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+          />
         </View>
       </View>
     </View>

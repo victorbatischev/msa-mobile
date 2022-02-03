@@ -8,43 +8,25 @@ import {
   Modal,
   Alert
 } from 'react-native'
-//import { Stopwatch } from '../lib/react-native-stopwatch-timer'
+import { Stopwatch } from '../lib/react-native-stopwatch-timer'
 import JSONTree from 'react-native-json-tree'
 
 import axios from 'axios'
 import styles from '../styles/Styles'
 import { windowWidth, jsonTreeTheme, options } from '../Constants'
 import OperationContainer from './OperationContainer'
-import StartBlock from './StartBlock'
 
 var checkCancelOrder = null
 
-const order = ({ order, userId }) => {
-  const [orderStarted, setOrderStarted] = useState(false)
-  const [modalVisible, setModalVisible] = useState(false)
-
-  const startOrder = () => {
-    axios
-      .put('order_worker_start', {
-        order_id: order?._id,
-        stream_id: order?.s_id,
-        operation_id: order?.operation?._id
-      })
-      .then(() => {
-        setOrderStarted(true)
-        checkCancelOrder = setInterval(async () => {
-          await axios.get(`order_worker_active/${userId}`).then(async (res) => {
-            if (res.data.length) {
-              clearInterval(checkCancelOrder)
-              Alert.alert('MSA Mobile', 'Your order has been cancelled.')
-              setOrderStarted(false)
-            }
-          })
-        }, 10000)
-      })
-      .catch((err) => console.error(err))
-  }
-
+const ActiveOrder = ({
+  order,
+  userId,
+  orderStarted,
+  setOrderStarted,
+  startOrder,
+  modalVisible,
+  setModalVisible
+}) => {
   const finishOrder = (nextOperationId, relationId) => {
     axios
       .put('order_worker_finish', {
@@ -69,7 +51,7 @@ const order = ({ order, userId }) => {
       <View style={styles.container}>
         {orderStarted ? (
           <ScrollView style={{ maxHeight: windowWidth }}>
-            <JSONTree
+            <JSONTreeimport
               data={order?.order?.list}
               theme={{
                 extend: jsonTreeTheme,
@@ -111,51 +93,55 @@ const order = ({ order, userId }) => {
           </>
         )}
       </View>
-      {windowWidth <= 480 && <OperationContainer order={order} />}
       {windowWidth <= 480 && (
-        <View style={{ ...styles.center, height: 70 }}>
-          <View style={{ ...styles.container, backgroundColor: '#000' }}>
-            <Text style={{ fontFamily: 'Roboto', fontSize: 12, color: '#888' }}>
-              Work time on the order
-            </Text>
-            <Stopwatch
-              reset={!orderStarted}
-              start={orderStarted}
-              options={options}
-            />
+        <>
+          <OperationContainer order={order} />
+          <View style={{ ...styles.center, height: 70 }}>
+            <View style={{ ...styles.container, backgroundColor: '#000' }}>
+              <Text
+                style={{ fontFamily: 'Roboto', fontSize: 12, color: '#888' }}
+              >
+                Work time on the order
+              </Text>
+              <Stopwatch
+                reset={!orderStarted}
+                start={orderStarted}
+                options={options}
+              />
+            </View>
+            {orderStarted ? (
+              <Pressable
+                style={{ ...styles.container, backgroundColor: '#009C6D' }}
+                onPress={() => setModalVisible(true)}
+              >
+                <Text
+                  style={{
+                    fontFamily: 'Montserrat',
+                    fontSize: 30,
+                    color: '#fff'
+                  }}
+                >
+                  FINISH
+                </Text>
+              </Pressable>
+            ) : (
+              <Pressable
+                style={{ ...styles.container, backgroundColor: '#0080FF' }}
+                onPress={() => startOrder()}
+              >
+                <Text
+                  style={{
+                    fontFamily: 'Montserrat',
+                    fontSize: 30,
+                    color: '#fff'
+                  }}
+                >
+                  START
+                </Text>
+              </Pressable>
+            )}
           </View>
-          {orderStarted ? (
-            <Pressable
-              style={{ ...styles.container, backgroundColor: '#009C6D' }}
-              onPress={() => setModalVisible(true)}
-            >
-              <Text
-                style={{
-                  fontFamily: 'Montserrat',
-                  fontSize: 30,
-                  color: '#fff'
-                }}
-              >
-                FINISH
-              </Text>
-            </Pressable>
-          ) : (
-            <Pressable
-              style={{ ...styles.container, backgroundColor: '#0080FF' }}
-              onPress={() => startOrder()}
-            >
-              <Text
-                style={{
-                  fontFamily: 'Montserrat',
-                  fontSize: 30,
-                  color: '#fff'
-                }}
-              >
-                START
-              </Text>
-            </Pressable>
-          )}
-        </View>
+        </>
       )}
 
       <Modal
@@ -215,4 +201,4 @@ const order = ({ order, userId }) => {
   )
 }
 
-export default order
+export default ActiveOrder

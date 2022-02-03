@@ -6,7 +6,7 @@ import arrowMain from '../../assets/icons/arrowMain.jpg'
 
 import styles from '../../styles/Styles'
 
-const OrderActive = ({ item, activeBarCode, setActiveBarCode }) => {
+const ActiveOrderHeader = ({ item, activeBarCode, setActiveBarCode }) => {
   const print = () => {
     console.log('print')
   }
@@ -67,4 +67,4 @@ const OrderActive = ({ item, activeBarCode, setActiveBarCode }) => {
   )
 }
 
-export default OrderActive
+export default ActiveOrderHeader

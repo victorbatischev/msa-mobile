@@ -1,20 +1,28 @@
 import React from 'react'
 import { StyleSheet, View, Text, Pressable } from 'react-native'
-import { StopWatch } from '../lib/react-native-stopwatch-timer'
+import { options, windowWidth } from '../Constants'
+// import { StopWatch } from '../lib/react-native-stopwatch-timer'
+import StopWatch from '../lib/react-native-stopwatch-timer/lib/stopwatch.js'
 import styles from '../styles/Styles'
 
-const StartBlock = ({ orderStarted, startOrder, setModalVisible, options }) => {
+const StartBlock = ({ orderStarted, startOrder, setModalVisible }) => {
   return (
-    <View style={{ ...styles.center, height: 70 }}>
+    <View
+      style={{
+        ...styles.center,
+        height: windowWidth <= 480 ? 70 : 130,
+        flexDirection: windowWidth > 480 ? 'column' : 'row'
+      }}
+    >
       <View style={{ ...styles.container, backgroundColor: '#000' }}>
         <Text style={{ fontFamily: 'Roboto', fontSize: 12, color: '#888' }}>
           Work time on the order
         </Text>
-        {/* <StopWatch
+        <StopWatch
           reset={!orderStarted}
           start={orderStarted}
           options={options}
-        /> */}
+        />
       </View>
       {orderStarted ? (
         <Pressable
