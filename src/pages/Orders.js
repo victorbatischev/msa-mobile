@@ -24,6 +24,8 @@ import Messages from '../components/Messages'
 import TechMaps from '../components/TechMaps'
 import ActiveOrderHeader from '../components/Adaptive/ActiveOrderHeader'
 import RightBlock from '../components/Adaptive/RightBlock'
+import arrowMain from '../assets/icons/arrowMain.jpg'
+import arrowNotMain from '../assets/icons/arrowNotMain.jpg'
 
 function Orders({ route, navigation }) {
   const { width } = Dimensions.get('window')
@@ -125,7 +127,6 @@ function Orders({ route, navigation }) {
       />
     )
   }
-
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
       <StatusBar style='light' translucent={false} />
@@ -174,7 +175,7 @@ function Orders({ route, navigation }) {
             )}
           </ScrollView>
         ) : (
-          <View style={{ width: windowWidth }}>
+          <View style={{ width: windowWidth, flexDirection: 'row' }}>
             {orders.length ? (
               orders.map((item, idx) => {
                 return (
@@ -184,6 +185,7 @@ function Orders({ route, navigation }) {
                     idx={idx}
                     activeBarCode={activeBarCode}
                     setActiveBarCode={setActiveBarCode}
+                    icon={idx === 0 ? arrowMain : arrowNotMain}
                   />
                 )
               })

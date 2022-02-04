@@ -2,11 +2,10 @@ import React from 'react'
 import { View, Text, Pressable, Image } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
 import { windowWidth } from '../Constants'
-import arrowMain from '../assets/icons/arrowMain.jpg'
 
 import styles from '../styles/Styles'
 
-const Order = ({ item, idx, activeBarCode, setActiveBarCode }) => {
+const Order = ({ item, idx, activeBarCode, setActiveBarCode, icon }) => {
   const print = () => {
     console.log('print')
   }
@@ -29,7 +28,7 @@ const Order = ({ item, idx, activeBarCode, setActiveBarCode }) => {
         {windowWidth <= 480 ? (
           <QRCode value={item._id} size={40} logoMargin={2} />
         ) : (
-          <Image source={arrowMain}></Image>
+          <Image source={icon}></Image>
         )}
       </Pressable>
       <View
