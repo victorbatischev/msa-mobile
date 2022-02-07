@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#000000',
     height: windowHeight - 145,
-    paddingTop: 5,
     paddingHorizontal: 15,
     justifyContent: 'space-between'
   },
@@ -58,7 +57,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#CF3B23',
     justifyContent: 'center',
     paddingHorizontal: 10,
-    marginTop: 7
+    marginTop: 5
   },
   resultPreviousOperation: {
     marginTop: 10
