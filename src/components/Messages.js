@@ -11,7 +11,7 @@ const Messages = ({ userName, userId, activeOrderId }) => {
 
   useEffect(() => {
     axios.get(`order_worker_message/${activeOrderId}`).then((res) => {
-      console.log(res.data)
+      //console.log(res.data)
       if (res.data && res.data.length) {
         const newMessages = res.data.map((item, index) => {
           return {
@@ -131,9 +131,10 @@ const Messages = ({ userName, userId, activeOrderId }) => {
         style={{
           ...styles.center,
           flex: 1,
-          width: windowWidth,
+          width: windowWidth <= 480 ? windowWidth : windowWidth * 0.75,
           transform: [{ rotateX: '180deg' }],
-          backgroundColor: '#fff'
+          backgroundColor: '#fff',
+          height: windowWidth * 0.6
         }}
       >
         <Text style={{ fontFamily: 'Roboto', fontSize: 18, padding: 15 }}>

@@ -94,9 +94,10 @@ function Orders({ route, navigation }) {
       const tempUser = JSON.parse(await AsyncStorage.getItem('user'))
       setUser(tempUser)
 
-      setInterval(() => {
-        getOrders(tempUser)
-      }, 2000)
+      // setInterval(() => {
+      //   getOrders(tempUser)
+      // }, 2000)
+      getOrders(tempUser)
 
       let checkLogout = setInterval(async () => {
         await axios.get(`worker_logout/${tempUser.u_id}`).then(async (res) => {
