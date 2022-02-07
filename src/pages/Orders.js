@@ -28,7 +28,6 @@ import arrowMain from '../assets/icons/arrowMain.jpg'
 import arrowNotMain from '../assets/icons/arrowNotMain.jpg'
 
 function Orders({ route, navigation }) {
-  const { width } = Dimensions.get('window')
   const [user, setUser] = useState(null)
   const [orders, setOrders] = useState([])
   const [activeOrder, setActiveOrder] = useState(null)
@@ -131,8 +130,8 @@ function Orders({ route, navigation }) {
     <View style={{ flex: 1, alignItems: 'center' }}>
       <StatusBar style='light' translucent={false} />
       <Header logOut={logOut} userName={route.params.userName} />
-      <View style={{ ...styles.shadow, height: 60 }}>
-        {width <= 480 ? (
+      <View style={{ ...styles.shadow, height: 80 }}>
+        {windowWidth <= 480 ? (
           <ScrollView
             horizontal={true}
             decelerationRate={0}
@@ -158,7 +157,8 @@ function Orders({ route, navigation }) {
                   ...styles.center,
                   flex: 1,
                   width: windowWidth,
-                  backgroundColor: '#fff'
+                  backgroundColor: '#fff',
+                  paddingHorizontal: 10
                 }}
               >
                 <ActivityIndicator size='large' color='#000088' />
@@ -224,7 +224,7 @@ function Orders({ route, navigation }) {
                   callbackOffsetMargin={20}
                   data={carouselItems}
                   sliderWidth={
-                    windowWidth > 480 ? windowWidth * 0.75 : windowWidthimport
+                    windowWidth > 480 ? windowWidth * 0.75 : windowWidth
                   }
                   itemWidth={
                     windowWidth > 480 ? windowWidth * 0.25 : windowWidth / 3
@@ -245,7 +245,7 @@ function Orders({ route, navigation }) {
             ) : null}
             {activeIndex === 1 && orders.length && !activeBarCode ? (
               <>
-                <ActiveOrderHeader item={orders[0]} />
+                {windowWidth > 480 && <ActiveOrderHeader item={orders[0]} />}
                 <ActiveOrder
                   order={activeOrder}
                   userId={user.u_id}
@@ -264,16 +264,18 @@ function Orders({ route, navigation }) {
               <BarCode activeBarCode={activeBarCode} orders={orders} />
             ) : null}
           </View>
-          <View style={{ flex: 1 }}>
-            <RightBlock
-              order={activeOrder}
-              orderStarted={orderStarted}
-              setOrderStarted={setOrderStarted}
-              startOrder={startOrder}
-              modalVisible={modalVisible}
-              setModalVisible={setModalVisible}
-            />
-          </View>
+          {windowWidth > 480 && (
+            <View style={{ flex: 1 }}>
+              <RightBlock
+                order={activeOrder}
+                orderStarted={orderStarted}
+                setOrderStarted={setOrderStarted}
+                startOrder={startOrder}
+                modalVisible={modalVisible}
+                setModalVisible={setModalVisible}
+              />
+            </View>
+          )}
         </View>
       ) : null}
     </View>

@@ -15,7 +15,7 @@ const Order = ({ item, idx, activeBarCode, setActiveBarCode, icon }) => {
       style={{
         ...styles.orderContainer,
         backgroundColor: idx === 0 ? '#FFFFFF' : '#F8F8F8',
-        width: windowWidth > 480 && 260,
+        width: windowWidth > 480 ? 260 : '100%',
         borderRightWidth: windowWidth > 480 ? 1 : 0,
         borderRightColor: '#00000029'
       }}

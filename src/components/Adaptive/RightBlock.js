@@ -38,8 +38,8 @@ const RightBlock = ({ order, orderStarted, startOrder, setModalVisible }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#000000',
-    height: windowHeight - 125,
-    paddingTop: 10,
+    height: windowHeight - 145,
+    paddingTop: 5,
     paddingHorizontal: 15,
     justifyContent: 'space-between'
   },

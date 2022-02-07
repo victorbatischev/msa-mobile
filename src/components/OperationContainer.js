@@ -8,7 +8,7 @@ const OperationContainer = ({ order }) => {
     <View
       style={{
         ...styles.operationContainer,
-        backgroundColor: windowWidth > 480 && 'transparent'
+        backgroundColor: windowWidth > 480 ? 'transparent' : '#F5F5F5'
       }}
     >
       <Text style={{ fontFamily: 'Roboto', fontSize: 12, color: '#8F8F8F' }}>
@@ -18,7 +18,7 @@ const OperationContainer = ({ order }) => {
         style={{
           fontFamily: 'Montserrat',
           fontSize: 18,
-          color: windowWidth > 480 && '#fff'
+          color: windowWidth > 480 ? '#fff' : '#000'
         }}
       >
         {order?.description?.name}
