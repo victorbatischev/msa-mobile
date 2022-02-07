@@ -14,9 +14,9 @@ const Order = ({ item, idx, activeBarCode, setActiveBarCode, icon }) => {
     <View
       style={{
         ...styles.orderContainer,
-        backgroundColor: idx === 0 ? '#FFFFFF' : '#F8F8F8',
-        width: windowWidth > 480 ? 260 : '100%',
-        borderRightWidth: windowWidth > 480 ? 1 : 0,
+        backgroundColor: idx === 0 ? '#F5F5F5' : '#FFFFFF',
+        width: windowWidth > 480 ? 260 : windowWidth,
+        borderRightWidth: windowWidth > 480 ? 0.5 : 0,
         borderRightColor: '#00000029'
       }}
     >
@@ -28,13 +28,11 @@ const Order = ({ item, idx, activeBarCode, setActiveBarCode, icon }) => {
         {windowWidth <= 480 ? (
           <QRCode value={item._id} size={40} logoMargin={2} />
         ) : (
-          <Image source={icon}></Image>
+          <Image source={icon} style={{ marginRight: 10 }}></Image>
         )}
       </Pressable>
       <View
         style={{
-          ...styles.center,
-          flexDirection: 'column',
           width: windowWidth <= 480 ? '70%' : '90%'
         }}
       >

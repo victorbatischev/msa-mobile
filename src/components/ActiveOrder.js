@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   View,
   Text,
@@ -16,11 +16,8 @@ import styles from '../styles/Styles'
 import { windowWidth, jsonTreeTheme, options, windowHeight } from '../Constants'
 import OperationContainer from './OperationContainer'
 
-var checkCancelOrder = null
-
 const ActiveOrder = ({
   order,
-  userId,
   orderStarted,
   setOrderStarted,
   startOrder,
@@ -39,7 +36,6 @@ const ActiveOrder = ({
       .then(() => {
         setOrderStarted(false)
         setModalVisible(false)
-        clearInterval(checkCancelOrder)
         // обновляем список заказов после завершения активной операции
         Alert.alert('MSA Mobile', 'Your operation has been completed.')
       })
@@ -52,7 +48,7 @@ const ActiveOrder = ({
         style={{
           ...styles.container,
           width: '100%',
-          height: windowWidth + 80
+          height: windowHeight - 190
         }}
       >
         <View style={{ ...styles.container, justifyContent: 'flex-start' }}>
@@ -85,7 +81,12 @@ const ActiveOrder = ({
           ) : (
             <>
               <Image
-                style={{ width: 60, height: 60, marginBottom: 20 }}
+                style={{
+                  width: 60,
+                  height: 60,
+                  marginBottom: 20,
+                  marginTop: 50
+                }}
                 source={require('../assets/images/warning.png')}
               />
               <Text
@@ -152,7 +153,6 @@ const ActiveOrder = ({
             </View>
           </View>
         )}
-
         <Modal
           animationType='slide'
           transparent={true}

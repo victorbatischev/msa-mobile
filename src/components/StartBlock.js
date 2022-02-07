@@ -11,10 +11,17 @@ const StartBlock = ({ orderStarted, startOrder, setModalVisible }) => {
       style={{
         ...styles.center,
         height: windowWidth <= 480 ? 70 : 130,
-        flexDirection: windowWidth > 480 ? 'column' : 'row'
+        flexDirection: windowWidth > 480 ? 'column' : 'row',
+        paddingBottom: 15
       }}
     >
-      <View style={{ ...styles.container, backgroundColor: '#000' }}>
+      <View
+        style={{
+          ...styles.container,
+          backgroundColor: '#000',
+          marginBottom: 10
+        }}
+      >
         <Text style={{ fontFamily: 'Roboto', fontSize: 12, color: '#888' }}>
           Work time on the order
         </Text>
@@ -50,9 +57,5 @@ const StartBlock = ({ orderStarted, startOrder, setModalVisible }) => {
     </View>
   )
 }
-
-const myStyles = StyleSheet.create({
-  container: {}
-})
 
 export default StartBlock

@@ -194,6 +194,8 @@ function Orders({ route, navigation }) {
               <View
                 style={{
                   ...styles.center,
+                  flex: 1,
+                  paddingTop: 15,
                   backgroundColor: '#fff'
                 }}
               >
@@ -216,7 +218,14 @@ function Orders({ route, navigation }) {
         <View style={{ flexDirection: 'row', width: '100%', height: '100%' }}>
           <View style={{ flex: 3 }}>
             {!activeBarCode && (
-              <View style={{ height: 60, backgroundColor: '#fff' }}>
+              <View
+                style={{
+                  height: 60,
+                  backgroundColor: '#fff',
+                  borderWidth: 1,
+                  borderColor: '#F5F5F5'
+                }}
+              >
                 <Carousel
                   ref={carousel}
                   firstItem={1}

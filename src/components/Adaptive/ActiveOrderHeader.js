@@ -19,37 +19,28 @@ const ActiveOrderHeader = ({ item, activeBarCode, setActiveBarCode }) => {
         width: '100%'
       }}
     >
-      <Pressable
-        onPress={() => {
-          activeBarCode ? setActiveBarCode(null) : setActiveBarCode(item._id)
-        }}
-      >
-        <QRCode value={item._id} size={40} logoMargin={2} />
-      </Pressable>
-      <View
-        style={{
-          ...styles.center,
-          flexDirection: 'column',
-          width: '30%'
-        }}
-      >
-        <Text style={{ fontFamily: 'Roboto', color: '#8F8F8F' }}>
-          {item._id}
-        </Text>
-        <Text
-          style={{ fontFamily: 'Roboto', fontSize: 16 }}
-          numberOfLines={2}
-          ellipsizeMode={'middle'}
+      <View style={{ flexDirection: 'row' }}>
+        <Pressable
+          onPress={() => {
+            activeBarCode ? setActiveBarCode(null) : setActiveBarCode(item._id)
+          }}
         >
-          {item.name}
-        </Text>
+          <QRCode value={item._id} size={40} logoMargin={2} />
+        </Pressable>
+        <View style={{ flexDirection: 'column', paddingLeft: 10 }}>
+          <Text
+            style={{ fontFamily: 'Roboto', fontSize: 16 }}
+            numberOfLines={2}
+            ellipsizeMode={'middle'}
+          >
+            {item.name}
+          </Text>
+          <Text style={{ fontFamily: 'Roboto', color: '#8F8F8F' }}>
+            {item._id}
+          </Text>
+        </View>
       </View>
-      <Pressable>
-        {/* <Image
-          onPress={() => print()}
-          style={{ width: 40, height: 40 }}
-          source={require('../../assets/images/print.png')}
-        /> */}
+      <Pressable onPress={() => print()}>
         <View
           style={{
             width: 76,
