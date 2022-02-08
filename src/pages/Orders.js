@@ -256,7 +256,6 @@ function Orders({ route, navigation }) {
                 {windowWidth > 480 && <ActiveOrderHeader item={orders[0]} />}
                 <ActiveOrder
                   order={activeOrder}
-                  userId={user.u_id}
                   orderStarted={orderStarted}
                   setOrderStarted={setOrderStarted}
                   startOrder={startOrder}
