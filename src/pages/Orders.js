@@ -4,8 +4,7 @@ import {
   Text,
   Alert,
   ScrollView,
-  ActivityIndicator,
-  Dimensions
+  ActivityIndicator
 } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -94,10 +93,9 @@ function Orders({ route, navigation }) {
       const tempUser = JSON.parse(await AsyncStorage.getItem('user'))
       setUser(tempUser)
 
-      // setInterval(() => {
-      //   getOrders(tempUser)
-      // }, 2000)
-      getOrders(tempUser)
+      setInterval(() => {
+        getOrders(tempUser)
+      }, 2000)
 
       let checkLogout = setInterval(async () => {
         await axios.get(`worker_logout/${tempUser.u_id}`).then(async (res) => {
