@@ -4,7 +4,7 @@ import done from '../assets/icons/done.png'
 import cansel from '../assets/icons/cansel.png'
 import { windowWidth } from '../Constants'
 
-const CompliteWorkShift = ({ logOut, setIsModalVisible }) => {
+const CompleteWorkShift = ({ logOut, setIsModalVisible }) => {
   return (
     <Modal
       animationType='slide'
@@ -82,4 +82,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default CompliteWorkShift
+export default CompleteWorkShift
