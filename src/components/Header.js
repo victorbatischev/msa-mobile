@@ -3,7 +3,7 @@ import { View, Text, Image, Alert } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import styles from '../styles/Styles'
-import CompleteWorkShift from './CompleteWorkShift'
+import CompleteWorkShift from './CompleteWorkShiftModal'
 
 const Header = ({ logOut, userName }) => {
   const [isModalVisible, setIsModalVisible] = useState(false)

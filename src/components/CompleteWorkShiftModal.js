@@ -6,12 +6,7 @@ import { windowWidth } from '../Constants'
 
 const CompleteWorkShift = ({ logOut, setIsModalVisible }) => {
   return (
-    <Modal
-      animationType='slide'
-      transparent={false}
-      visible={true}
-      onRequestClose={() => console.log('Закрыто!')}
-    >
+    <Modal animationType='slide' transparent={true} visible={true}>
       <View style={styles.container}>
         <Text style={styles.modalTitle}>
           Do you really want to complete your work shift?

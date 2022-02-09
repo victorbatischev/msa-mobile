@@ -1,11 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import {
-  View,
-  Text,
-  Alert,
-  ScrollView,
-  ActivityIndicator
-} from 'react-native'
+import { View, Text, Alert, ScrollView, ActivityIndicator } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
@@ -25,6 +19,7 @@ import ActiveOrderHeader from '../components/Adaptive/ActiveOrderHeader'
 import RightBlock from '../components/Adaptive/RightBlock'
 import arrowMain from '../assets/icons/arrowMain.jpg'
 import arrowNotMain from '../assets/icons/arrowNotMain.jpg'
+import OrderCancelModal from '../components/OrderCancelModal'
 
 function Orders({ route, navigation }) {
   const [user, setUser] = useState(null)
@@ -34,6 +29,8 @@ function Orders({ route, navigation }) {
   const [activeBarCode, setActiveBarCode] = useState(false)
   const [orderStarted, setOrderStarted] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
+
+  const [orderCanselModalVisible, setOrderCanselModalVisible] = useState(false)
 
   const carousel = useRef()
 
@@ -79,7 +76,8 @@ function Orders({ route, navigation }) {
             .then(async (res) => {
               if (res.data.length) {
                 clearInterval(checkCancelOrder)
-                Alert.alert('MSA Mobile', 'Your order has been cancelled.')
+                // Alert.alert('MSA Mobile', 'Your order has been cancelled.')
+                setOrderCanselModalVisible(true)
                 setOrderStarted(false)
               }
             })
@@ -285,6 +283,12 @@ function Orders({ route, navigation }) {
           )}
         </View>
       ) : null}
+      {orderCanselModalVisible && (
+        <OrderCancelModal
+          item={orders[0]}
+          setOrderCanselModalVisible={setOrderCanselModalVisible}
+        />
+      )}
     </View>
   )
 }
