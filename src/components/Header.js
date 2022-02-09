@@ -1,23 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, Image, Alert } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import styles from '../styles/Styles'
+import CompliteWorkShift from './CompliteWorkShift'
 
 const Header = ({ logOut, userName }) => {
+  const [isModalVisible, setIsModalVisible] = useState(false)
   const tryCompleteWorkShift = () => {
-    Alert.alert(
-      'MSA Mobile',
-      'Do you really want to complete your work shift?',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel'
-        },
-        { text: 'Yes', onPress: () => logOut() }
-      ],
-      { cancelable: false }
-    )
+    // Alert.alert(
+    //   'MSA Mobile',
+    //   'Do you really want to complete your work shift?',
+    //   [
+    //     {
+    //       text: 'Cancel',
+    //       style: 'cancel'
+    //     },
+    //     { text: 'Yes', onPress: () => logOut() }
+    //   ],
+    //   { cancelable: false }
+    // )
+    setIsModalVisible(true)
   }
 
   return (
@@ -37,6 +40,12 @@ const Header = ({ logOut, userName }) => {
         size={20}
         onPress={() => tryCompleteWorkShift()}
       />
+      {isModalVisible && (
+        <CompliteWorkShift
+          logOut={logOut}
+          setIsModalVisible={setIsModalVisible}
+        />
+      )}
     </View>
   )
 }
