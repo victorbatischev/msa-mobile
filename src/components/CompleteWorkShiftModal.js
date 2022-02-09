@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, Modal, Pressable, Image } from 'react-native'
-import done from '../assets/icons/done.png'
-import cansel from '../assets/icons/cansel.png'
+import done from '../assets/images/ok.png'
+import cansel from '../assets/images/no.png'
 import { windowWidth } from '../Constants'
 
 const CompleteWorkShift = ({ logOut, setIsModalVisible }) => {

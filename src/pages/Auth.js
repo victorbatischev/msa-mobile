@@ -96,7 +96,7 @@ function Auth({ navigation }) {
       <View style={styles.authContainer}>
         <Image
           style={{ width: 150, height: 65 }}
-          source={require('../assets/images/auth.png')}
+          source={require('../assets/images/logoAuth.png')}
         />
         <TextInput
           label='Login'
