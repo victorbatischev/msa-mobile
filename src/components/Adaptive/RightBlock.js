@@ -24,7 +24,7 @@ const RightBlock = ({
           </Text>
         </View>
         <View style={styles.resultPreviousOperation}>
-          <Text style={styles.previusOperationTitle}>
+          <Text style={[styles.previusOperationTitle, { paddingLeft: '10%' }]}>
             Result of previous operation
           </Text>
           <View style={styles.previusOperationTextContainer}>
@@ -49,11 +49,10 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#000000',
     height: windowHeight - 145,
-    paddingHorizontal: 15,
     justifyContent: 'space-between'
   },
   previousOperation: {
-    paddingHorizontal: 10
+    paddingHorizontal: '10%'
   },
   previusOperationTitle: {
     color: '#8F8F8F'
@@ -63,10 +62,11 @@ const styles = StyleSheet.create({
     fontSize: 14
   },
   previusOperationTextContainer: {
+    width: '88%',
     height: 55,
     backgroundColor: '#CF3B23',
-    justifyContent: 'center',
-    paddingHorizontal: 10
+    alignSelf: 'center',
+    padding: '4.5%'
   },
   resultPreviousOperation: {
     marginTop: 5

@@ -85,7 +85,7 @@ const ActiveOrder = ({
                   width: 60,
                   height: 60,
                   marginBottom: 20,
-                  marginTop: 50
+                  marginTop: 20
                 }}
                 source={require('../assets/images/warning.png')}
               />

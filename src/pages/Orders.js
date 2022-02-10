@@ -59,7 +59,6 @@ function Orders({ route, navigation }) {
 
   const getPreviousOperation = (user) => {
     axios.get(`order_prev_operation/${user.u_id}`).then((res) => {
-      console.log(res.data)
       setPreviousOperation(res.data)
     })
   }

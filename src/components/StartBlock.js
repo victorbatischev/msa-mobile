@@ -10,7 +10,7 @@ const StartBlock = ({ orderStarted, startOrder, setModalVisible }) => {
     <View
       style={{
         ...styles.center,
-        height: windowWidth <= 480 ? 70 : 130,
+        height: windowWidth <= 480 ? 70 : '50%',
         flexDirection: windowWidth > 480 ? 'column' : 'row',
         paddingBottom: 15
       }}
@@ -33,7 +33,10 @@ const StartBlock = ({ orderStarted, startOrder, setModalVisible }) => {
       </View>
       {orderStarted ? (
         <Pressable
-          style={{ ...styles.container, backgroundColor: '#009C6D' }}
+          style={{
+            ...styles.container,
+            backgroundColor: '#009C6D'
+          }}
           onPress={() => setModalVisible(true)}
         >
           <Text
