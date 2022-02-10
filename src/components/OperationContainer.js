@@ -17,7 +17,7 @@ const OperationContainer = ({ order }) => {
       <Text
         style={{
           fontFamily: 'Montserrat',
-          fontSize: 18,
+          fontSize: 16,
           color: windowWidth > 480 ? '#fff' : '#000'
         }}
       >

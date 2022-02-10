@@ -4,7 +4,13 @@ import { windowHeight } from '../../Constants'
 import OperationContainer from '../OperationContainer'
 import StartBlock from '../StartBlock'
 
-const RightBlock = ({ order, orderStarted, startOrder, setModalVisible }) => {
+const RightBlock = ({
+  order,
+  orderStarted,
+  startOrder,
+  setModalVisible,
+  previousOperation
+}) => {
   return (
     <View style={styles.container}>
       <View>
@@ -12,7 +18,9 @@ const RightBlock = ({ order, orderStarted, startOrder, setModalVisible }) => {
         <View style={styles.previousOperation}>
           <Text style={styles.previusOperationTitle}>Previous operation</Text>
           <Text style={styles.previusOperationText}>
-            Embroidery of rhombuses
+            {previousOperation.length > 0
+              ? previousOperation.length[0].name_prev_operation
+              : 'No previous operations'}
           </Text>
         </View>
         <View style={styles.resultPreviousOperation}>
@@ -21,7 +29,9 @@ const RightBlock = ({ order, orderStarted, startOrder, setModalVisible }) => {
           </Text>
           <View style={styles.previusOperationTextContainer}>
             <Text style={styles.previusOperationText}>
-              Alter (including double stitch)
+              {previousOperation.length > 0
+                ? previousOperation.length[0].result_prev_operation
+                : 'No previous operations'}
             </Text>
           </View>
         </View>
@@ -50,17 +60,16 @@ const styles = StyleSheet.create({
   },
   previusOperationText: {
     color: '#FFFFFF',
-    fontSize: 16
+    fontSize: 14
   },
   previusOperationTextContainer: {
     height: 55,
     backgroundColor: '#CF3B23',
     justifyContent: 'center',
-    paddingHorizontal: 10,
-    marginTop: 5
+    paddingHorizontal: 10
   },
   resultPreviousOperation: {
-    marginTop: 10
+    marginTop: 5
   }
 })
 

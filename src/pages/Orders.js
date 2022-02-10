@@ -31,6 +31,7 @@ function Orders({ route, navigation }) {
   const [modalVisible, setModalVisible] = useState(false)
 
   const [orderCanselModalVisible, setOrderCanselModalVisible] = useState(false)
+  const [previousOperation, setPreviousOperation] = useState([])
 
   const carousel = useRef()
 
@@ -51,7 +52,15 @@ function Orders({ route, navigation }) {
       setOrders(res.data)
       if (res.data.length) {
         getOrderInfo(res.data[0]._id, user.u_id)
+        getPreviousOperation(user)
       }
+    })
+  }
+
+  const getPreviousOperation = (user) => {
+    axios.get(`order_prev_operation/${user.u_id}`).then((res) => {
+      console.log(res.data)
+      setPreviousOperation(res.data)
     })
   }
 
@@ -278,6 +287,7 @@ function Orders({ route, navigation }) {
                 startOrder={startOrder}
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
+                previousOperation={previousOperation}
               />
             </View>
           )}
