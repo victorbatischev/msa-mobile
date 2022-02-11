@@ -47,14 +47,14 @@ const Header = ({ logOut, userName }) => {
           <View style={{ backgroundColor: '#fff', height: 2 }}></View>
           <View style={{ backgroundColor: '#fff', height: 2 }}></View>
         </Pressable>
-        <Icon.Button
+        {/* <Icon.Button
           name='exit-outline'
           color={'#000'}
           backgroundColor={'#fff'}
           style={{ padding: 2, marginRight: -10 }}
           size={20}
           onPress={() => tryCompleteWorkShift()}
-        />
+        /> */}
       </View>
       {isModalWorkShiftVisible && (
         <CompleteWorkShift
@@ -63,7 +63,7 @@ const Header = ({ logOut, userName }) => {
         />
       )}
       {isUserMenuModal && (
-        <UsersMenuModal setModalVisible={setIsUserMenuModal} />
+        <UsersMenuModal setModalVisible={setIsUserMenuModal} logOut={logOut} />
       )}
     </View>
   )

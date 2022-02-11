@@ -3,13 +3,16 @@ import { StyleSheet, View, Text, Modal, Pressable, Image } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import styles from '../styles/Styles'
 import axios from 'axios'
+import CompleteWorkShift from './CompleteWorkShiftModal'
 
-const UsersMenuModal = ({ setModalVisible }) => {
+const UsersMenuModal = ({ setModalVisible, logOut }) => {
   const [isModal, setIsModal] = useState(false)
+  const [isCompleteWorhShiftVisible, setIsCompleteWorhShiftVisible] =
+    useState(false)
 
   const getNewOrder = async () => {
     const tempUser = JSON.parse(await AsyncStorage.getItem('user'))
-    axios.get(`api/deskbook_info/${tempUser.u_id}`).then((res) => {
+    axios.get(`deskbook_info/61f5b6541f1d04747fffe837`).then((res) => {
       console.log(res.data)
     })
   }
@@ -26,7 +29,10 @@ const UsersMenuModal = ({ setModalVisible }) => {
           >
             <Text style={myStyles.menuItemText}>New order</Text>
           </Pressable>
-          <Pressable style={myStyles.menuItem}>
+          <Pressable
+            style={myStyles.menuItem}
+            onPress={() => setIsCompleteWorhShiftVisible(true)}
+          >
             <Text style={myStyles.menuItemText}>Logout</Text>
           </Pressable>
         </View>
@@ -65,10 +71,7 @@ const UsersMenuModal = ({ setModalVisible }) => {
                 New order
               </Text>
               <View style={myStyles.menuItemBlock}>
-                <Pressable
-                  style={myStyles.menuItem}
-                  onPress={() => setIsModalVisible(true)}
-                >
+                <Pressable style={myStyles.menuItem}>
                   <Text style={myStyles.menuItemText}>Get details 1</Text>
                 </Pressable>
                 <Pressable style={myStyles.menuItem}>
@@ -102,6 +105,12 @@ const UsersMenuModal = ({ setModalVisible }) => {
             </Pressable>
           </View>
         </Modal>
+        {isCompleteWorhShiftVisible && (
+          <CompleteWorkShift
+            logOut={logOut}
+            setIsModalVisible={setIsCompleteWorhShiftVisible}
+          />
+        )}
       </View>
     </Modal>
   )
