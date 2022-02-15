@@ -150,7 +150,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                   {tempDetail.order?.name}
                 </Text>
                 <View
-                  style={{ alignItems: 'center', width: '100%', marginTop: 15 }}
+                  style={{ alignItems: 'center', width: '100%', marginTop: 5 }}
                 >
                   <Text style={{ color: '#fff', fontSize: 14, width: '85%' }}>
                     What to deliver?
@@ -167,7 +167,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                   ></TextInput>
                 </View>
                 <View
-                  style={{ alignItems: 'center', width: '100%', marginTop: 13 }}
+                  style={{ alignItems: 'center', width: '100%', marginTop: 5 }}
                 >
                   <Text style={{ color: '#fff', fontSize: 14, width: '85%' }}>
                     Detail id
@@ -184,7 +184,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                   ></TextInput>
                 </View>
                 <View
-                  style={{ alignItems: 'center', width: '100%', marginTop: 13 }}
+                  style={{ alignItems: 'center', width: '100%', marginTop: 5 }}
                 >
                   <Text style={{ color: '#fff', fontSize: 14, width: '85%' }}>
                     Workplace
@@ -200,6 +200,40 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                     })}
                   ></TextInput>
                 </View>
+                <View
+                  style={{ alignItems: 'center', width: '100%', marginTop: 5 }}
+                >
+                  <Text style={{ color: '#fff', fontSize: 14, width: '85%' }}>
+                    Worker
+                  </Text>
+                  <TextInput
+                    style={myStyles.input}
+                    value={tempDetail.order?.composition['Worker']}
+                    onChangeText={(text => {
+                      setTempDetail(prev => ({
+                        ...prev,
+                        order: {...prev.order, composition: {...prev.order.composition, ['Worker']: text}}
+                      }))
+                    })}
+                  ></TextInput>
+                </View>
+                <View
+                  style={{ alignItems: 'center', width: '100%', marginTop: 5 }}
+                >
+                  <Text style={{ color: '#fff', fontSize: 14, width: '85%' }}>
+                  Worker id
+                  </Text>
+                  <TextInput
+                    style={myStyles.input}
+                    value={tempDetail.order?.composition['Worker id']}
+                    onChangeText={(text => {
+                      setTempDetail(prev => ({
+                        ...prev,
+                        order: {...prev.order, composition: {...prev.order.composition, ['Worker id']: text}}
+                      }))
+                    })}
+                  ></TextInput>
+                </View>
                 <Pressable
                   style={{
                     width: 204,
@@ -207,12 +241,28 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                     backgroundColor: '#0080FF',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    marginTop: 30
+                    marginTop: 20
                   }}
-                  onPress={() =>
-                    console.log(
-                      tempDetail
-                    )
+                  onPress={() => {
+                    if(tempDetail.order.composition['Worker'] && tempDetail.order.composition['Worker id']) {
+                      axios.post('new_order_pending', {
+                        type: 'template',
+                        name: tempDetail.order.name,
+                        composition: {
+                          'What to deliver?': tempDetail.order.composition['What to deliver?'],
+                          'Detail id': tempDetail.order.composition['Detail id'],
+                          'Workplace': tempDetail.order.composition['Workplace'],
+                          'Worker': tempDetail.order.composition['Worker'],
+                          'Worker id': tempDetail.order.composition['Worker id']
+                        }
+                      }).then(res => {
+                        console.log(res)
+                      }).catch((err) => {
+                        console.log(err)
+                      }).finally(() => setIsModalGetDetails(false))
+                    }
+                    else console.log('Заполните все поля')
+                  }
                   }
                 >
                   <Text style={{ color: '#fff', fontSize: 24 }}>OK!</Text>
@@ -238,7 +288,7 @@ const myStyles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: '#000',
     flex: 1,
-    paddingTop: 35,
+    paddingTop: 20,
     paddingBottom: 45
   },
   menuItemBlock: {
