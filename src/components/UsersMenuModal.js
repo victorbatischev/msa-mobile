@@ -158,7 +158,12 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                   <TextInput
                     style={myStyles.input}
                     value={tempDetail.order?.composition['What to deliver?']}
-                    onChangeText={(text) => {}}
+                    onChangeText={(text) => {
+                      setTempDetail(prev => ({
+                        ...prev,
+                        order: {...prev.order, composition: {...prev.order.composition, ['What to deliver?']: text}}
+                      }))
+                    }}
                   ></TextInput>
                 </View>
                 <View
@@ -170,6 +175,12 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                   <TextInput
                     style={myStyles.input}
                     value={tempDetail.order?.composition['Detail id']}
+                    onChangeText={(text => {
+                      setTempDetail(prev => ({
+                        ...prev,
+                        order: {...prev.order, composition: {...prev.order.composition, ['Detail id']: text}}
+                      }))
+                    })}
                   ></TextInput>
                 </View>
                 <View
@@ -181,6 +192,12 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                   <TextInput
                     style={myStyles.input}
                     value={tempDetail.order?.composition['Workplace']}
+                    onChangeText={(text => {
+                      setTempDetail(prev => ({
+                        ...prev,
+                        order: {...prev.order, composition: {...prev.order.composition, ['Workplace']: text}}
+                      }))
+                    })}
                   ></TextInput>
                 </View>
                 <Pressable
@@ -194,11 +211,11 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                   }}
                   onPress={() =>
                     console.log(
-                      tempDetail.order.composition['What to deliver?']
+                      tempDetail
                     )
                   }
                 >
-                  <Text style={{ color: '#fff', fontSize: 24 }}>ОК!</Text>
+                  <Text style={{ color: '#fff', fontSize: 24 }}>OK!</Text>
                 </Pressable>
               </View>
             </View>
