@@ -3,7 +3,7 @@
     "name": "msa-mobile",
     "slug": "msa-mobile",
     "version": "1.0.0",
-    "orientation": "default",
+    "orientation": "portrait",
     "androidStatusBar": {
       "barStyle": "light-content",
       "backgroundColor": "#000000",
