@@ -7,6 +7,7 @@ import {
   Pressable,
   Image,
   TextInput,
+  Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "../styles/Styles";
@@ -21,6 +22,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
     useState(false);
   const [orders, setOrders] = useState([]);
   const [tempDetail, setTempDetail] = useState({});
+  const [createdOrderId, setCreatedOrderId] = useState(null);
 
   const [isValidate, setIsValidate] = useState(false);
 
@@ -52,9 +54,36 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
   };
 
   const getNewOrder = async () => {
-    axios.get(`deskbook_info/61f5b6541f1d04747fffe837`).then((res) => {
+    axios.get("deskbook_info/61f5b6541f1d04747fffe837").then((res) => {
       addOrdersArr(res.data);
     });
+  };
+
+  const addingEmployeToOrder = () => {
+    axios
+      .post("worker_order_worker_add", {
+        _id: createdOrderId,
+        worker: {
+          o_id: tempDetail.worker.o_id,
+          w_id: tempDetail.order.composition["Worker id"],
+          name: tempDetail.order.composition["Worker"],
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err.message));
+  };
+
+  const sendingOrdeForExecution = () => {
+    axios
+      .post("worker_order_execution", {
+        _id: createdOrderId,
+        s_id: tempDetail.stream,
+      })
+      .then((res) => {
+        addingEmployeToOrder();
+      });
   };
 
   const sendFormData = () => {
@@ -73,7 +102,8 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
           },
         })
         .then((res) => {
-          console.log(res.data);
+          setCreatedOrderId(res.data);
+          sendingOrdeForExecution();
         })
         .catch((err) => {
           console.log(err);
