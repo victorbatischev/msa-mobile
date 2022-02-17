@@ -72,7 +72,18 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
       .then((res) => {
         console.log(res);
       })
-      .catch((err) => console.log(err.message));
+      .catch((err) => {
+        console.log(err);
+        const obj = {
+          _id: createdOrderId,
+          worker: {
+            o_id: tempDetail.worker.o_id,
+            w_id: tempDetail.order.composition["Worker id"],
+            name: tempDetail.order.composition["Worker"],
+          },
+        };
+        console.log(obj);
+      });
   };
 
   const sendingOrdeForExecution = () => {
