@@ -26,6 +26,19 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
 
   const [isValidate, setIsValidate] = useState(false);
 
+  const textInputHandler = (text, key) => {
+    setTempDetail((prev) => ({
+      ...prev,
+      order: {
+        ...prev.order,
+        composition: {
+          ...prev.order.composition,
+          [key]: text,
+        },
+      },
+    }));
+  };
+
   const addOrdersArr = (data) => {
     let arr = [];
     for (let i = 0; ; i++) {
@@ -37,19 +50,10 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
   };
 
   const menuItemHandler = async (item) => {
-    setTempDetail(item);
     const user = JSON.parse(await AsyncStorage.getItem("user"));
-    setTempDetail((prev) => ({
-      ...prev,
-      order: {
-        ...prev.order,
-        composition: {
-          ...prev.order.composition,
-          ["Worker"]: user.name,
-          ["Worker id"]: user.u_id,
-        },
-      },
-    }));
+    item.order.composition["Worker"] = user.name;
+    item.order.composition["Worker id"] = user.u_id;
+    setTempDetail(item);
     setIsModalGetDetails(true);
   };
 
@@ -244,16 +248,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                     style={myStyles.input}
                     value={tempDetail.order?.composition["What to deliver?"]}
                     onChangeText={(text) => {
-                      setTempDetail((prev) => ({
-                        ...prev,
-                        order: {
-                          ...prev.order,
-                          composition: {
-                            ...prev.order.composition,
-                            ["What to deliver?"]: text,
-                          },
-                        },
-                      }));
+                      textInputHandler(text, "What to deliver?");
                     }}
                   ></TextInput>
                 </View>
@@ -267,16 +262,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                     style={myStyles.input}
                     value={tempDetail.order?.composition["Detail id"]}
                     onChangeText={(text) => {
-                      setTempDetail((prev) => ({
-                        ...prev,
-                        order: {
-                          ...prev.order,
-                          composition: {
-                            ...prev.order.composition,
-                            ["Detail id"]: text,
-                          },
-                        },
-                      }));
+                      textInputHandler(text, "Detail id");
                     }}
                   ></TextInput>
                 </View>
@@ -292,16 +278,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                     placeholderTextColor={"red"}
                     value={tempDetail.order?.composition["Workplace"]}
                     onChangeText={(text) => {
-                      setTempDetail((prev) => ({
-                        ...prev,
-                        order: {
-                          ...prev.order,
-                          composition: {
-                            ...prev.order.composition,
-                            ["Workplace"]: text,
-                          },
-                        },
-                      }));
+                      textInputHandler(text, "Workplace");
                     }}
                   ></TextInput>
                 </View>
@@ -315,16 +292,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                     style={myStyles.input}
                     value={tempDetail.order?.composition["Worker"]}
                     onChangeText={(text) => {
-                      setTempDetail((prev) => ({
-                        ...prev,
-                        order: {
-                          ...prev.order,
-                          composition: {
-                            ...prev.order.composition,
-                            ["Worker"]: text,
-                          },
-                        },
-                      }));
+                      textInputHandler(text, "Worker");
                     }}
                   ></TextInput>
                 </View>
@@ -338,16 +306,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                     style={myStyles.input}
                     value={tempDetail.order?.composition["Worker id"]}
                     onChangeText={(text) => {
-                      setTempDetail((prev) => ({
-                        ...prev,
-                        order: {
-                          ...prev.order,
-                          composition: {
-                            ...prev.order.composition,
-                            ["Worker id"]: text,
-                          },
-                        },
-                      }));
+                      textInputHandler(text, "Worker id");
                     }}
                   ></TextInput>
                 </View>
