@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
-import { View, Text, Image, Alert, Pressable } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
+import React, { useState } from "react";
+import { View, Text, Image, Alert, Pressable, StyleSheet } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 
-import styles from '../styles/Styles'
-import CompleteWorkShift from './CompleteWorkShiftModal'
-import UsersMenuModal from './UsersMenuModal'
+import styles from "../styles/Styles";
+import CompleteWorkShift from "./CompleteWorkShiftModal";
+import UsersMenuModal from "./UsersMenuModal";
 
 const Header = ({ logOut, userName }) => {
-  const [isModalWorkShiftVisible, setIsModalWorkShiftVisible] = useState(false)
-  const [isUserMenuModal, setIsUserMenuModal] = useState(false)
+  const [isModalWorkShiftVisible, setIsModalWorkShiftVisible] = useState(false);
+  const [isUserMenuModal, setIsUserMenuModal] = useState(false);
   const tryCompleteWorkShift = () => {
     // Alert.alert(
     //   'MSA Mobile',
@@ -22,30 +22,30 @@ const Header = ({ logOut, userName }) => {
     //   ],
     //   { cancelable: false }
     // )
-    setIsModalWorkShiftVisible(true)
-  }
+    setIsModalWorkShiftVisible(true);
+  };
 
   return (
     <View style={styles.headerContainer}>
       <View style={styles.center}>
         <Image
           style={{ width: 24, height: 23 }}
-          source={require('../assets/images/person.png')}
+          source={require("../assets/images/person.png")}
         />
         <Text style={styles.headerName}>{userName}</Text>
       </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Pressable
-          style={{
-            width: 20,
-            height: 8,
-            justifyContent: 'space-between',
-            marginRight: 20
-          }}
+          style={componentStyles.headerButton}
           onPress={() => setIsUserMenuModal(true)}
         >
-          <View style={{ backgroundColor: '#fff', height: 2 }}></View>
-          <View style={{ backgroundColor: '#fff', height: 2 }}></View>
+          <View
+            style={[
+              componentStyles.headerButtonLine,
+              componentStyles.headerButtonTopLine,
+            ]}
+          ></View>
+          <View style={componentStyles.headerButtonLine}></View>
         </Pressable>
         {/* <Icon.Button
           name='exit-outline'
@@ -66,7 +66,22 @@ const Header = ({ logOut, userName }) => {
         <UsersMenuModal setModalVisible={setIsUserMenuModal} logOut={logOut} />
       )}
     </View>
-  )
-}
+  );
+};
 
-export default Header
+const componentStyles = StyleSheet.create({
+  headerButton: {
+    width: 30,
+    height: "100%",
+    marginRight: 30,
+  },
+  headerButtonLine: {
+    backgroundColor: "#fff",
+    height: 3,
+  },
+  headerButtonTopLine: {
+    marginBottom: 7,
+  },
+});
+
+export default Header;
