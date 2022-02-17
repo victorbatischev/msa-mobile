@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -39,6 +39,10 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
     }));
   };
 
+  useEffect(() => {
+    if (createdOrderId) sendingOrdeForExecution();
+  }, [createdOrderId]);
+
   const addOrdersArr = (data) => {
     let arr = [];
     for (let i = 0; ; i++) {
@@ -78,15 +82,6 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
       })
       .catch((err) => {
         console.log(err);
-        const obj = {
-          _id: createdOrderId,
-          worker: {
-            o_id: tempDetail.worker.o_id,
-            w_id: tempDetail.order.composition["Worker id"],
-            name: tempDetail.order.composition["Worker"],
-          },
-        };
-        console.log(obj);
       });
   };
 
@@ -97,6 +92,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
         s_id: tempDetail.stream,
       })
       .then((res) => {
+        console.log(res.status, " Это отработка отправки заказа на исполнение");
         addingEmployeToOrder();
       });
   };
@@ -118,7 +114,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
         })
         .then((res) => {
           setCreatedOrderId(res.data);
-          sendingOrdeForExecution();
+          //sendingOrdeForExecution();
         })
         .catch((err) => {
           console.log(err);
