@@ -1,9 +1,13 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { windowWidth } from "../Constants";
 
 const MessageItem = ({ isYourMessage }) => {
-  return <View style={styles.container}></View>;
+  return (
+    <View style={styles.container}>
+      <Text>Это сообщение</Text>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

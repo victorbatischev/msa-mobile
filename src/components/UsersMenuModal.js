@@ -69,7 +69,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
 
   const addingEmployeToOrder = () => {
     axios
-      .post("worker_order_worker_add", {
+      .put("worker_order_worker_add", {
         _id: createdOrderId,
         worker: {
           o_id: tempDetail.worker.o_id,
@@ -86,13 +86,17 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
   };
 
   const sendingOrdeForExecution = () => {
+    console.log({
+      _id: createdOrderId,
+      s_id: tempDetail.stream,
+    });
     axios
       .post("worker_order_execution", {
         _id: createdOrderId,
         s_id: tempDetail.stream,
       })
       .then((res) => {
-        console.log(res.status, " Это отработка отправки заказа на исполнение");
+        console.log(res.data);
         addingEmployeToOrder();
       });
   };
