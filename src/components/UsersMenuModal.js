@@ -76,7 +76,6 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
       })
       .then((res) => {
         setModalVisible(false)
-        setIsModalNewOrder(false)
       })
       .catch((err) => {
         console.log(err)
@@ -267,7 +266,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                   </Text>
                   <TextInput
                     style={myStyles.input}
-                    placeholder={isValidate ? 'Заполните данное поле' : null}
+                    placeholder={isValidate ? 'Required' : null}
                     placeholderTextColor={'red'}
                     value={tempDetail.order?.composition['Workplace']}
                     onChangeText={(text) => {
@@ -322,7 +321,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                       ...styles.center,
                       ...styles.cancelContainer
                     }}
-                    onPress={() => isModalGetDetails(false)}
+                    onPress={() => setIsModalGetDetails(false)}
                   >
                     <Image
                       style={{ width: 20, height: 20, marginRight: 15 }}
