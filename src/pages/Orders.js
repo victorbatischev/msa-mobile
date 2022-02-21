@@ -21,6 +21,7 @@ import RightBlock from '../components/Adaptive/RightBlock'
 import arrowMain from '../assets/icons/arrowMain.jpg'
 import arrowNotMain from '../assets/icons/arrowNotMain.jpg'
 import OrderCancelModal from '../components/OrderCancelModal'
+import MyMessages from '../components/MyMessages'
 
 function Orders({ route, navigation }) {
   const [user, setUser] = useState(null)
@@ -254,11 +255,13 @@ function Orders({ route, navigation }) {
               </View>
             )}
             {activeIndex === 0 && orders.length && !activeBarCode ? (
-              <Messages
-                userName={route.params.userName}
-                userId={user.id}
-                activeOrderId={orders[0]._id}
-              />
+              // <Messages
+              //   userName={route.params.userName}
+              //   userId={user.id}
+              //   activeOrderId={orders[0]._id}
+              // />
+
+              <MyMessages />
             ) : null}
             {activeIndex === 1 && orders.length && !activeBarCode ? (
               <>
