@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import {
   View,
   Text,
@@ -6,20 +6,15 @@ import {
   Pressable,
   ScrollView,
   Modal,
-  Alert,
-} from "react-native";
-import { Stopwatch } from "../lib/react-native-stopwatch-timer";
-import JSONTree from "react-native-json-tree";
+  Alert
+} from 'react-native'
+import { Stopwatch } from '../lib/react-native-stopwatch-timer'
+import JSONTree from 'react-native-json-tree'
 
-import axios from "axios";
-import styles from "../styles/Styles";
-import {
-  windowWidth,
-  jsonTreeTheme,
-  options,
-  windowHeight,
-} from "../Constants";
-import OperationContainer from "./OperationContainer";
+import axios from 'axios'
+import styles from '../styles/Styles'
+import { windowWidth, jsonTreeTheme, options, windowHeight } from '../Constants'
+import OperationContainer from './OperationContainer'
 
 const ActiveOrder = ({
   order,
@@ -27,36 +22,36 @@ const ActiveOrder = ({
   setOrderStarted,
   startOrder,
   modalVisible,
-  setModalVisible,
+  setModalVisible
 }) => {
   const finishOrder = (nextOperationId, relationId) => {
     axios
-      .put("order_worker_finish", {
+      .put('order_worker_finish', {
         order_id: order?._id,
         stream_id: order?.s_id,
         next_operation_id: nextOperationId,
         current_operation_id: order?.operation?._id,
-        relation_id: relationId,
+        relation_id: relationId
       })
       .then(() => {
-        setOrderStarted(false);
-        setModalVisible(false);
+        setOrderStarted(false)
+        setModalVisible(false)
         // обновляем список заказов после завершения активной операции
-        Alert.alert("MSA Mobile", "Your operation has been completed.");
+        Alert.alert('MSA Mobile', 'Your operation has been completed.')
       })
-      .catch((err) => console.error(err));
-  };
+      .catch((err) => console.error(err))
+  }
 
   return (
     <ScrollView>
       <View
         style={{
           ...styles.container,
-          width: "100%",
-          height: windowHeight - 190,
+          width: '100%',
+          height: windowHeight - 190
         }}
       >
-        <View style={{ ...styles.container, justifyContent: "flex-start" }}>
+        <View style={{ ...styles.container, justifyContent: 'flex-start' }}>
           {orderStarted ? (
             <ScrollView style={{ maxHeight: windowWidth }}>
               <JSONTree
@@ -67,19 +62,19 @@ const ActiveOrder = ({
                     style: {
                       ...style,
                       textTransform: expanded
-                        ? "uppercase"
-                        : style.textTransform,
-                    },
-                  }),
+                        ? 'uppercase'
+                        : style.textTransform
+                    }
+                  })
                 }}
                 hideRoot={true}
                 invertTheme={false}
                 getItemString={() => <Text></Text>}
                 labelRenderer={([label]) => (
-                  <Text style={{ fontSize: 14, color: "black" }}>{label}:</Text>
+                  <Text style={{ fontSize: 14, color: 'black' }}>{label}:</Text>
                 )}
                 valueRenderer={(raw) => (
-                  <Text style={{ fontSize: 14, color: "black" }}>{raw}</Text>
+                  <Text style={{ fontSize: 14, color: 'black' }}>{raw}</Text>
                 )}
               />
             </ScrollView>
@@ -90,17 +85,17 @@ const ActiveOrder = ({
                   width: 60,
                   height: 60,
                   marginBottom: 20,
-                  marginTop: 20,
+                  marginTop: 20
                 }}
-                source={require("../assets/images/warning.png")}
+                source={require('../assets/images/warning.png')}
               />
               <Text
                 style={{
-                  fontFamily: "Roboto",
+                  fontFamily: 'Roboto',
                   fontSize: 20,
-                  color: "#282A2D",
-                  textAlign: "center",
-                  paddingHorizontal: 50,
+                  color: '#282A2D',
+                  textAlign: 'center',
+                  paddingHorizontal: 50
                 }}
               >
                 Complete order information will appear after clicking "START"
@@ -109,12 +104,12 @@ const ActiveOrder = ({
           )}
         </View>
         {windowWidth <= 480 && (
-          <View style={{ position: "absolute", bottom: 25, width: "100%" }}>
+          <View style={{ position: 'absolute', bottom: 25, width: '100%' }}>
             <OperationContainer order={order} />
             <View style={{ ...styles.center, height: 75 }}>
-              <View style={{ ...styles.container, backgroundColor: "#000" }}>
+              <View style={{ ...styles.container, backgroundColor: '#000' }}>
                 <Text
-                  style={{ fontFamily: "Roboto", fontSize: 12, color: "#888" }}
+                  style={{ fontFamily: 'Roboto', fontSize: 12, color: '#888' }}
                 >
                   Work time on the order
                 </Text>
@@ -126,14 +121,14 @@ const ActiveOrder = ({
               </View>
               {orderStarted ? (
                 <Pressable
-                  style={{ ...styles.container, backgroundColor: "#009C6D" }}
+                  style={{ ...styles.container, backgroundColor: '#009C6D' }}
                   onPress={() => setModalVisible(true)}
                 >
                   <Text
                     style={{
-                      fontFamily: "Montserrat",
+                      fontFamily: 'Montserrat',
                       fontSize: 30,
-                      color: "#fff",
+                      color: '#fff'
                     }}
                   >
                     FINISH
@@ -141,14 +136,14 @@ const ActiveOrder = ({
                 </Pressable>
               ) : (
                 <Pressable
-                  style={{ ...styles.container, backgroundColor: "#0080FF" }}
+                  style={{ ...styles.container, backgroundColor: '#0080FF' }}
                   onPress={() => startOrder()}
                 >
                   <Text
                     style={{
-                      fontFamily: "Montserrat",
+                      fontFamily: 'Montserrat',
                       fontSize: 30,
-                      color: "#fff",
+                      color: '#fff'
                     }}
                   >
                     START
@@ -159,12 +154,12 @@ const ActiveOrder = ({
           </View>
         )}
         <Modal
-          animationType="slide"
+          animationType='slide'
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => setModalVisible(false)}
         >
-          <View style={{ ...styles.container, backgroundColor: "#000" }}>
+          <View style={{ ...styles.container, backgroundColor: '#000' }}>
             {order?.operation?.relation.map((item) => (
               <Pressable
                 onPress={() => finishOrder(item.so_id, item._id)}
@@ -172,21 +167,21 @@ const ActiveOrder = ({
                 style={{
                   ...styles.center,
                   ...styles.operationItem,
-                  backgroundColor: item.bgr_color,
+                  backgroundColor: item.bgr_color
                 }}
               >
                 <Text
                   style={{
-                    fontFamily: "Montserrat",
+                    fontFamily: 'Montserrat',
                     fontSize: 18,
-                    color: "#fff",
+                    color: '#fff'
                   }}
                 >
                   {item.result}
                 </Text>
                 <Image
                   style={{ width: 20, height: 20 }}
-                  source={require("../assets/images/arrow_white.png")}
+                  source={require('../assets/images/arrow_white.png')}
                 />
               </Pressable>
             ))}
@@ -194,19 +189,19 @@ const ActiveOrder = ({
               <Pressable
                 style={{
                   ...styles.center,
-                  ...styles.cancelContainer,
+                  ...styles.cancelContainer
                 }}
                 onPress={() => setModalVisible(false)}
               >
                 <Image
                   style={{ width: 20, height: 20, marginRight: 15 }}
-                  source={require("../assets/images/close.png")}
+                  source={require('../assets/images/close.png')}
                 />
                 <Text
                   style={{
-                    fontFamily: "Roboto",
+                    fontFamily: 'Roboto',
                     fontSize: 18,
-                    color: "#6C6F72",
+                    color: '#6C6F72'
                   }}
                 >
                   Cancel
@@ -217,7 +212,7 @@ const ActiveOrder = ({
         </Modal>
       </View>
     </ScrollView>
-  );
-};
+  )
+}
 
-export default ActiveOrder;
+export default ActiveOrder

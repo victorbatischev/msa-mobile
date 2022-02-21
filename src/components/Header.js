@@ -1,40 +1,28 @@
-import React, { useState } from "react";
-import { View, Text, Image, Alert, Pressable, StyleSheet } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+import React, { useState } from 'react'
+import { View, Text, Image, Pressable, StyleSheet } from 'react-native'
 
-import styles from "../styles/Styles";
-import CompleteWorkShift from "./CompleteWorkShiftModal";
-import UsersMenuModal from "./UsersMenuModal";
+import styles from '../styles/Styles'
+import CompleteWorkShift from './CompleteWorkShiftModal'
+import UsersMenuModal from './UsersMenuModal'
 
 const Header = ({ logOut, userName }) => {
-  const [isModalWorkShiftVisible, setIsModalWorkShiftVisible] = useState(false);
-  const [isUserMenuModal, setIsUserMenuModal] = useState(false);
-  const tryCompleteWorkShift = () => {
-    // Alert.alert(
-    //   'MSA Mobile',
-    //   'Do you really want to complete your work shift?',
-    //   [
-    //     {
-    //       text: 'Cancel',
-    //       style: 'cancel'
-    //     },
-    //     { text: 'Yes', onPress: () => logOut() }
-    //   ],
-    //   { cancelable: false }
-    // )
-    setIsModalWorkShiftVisible(true);
-  };
+  const [isModalWorkShiftVisible, setIsModalWorkShiftVisible] = useState(false)
+  const [isUserMenuModal, setIsUserMenuModal] = useState(false)
+  
+  // const tryCompleteWorkShift = () => {
+  //   setIsModalWorkShiftVisible(true)
+  // }
 
   return (
     <View style={styles.headerContainer}>
       <View style={styles.center}>
         <Image
           style={{ width: 24, height: 23 }}
-          source={require("../assets/images/person.png")}
+          source={require('../assets/images/person.png')}
         />
         <Text style={styles.headerName}>{userName}</Text>
       </View>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Pressable
           style={componentStyles.headerButton}
           onPress={() => setIsUserMenuModal(true)}
@@ -42,7 +30,7 @@ const Header = ({ logOut, userName }) => {
           <View
             style={[
               componentStyles.headerButtonLine,
-              componentStyles.headerButtonTopLine,
+              componentStyles.headerButtonTopLine
             ]}
           ></View>
           <View style={componentStyles.headerButtonLine}></View>
@@ -66,22 +54,22 @@ const Header = ({ logOut, userName }) => {
         <UsersMenuModal setModalVisible={setIsUserMenuModal} logOut={logOut} />
       )}
     </View>
-  );
-};
+  )
+}
 
 const componentStyles = StyleSheet.create({
   headerButton: {
     width: 30,
-    height: "100%",
-    marginRight: 30,
+    height: '100%',
+    marginRight: 30
   },
   headerButtonLine: {
-    backgroundColor: "#fff",
-    height: 3,
+    backgroundColor: '#fff',
+    height: 3
   },
   headerButtonTopLine: {
-    marginBottom: 7,
-  },
-});
+    marginBottom: 7
+  }
+})
 
-export default Header;
+export default Header

@@ -1,8 +1,6 @@
 import React from 'react'
 import { View, Text, Pressable, Image } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
-import { windowWidth } from '../../Constants'
-import arrowMain from '../../assets/icons/arrowMain.jpg'
 
 import styles from '../../styles/Styles'
 

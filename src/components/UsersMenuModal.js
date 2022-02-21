@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 import {
   StyleSheet,
   View,
@@ -6,25 +6,22 @@ import {
   Modal,
   Pressable,
   Image,
-  TextInput,
-  Alert,
-} from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import styles from "../styles/Styles";
-import axios from "axios";
-import CompleteWorkShift from "./CompleteWorkShiftModal";
-import { Send } from "react-native-gifted-chat";
+  TextInput
+} from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import styles from '../styles/Styles'
+import axios from 'axios'
+import CompleteWorkShift from './CompleteWorkShiftModal'
 
 const UsersMenuModal = ({ setModalVisible, logOut }) => {
-  const [isModalNewOrder, setIsModalNewOrder] = useState(false);
-  const [isModalGetDetails, setIsModalGetDetails] = useState(false);
-  const [isCompleteWorhShiftVisible, setIsCompleteWorhShiftVisible] =
-    useState(false);
-  const [orders, setOrders] = useState([]);
-  const [tempDetail, setTempDetail] = useState({});
-  const [createdOrderId, setCreatedOrderId] = useState(null);
-
-  const [isValidate, setIsValidate] = useState(false);
+  const [isModalNewOrder, setIsModalNewOrder] = useState(false)
+  const [isModalGetDetails, setIsModalGetDetails] = useState(false)
+  const [isCompleteWorkShiftVisible, setIsCompleteWorkShiftVisible] =
+    useState(false)
+  const [orders, setOrders] = useState([])
+  const [tempDetail, setTempDetail] = useState({})
+  const [createdOrderId, setCreatedOrderId] = useState(null)
+  const [isValidate, setIsValidate] = useState(false)
 
   const textInputHandler = (text, key) => {
     setTempDetail((prev) => ({
@@ -33,140 +30,136 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
         ...prev.order,
         composition: {
           ...prev.order.composition,
-          [key]: text,
-        },
-      },
-    }));
-  };
+          [key]: text
+        }
+      }
+    }))
+  }
 
   useEffect(() => {
-    if (createdOrderId) sendingOrdeForExecution();
-  }, [createdOrderId]);
+    if (createdOrderId) sendingOrdeForExecution()
+  }, [createdOrderId])
 
   const addOrdersArr = (data) => {
-    let arr = [];
+    let arr = []
     for (let i = 0; ; i++) {
       if (data[0].value[`Delivery (detail ${i + 1})`]) {
-        arr.push(data[0].value[`Delivery (detail ${i + 1})`]);
-      } else break;
+        arr.push(data[0].value[`Delivery (detail ${i + 1})`])
+      } else break
     }
-    setOrders(arr);
-  };
+    setOrders(arr)
+  }
 
   const menuItemHandler = async (item) => {
-    const user = JSON.parse(await AsyncStorage.getItem("user"));
-    item.order.composition["Worker"] = user.name;
-    item.order.composition["Worker id"] = user.u_id;
-    setTempDetail(item);
-    setIsModalGetDetails(true);
-  };
+    const user = JSON.parse(await AsyncStorage.getItem('user'))
+    item.order.composition['Worker'] = user.name
+    item.order.composition['Worker id'] = user.u_id
+    setTempDetail(item)
+    setIsModalGetDetails(true)
+  }
 
   const getNewOrder = async () => {
-    axios.get("deskbook_info/61f5b6541f1d04747fffe837").then((res) => {
-      addOrdersArr(res.data);
-    });
-  };
+    axios.get('deskbook_info/61f5b6541f1d04747fffe837').then((res) => {
+      addOrdersArr(res.data)
+    })
+  }
 
   const addingEmployeToOrder = () => {
     axios
-      .put("worker_order_worker_add", {
+      .put('worker_order_worker_add', {
         _id: createdOrderId,
         worker: {
           o_id: tempDetail.worker.o_id,
-          w_id: tempDetail.order.composition["Worker id"],
-          name: tempDetail.order.composition["Worker"],
-        },
+          w_id: tempDetail.order.composition['Worker id'],
+          name: tempDetail.order.composition['Worker']
+        }
       })
       .then((res) => {
-        console.log(res);
+        setModalVisible(false)
+        setIsModalNewOrder(false)
       })
       .catch((err) => {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
 
   const sendingOrdeForExecution = () => {
-    console.log({
-      _id: createdOrderId,
-      s_id: tempDetail.stream,
-    });
     axios
-      .post("worker_order_execution", {
+      .post('worker_order_execution', {
         _id: createdOrderId,
-        s_id: tempDetail.stream,
+        s_id: tempDetail.stream
       })
       .then((res) => {
-        console.log(res.data);
-        addingEmployeToOrder();
-      });
-  };
+        console.log(res.data)
+        addingEmployeToOrder()
+      })
+  }
 
   const sendFormData = () => {
-    if (tempDetail.order.composition["Workplace"]) {
+    if (tempDetail.order.composition['Workplace']) {
       axios
-        .post("worker_new_order_pending", {
-          type: "template",
+        .post('worker_new_order_pending', {
+          type: 'template',
           name: tempDetail.order.name,
           composition: {
-            "What to deliver?":
-              tempDetail.order.composition["What to deliver?"],
-            "Detail id": tempDetail.order.composition["Detail id"],
-            Workplace: tempDetail.order.composition["Workplace"],
-            Worker: tempDetail.order.composition["Worker"],
-            "Worker id": tempDetail.order.composition["Worker id"],
-          },
+            'What to deliver?':
+              tempDetail.order.composition['What to deliver?'],
+            'Detail id': tempDetail.order.composition['Detail id'],
+            Workplace: tempDetail.order.composition['Workplace'],
+            Worker: tempDetail.order.composition['Worker'],
+            'Worker id': tempDetail.order.composition['Worker id']
+          }
         })
         .then((res) => {
-          setCreatedOrderId(res.data);
-          //sendingOrdeForExecution();
+          setCreatedOrderId(res.data)
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err)
         })
         .finally(() => {
-          setIsModalGetDetails(false);
-          setIsValidate(false);
-        });
-    } else setIsValidate(true);
-  };
+          setIsModalGetDetails(false)
+          setIsValidate(false)
+        })
+    } else setIsValidate(true)
+  }
 
   return (
-    <Modal animationType="slide" transparent={true} visible={true}>
+    <Modal animationType='slide' transparent={true} visible={true}>
       <View style={myStyles.container}>
         <View style={myStyles.menuItemBlock}>
           <Pressable
             style={myStyles.menuItem}
             onPress={() => {
-              getNewOrder();
-              setIsModalNewOrder(true);
+              getNewOrder()
+              setIsModalNewOrder(true)
             }}
           >
             <Text style={myStyles.menuItemText}>New order</Text>
           </Pressable>
           <Pressable
             style={myStyles.menuItem}
-            onPress={() => setIsCompleteWorhShiftVisible(true)}
+            onPress={() => setIsCompleteWorkShiftVisible(true)}
           >
             <Text style={myStyles.menuItemText}>Logout</Text>
           </Pressable>
         </View>
-        <View style={{ marginTop: 100 }}>
+        <View style={{ marginTop: 20 }}>
           <Pressable
             style={{
               ...styles.center,
-              ...styles.cancelContainer,
+              ...styles.cancelContainer
             }}
             onPress={() => setModalVisible(false)}
           >
             <Image
               style={{ width: 20, height: 20, marginRight: 15 }}
-              source={require("../assets/images/close.png")}
+              source={require('../assets/images/close.png')}
             />
             <Text
               style={{
-                fontFamily: "Roboto",
+                fontFamily: 'Roboto',
                 fontSize: 18,
-                color: "#6C6F72",
+                color: '#6C6F72'
               }}
             >
               Cancel
@@ -174,16 +167,16 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
           </Pressable>
         </View>
         <Modal
-          animationType="slider"
+          animationType='slider'
           transparent={true}
           visible={isModalNewOrder}
         >
           <View style={myStyles.container}>
-            <View style={{ width: "100%", alignItems: "center" }}>
+            <View style={{ width: '100%', alignItems: 'center' }}>
               <Text
                 style={[
                   myStyles.menuItemText,
-                  { fontSize: 24, marginBottom: 45 },
+                  { fontSize: 24, marginBottom: 45 }
                 ]}
               >
                 New order
@@ -200,26 +193,26 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                         {item.order.name}
                       </Text>
                     </Pressable>
-                  );
+                  )
                 })}
               </View>
             </View>
             <Pressable
               style={{
                 ...styles.center,
-                ...styles.cancelContainer,
+                ...styles.cancelContainer
               }}
               onPress={() => setIsModalNewOrder(false)}
             >
               <Image
                 style={{ width: 20, height: 20, marginRight: 15 }}
-                source={require("../assets/images/close.png")}
+                source={require('../assets/images/close.png')}
               />
               <Text
                 style={{
-                  fontFamily: "Roboto",
+                  fontFamily: 'Roboto',
                   fontSize: 18,
-                  color: "#6C6F72",
+                  color: '#6C6F72'
                 }}
               >
                 Cancel
@@ -227,86 +220,86 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
             </Pressable>
           </View>
           <Modal
-            animationType="slider"
+            animationType='slider'
             transparent={false}
             visible={isModalGetDetails}
           >
             <View style={myStyles.container}>
-              <View style={{ width: "100%", alignItems: "center" }}>
+              <View style={{ width: '100%', alignItems: 'center' }}>
                 <Text
-                  style={{ color: "#fff", fontSize: 24, textAlign: "center" }}
+                  style={{ color: '#fff', fontSize: 24, textAlign: 'center' }}
                 >
                   {tempDetail.order?.name}
                 </Text>
                 <View
-                  style={{ alignItems: "center", width: "100%", marginTop: 5 }}
+                  style={{ alignItems: 'center', width: '100%', marginTop: 5 }}
                 >
-                  <Text style={{ color: "#fff", fontSize: 14, width: "85%" }}>
+                  <Text style={{ color: '#fff', fontSize: 14, width: '85%' }}>
                     What to deliver?
                   </Text>
                   <TextInput
                     style={myStyles.input}
-                    value={tempDetail.order?.composition["What to deliver?"]}
+                    value={tempDetail.order?.composition['What to deliver?']}
                     onChangeText={(text) => {
-                      textInputHandler(text, "What to deliver?");
+                      textInputHandler(text, 'What to deliver?')
                     }}
                   ></TextInput>
                 </View>
                 <View
-                  style={{ alignItems: "center", width: "100%", marginTop: 5 }}
+                  style={{ alignItems: 'center', width: '100%', marginTop: 5 }}
                 >
-                  <Text style={{ color: "#fff", fontSize: 14, width: "85%" }}>
+                  <Text style={{ color: '#fff', fontSize: 14, width: '85%' }}>
                     Detail id
                   </Text>
                   <TextInput
                     style={myStyles.input}
-                    value={tempDetail.order?.composition["Detail id"]}
+                    value={tempDetail.order?.composition['Detail id']}
                     onChangeText={(text) => {
-                      textInputHandler(text, "Detail id");
+                      textInputHandler(text, 'Detail id')
                     }}
                   ></TextInput>
                 </View>
                 <View
-                  style={{ alignItems: "center", width: "100%", marginTop: 5 }}
+                  style={{ alignItems: 'center', width: '100%', marginTop: 5 }}
                 >
-                  <Text style={{ color: "#fff", fontSize: 14, width: "85%" }}>
+                  <Text style={{ color: '#fff', fontSize: 14, width: '85%' }}>
                     Workplace
                   </Text>
                   <TextInput
                     style={myStyles.input}
-                    placeholder={isValidate ? "Заполните данное поле" : null}
-                    placeholderTextColor={"red"}
-                    value={tempDetail.order?.composition["Workplace"]}
+                    placeholder={isValidate ? 'Заполните данное поле' : null}
+                    placeholderTextColor={'red'}
+                    value={tempDetail.order?.composition['Workplace']}
                     onChangeText={(text) => {
-                      textInputHandler(text, "Workplace");
+                      textInputHandler(text, 'Workplace')
                     }}
                   ></TextInput>
                 </View>
                 <View
-                  style={{ alignItems: "center", width: "100%", marginTop: 5 }}
+                  style={{ alignItems: 'center', width: '100%', marginTop: 5 }}
                 >
-                  <Text style={{ color: "#fff", fontSize: 14, width: "85%" }}>
+                  <Text style={{ color: '#fff', fontSize: 14, width: '85%' }}>
                     Worker
                   </Text>
                   <TextInput
                     style={myStyles.input}
-                    value={tempDetail.order?.composition["Worker"]}
+                    value={tempDetail.order?.composition['Worker']}
                     onChangeText={(text) => {
-                      textInputHandler(text, "Worker");
+                      textInputHandler(text, 'Worker')
                     }}
                   ></TextInput>
                 </View>
                 <View
-                  style={{ alignItems: "center", width: "100%", marginTop: 5 }}
+                  style={{ alignItems: 'center', width: '100%', marginTop: 5 }}
                 >
-                  <Text style={{ color: "#fff", fontSize: 14, width: "85%" }}>
+                  <Text style={{ color: '#fff', fontSize: 14, width: '85%' }}>
                     Worker id
                   </Text>
                   <TextInput
                     style={myStyles.input}
-                    value={tempDetail.order?.composition["Worker id"]}
+                    value={tempDetail.order?.composition['Worker id']}
                     onChangeText={(text) => {
-                      textInputHandler(text, "Worker id");
+                      textInputHandler(text, 'Worker id')
                     }}
                   ></TextInput>
                 </View>
@@ -314,65 +307,88 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                   style={{
                     width: 204,
                     height: 70,
-                    backgroundColor: "#0080FF",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginTop: 20,
+                    backgroundColor: '#0080FF',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginTop: 20
                   }}
                   onPress={sendFormData}
                 >
-                  <Text style={{ color: "#fff", fontSize: 24 }}>OK!</Text>
+                  <Text style={{ color: '#fff', fontSize: 24 }}>OK!</Text>
                 </Pressable>
+                <View style={{ marginTop: 20 }}>
+                  <Pressable
+                    style={{
+                      ...styles.center,
+                      ...styles.cancelContainer
+                    }}
+                    onPress={() => isModalGetDetails(false)}
+                  >
+                    <Image
+                      style={{ width: 20, height: 20, marginRight: 15 }}
+                      source={require('../assets/images/close.png')}
+                    />
+                    <Text
+                      style={{
+                        fontFamily: 'Roboto',
+                        fontSize: 18,
+                        color: '#6C6F72'
+                      }}
+                    >
+                      Cancel
+                    </Text>
+                  </Pressable>
+                </View>
               </View>
             </View>
           </Modal>
         </Modal>
-        {isCompleteWorhShiftVisible && (
+        {isCompleteWorkShiftVisible && (
           <CompleteWorkShift
             logOut={logOut}
-            setIsModalVisible={setIsCompleteWorhShiftVisible}
+            setIsModalVisible={setIsCompleteWorkShiftVisible}
           />
         )}
       </View>
     </Modal>
-  );
-};
+  )
+}
 
 const myStyles = StyleSheet.create({
   container: {
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#000",
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#000',
     flex: 1,
     paddingTop: 20,
-    paddingBottom: 45,
+    paddingBottom: 45
   },
   menuItemBlock: {
-    width: "100%",
-    alignItems: "center",
+    width: '100%',
+    alignItems: 'center'
   },
   menuItem: {
-    width: "85%",
+    width: '85%',
     height: 70,
-    backgroundColor: "#242424",
+    backgroundColor: '#242424',
     marginBottom: 15,
-    justifyContent: "center",
-    paddingLeft: 20,
+    justifyContent: 'center',
+    paddingLeft: 20
   },
   menuItemText: {
-    color: "#fff",
-    fontFamily: "Montserrat",
-    fontSize: 18,
+    color: '#fff',
+    fontFamily: 'Montserrat',
+    fontSize: 18
   },
   input: {
-    width: "85%",
+    width: '85%',
     height: 60,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     borderRadius: 4,
     paddingHorizontal: 10,
     fontSize: 16,
-    fontFamily: "Roboto",
-  },
-});
+    fontFamily: 'Roboto'
+  }
+})
 
-export default UsersMenuModal;
+export default UsersMenuModal

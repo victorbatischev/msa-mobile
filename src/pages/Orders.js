@@ -4,6 +4,7 @@ import Carousel from 'react-native-snap-carousel'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { StatusBar } from 'expo-status-bar'
+import * as Updates from 'expo-updates'
 
 import Header from '../components/Header'
 import Order from '../components/Order'
@@ -43,7 +44,8 @@ function Orders({ route, navigation }) {
       })
       .then(async () => {
         await AsyncStorage.clear()
-        navigation.navigate('Auth')
+        // navigation.navigate('Auth')
+        Updates.reloadAsync()
       })
   }
 
@@ -108,7 +110,8 @@ function Orders({ route, navigation }) {
           if (res.data[0].at_work === false) {
             clearInterval(checkLogout)
             await AsyncStorage.clear()
-            navigation.navigate('Auth')
+            // navigation.navigate('Auth')
+            Updates.reloadAsync()
             Alert.alert(
               'MSA Mobile',
               'You have been logged out by the administrator.'
