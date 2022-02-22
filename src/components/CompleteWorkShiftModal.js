@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, Modal, Pressable, Image } from 'react-native'
 import done from '../assets/images/ok.png'
-import cansel from '../assets/images/no.png'
+import cancel from '../assets/images/no.png'
 import { windowWidth } from '../Constants'
 
 const CompleteWorkShift = ({ logOut, setIsModalVisible }) => {
@@ -26,7 +26,7 @@ const CompleteWorkShift = ({ logOut, setIsModalVisible }) => {
             style={[styles.button, styles.redButton]}
             onPress={() => setIsModalVisible(false)}
           >
-            <Image source={cansel} style={{ width: 20, height: 20 }} />
+            <Image source={cancel} style={{ width: 20, height: 20 }} />
             <Text style={styles.buttonText}>No</Text>
           </Pressable>
         </View>

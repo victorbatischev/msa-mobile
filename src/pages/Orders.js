@@ -22,7 +22,7 @@ import arrowMain from '../assets/icons/arrowMain.jpg'
 import arrowNotMain from '../assets/icons/arrowNotMain.jpg'
 import OrderCancelModal from '../components/OrderCancelModal'
 
-function Orders({ route, navigation }) {
+function Orders({ route }) {
   const [user, setUser] = useState(null)
   const [orders, setOrders] = useState([])
   const [activeOrder, setActiveOrder] = useState(null)
@@ -31,7 +31,7 @@ function Orders({ route, navigation }) {
   const [orderStarted, setOrderStarted] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
 
-  const [orderCanselModalVisible, setOrderCanselModalVisible] = useState(false)
+  const [orderCancelModalVisible, setOrderCancelModalVisible] = useState(false)
   const [previousOperation, setPreviousOperation] = useState([])
 
   const carousel = useRef()
@@ -51,6 +51,7 @@ function Orders({ route, navigation }) {
 
   const getOrders = (user) => {
     axios.get(`order_worker/${user.u_id}`).then((res) => {
+      console.log(res.data)
       setOrders(res.data)
       if (res.data.length) {
         getOrderInfo(res.data[0]._id, user.u_id)
@@ -87,7 +88,7 @@ function Orders({ route, navigation }) {
               if (res.data.length) {
                 clearInterval(checkCancelOrder)
                 // Alert.alert('MSA Mobile', 'Your order has been cancelled.')
-                setOrderCanselModalVisible(true)
+                setOrderCancelModalVisible(true)
                 setOrderStarted(false)
               }
             })
@@ -295,10 +296,10 @@ function Orders({ route, navigation }) {
           )}
         </View>
       ) : null}
-      {orderCanselModalVisible && (
+      {orderCancelModalVisible && (
         <OrderCancelModal
           item={orders[0]}
-          setOrderCanselModalVisible={setOrderCanselModalVisible}
+          setOrderCancelModalVisible={setOrderCancelModalVisible}
         />
       )}
     </View>

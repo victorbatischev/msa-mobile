@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import { windowWidth } from '../Constants'
 
-const OrderCancelModal = ({ item, setOrderCanselModalVisible }) => {
+const OrderCancelModal = ({ item, setOrderCancelModalVisible }) => {
   return (
     <Modal visible={true} animationType='slide' transparent={true}>
       <View style={styles.container}>
@@ -26,7 +26,7 @@ const OrderCancelModal = ({ item, setOrderCanselModalVisible }) => {
 
           <Pressable
             style={styles.button}
-            onPress={() => setOrderCanselModalVisible(false)}
+            onPress={() => setOrderCancelModalVisible(false)}
           >
             <Text style={styles.buttonText}>OK!</Text>
           </Pressable>
