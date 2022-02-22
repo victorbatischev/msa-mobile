@@ -1,12 +1,22 @@
+import axios from 'axios'
 import React, { useState } from 'react'
 import { StyleSheet, View, Pressable, TextInput, Image } from 'react-native'
 import sendButton from '../assets/images/send.png'
 import { windowWidth } from '../Constants'
 
-const NewMessagesItem = () => {
+const NewMessagesItem = ({ orderId, userId }) => {
   const [newMessage, setNewMessage] = useState('')
   const buttonHendler = () => {
-    console.log(newMessage)
+    axios
+      .post('order_worker_new_message', {
+        _id: orderId,
+        u_id: userId,
+        message: newMessage
+      })
+      .then((res) => {
+        setNewMessage('')
+        console.log(res.status)
+      })
   }
   return (
     <View style={styles.container}>

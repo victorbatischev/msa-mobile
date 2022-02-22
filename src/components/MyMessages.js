@@ -47,7 +47,7 @@ const MyMessages = ({ orderId, userId }) => {
           padding: 5
         }}
       >
-        <NewMessagesItem />
+        <NewMessagesItem orderId={orderId} userId={userId} />
       </View>
     </View>
   )
