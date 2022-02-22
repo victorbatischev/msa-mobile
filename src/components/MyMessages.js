@@ -20,7 +20,7 @@ const MyMessages = () => {
       <View
         style={{
           position: 'absolute',
-          bottom: 140,
+          bottom: 135,
           width: '100%',
           padding: 5
         }}
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   scrool: {
     flex: 1,
-    marginBottom: 235
+    marginBottom: 230
   }
 })
 
