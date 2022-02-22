@@ -261,7 +261,7 @@ function Orders({ route, navigation }) {
               //   activeOrderId={orders[0]._id}
               // />
 
-              <MyMessages orderId={activeOrder._id} userId={user.u_id} />
+              <MyMessages orderId={activeOrder?._id} userId={user.u_id} />
             ) : null}
             {activeIndex === 1 && orders.length && !activeBarCode ? (
               <>

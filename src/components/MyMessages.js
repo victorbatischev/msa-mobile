@@ -7,9 +7,14 @@ import NewMessagesItem from './NewMessageItem'
 const MyMessages = ({ orderId, userId }) => {
   const [messages, setMessages] = useState([])
   useEffect(() => {
-    axios.get(`order_worker_message/${orderId}`).then((res) => {
-      setMessages(res.data)
-    })
+    const getMessage = setInterval(() => {
+      axios.get(`order_worker_message/${orderId}`).then((res) => {
+        setMessages(res.data)
+      })
+    }, 1000)
+    return () => {
+      clearInterval(getMessage)
+    }
   }, [])
   return (
     <View style={styles.container}>
@@ -32,7 +37,7 @@ const MyMessages = ({ orderId, userId }) => {
                 userName={item.worker}
                 operation={item.operation}
                 date={item.m_data}
-                message={item.w_id}
+                message={item.message}
               />
             )
           })

@@ -3,13 +3,7 @@ import { StyleSheet, View, Text, Image } from 'react-native'
 import avatar from '../assets/images/avatar_server.png'
 import { windowWidth } from '../Constants'
 
-const MessageItem = ({
-  isYourMessage,
-  userName = 'Вася Пупкин',
-  operation = 'Операция "Ы"',
-  date = '21.06.2019  10:26',
-  message = 'Тестовое сообщение!'
-}) => {
+const MessageItem = ({ isYourMessage, userName, operation, date, message }) => {
   return (
     <View
       style={[
@@ -27,7 +21,13 @@ const MessageItem = ({
           <Text style={[styles.text, isYourMessage && { color: '#ffffff' }]}>
             {userName}
           </Text>
-          <Text style={[styles.text, isYourMessage && { color: '#ffffff' }]}>
+          <Text
+            style={[
+              styles.text,
+              { width: 100 },
+              isYourMessage && { color: '#ffffff' }
+            ]}
+          >
             Operation: {operation}
           </Text>
         </View>
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     color: '#8F8F8F'
   },
   message: {
-    marginLeft: 35,
+    marginLeft: 25,
     color: '#282A2D',
     fontSize: windowWidth <= 480 ? 14 : 18
   }
