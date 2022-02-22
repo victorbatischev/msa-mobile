@@ -21,7 +21,6 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
   const [orders, setOrders] = useState([])
   const [tempDetail, setTempDetail] = useState({})
   const [createdOrderId, setCreatedOrderId] = useState(null)
-  const [isValidate, setIsValidate] = useState(false)
 
   const textInputHandler = (text, key) => {
     setTempDetail((prev) => ({
@@ -50,13 +49,12 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
 
   const getNewOrder = async () => {
     axios.get('deskbook_info/61f5b6541f1d04747fffe837').then((res) => {
-      console.log(res.data)
       setOrders(Object.values(res.data[0].value))
       setIsModalNewOrder(true)
     })
   }
 
-  const addingEmployeToOrder = () => {
+  const addingEmployeeToOrder = () => {
     axios
       .put('worker_order_worker_add', {
         _id: createdOrderId,
@@ -66,7 +64,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
           name: tempDetail.order.composition['Worker']
         }
       })
-      .then((res) => {
+      .then(() => {
         setModalVisible(false)
       })
       .catch((err) => {
@@ -80,38 +78,33 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
         _id: createdOrderId,
         s_id: tempDetail.stream
       })
-      .then((res) => {
-        console.log(res.data)
-        addingEmployeToOrder()
+      .then(() => {
+        addingEmployeeToOrder()
       })
   }
 
   const sendFormData = () => {
-    if (tempDetail.order.composition['Workplace']) {
-      axios
-        .post('worker_new_order_pending', {
-          type: 'template',
-          name: tempDetail.order.name,
-          composition: {
-            'What to deliver?':
-              tempDetail.order.composition['What to deliver?'],
-            'Detail id': tempDetail.order.composition['Detail id'],
-            Workplace: tempDetail.order.composition['Workplace'],
-            Worker: tempDetail.order.composition['Worker'],
-            'Worker id': tempDetail.order.composition['Worker id']
-          }
-        })
-        .then((res) => {
-          setCreatedOrderId(res.data)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-        .finally(() => {
-          setIsModalGetDetails(false)
-          setIsValidate(false)
-        })
-    } else setIsValidate(true)
+    axios
+      .post('worker_new_order_pending', {
+        type: 'template',
+        name: tempDetail.order.name,
+        composition: {
+          'What to deliver?': tempDetail.order.composition['What to deliver?'],
+          'Detail id': tempDetail.order.composition['Detail id'],
+          Workplace: tempDetail.order.composition['Workplace'],
+          Worker: tempDetail.order.composition['Worker'],
+          'Worker id': tempDetail.order.composition['Worker id']
+        }
+      })
+      .then((res) => {
+        setCreatedOrderId(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      .finally(() => {
+        setIsModalGetDetails(false)
+      })
   }
 
   return (
@@ -214,7 +207,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                 <Text
                   style={{ color: '#fff', fontSize: 24, textAlign: 'center' }}
                 >
-                  {tempDetail.order?.name}
+                  {tempDetail?.order?.name}
                 </Text>
                 <View
                   style={{ alignItems: 'center', width: '100%', marginTop: 5 }}
@@ -224,11 +217,11 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                   </Text>
                   <TextInput
                     style={myStyles.input}
-                    value={tempDetail.order?.composition['What to deliver?']}
+                    value={tempDetail?.order?.composition['What to deliver?']}
                     onChangeText={(text) => {
                       textInputHandler(text, 'What to deliver?')
                     }}
-                  ></TextInput>
+                  />
                 </View>
                 <View
                   style={{ alignItems: 'center', width: '100%', marginTop: 5 }}
@@ -238,11 +231,11 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                   </Text>
                   <TextInput
                     style={myStyles.input}
-                    value={tempDetail.order?.composition['Detail id']}
+                    value={tempDetail?.order?.composition['Detail id']}
                     onChangeText={(text) => {
                       textInputHandler(text, 'Detail id')
                     }}
-                  ></TextInput>
+                  />
                 </View>
                 <View
                   style={{ alignItems: 'center', width: '100%', marginTop: 5 }}
@@ -252,41 +245,11 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                   </Text>
                   <TextInput
                     style={myStyles.input}
-                    placeholder={isValidate ? 'Required' : null}
-                    placeholderTextColor={'red'}
-                    value={tempDetail.order?.composition['Workplace']}
+                    value={tempDetail?.order?.composition['Workplace']}
                     onChangeText={(text) => {
                       textInputHandler(text, 'Workplace')
                     }}
-                  ></TextInput>
-                </View>
-                <View
-                  style={{ alignItems: 'center', width: '100%', marginTop: 5 }}
-                >
-                  <Text style={{ color: '#fff', fontSize: 14, width: '85%' }}>
-                    Worker
-                  </Text>
-                  <TextInput
-                    style={myStyles.input}
-                    value={tempDetail.order?.composition['Worker']}
-                    onChangeText={(text) => {
-                      textInputHandler(text, 'Worker')
-                    }}
-                  ></TextInput>
-                </View>
-                <View
-                  style={{ alignItems: 'center', width: '100%', marginTop: 5 }}
-                >
-                  <Text style={{ color: '#fff', fontSize: 14, width: '85%' }}>
-                    Worker id
-                  </Text>
-                  <TextInput
-                    style={myStyles.input}
-                    value={tempDetail.order?.composition['Worker id']}
-                    onChangeText={(text) => {
-                      textInputHandler(text, 'Worker id')
-                    }}
-                  ></TextInput>
+                  />
                 </View>
                 <Pressable
                   style={{
@@ -297,7 +260,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                     justifyContent: 'center',
                     marginTop: 20
                   }}
-                  onPress={sendFormData}
+                  onPress={() => sendFormData()}
                 >
                   <Text style={{ color: '#fff', fontSize: 24 }}>OK!</Text>
                 </Pressable>
