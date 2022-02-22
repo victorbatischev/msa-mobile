@@ -48,8 +48,7 @@ const styles = StyleSheet.create({
     width: 350,
     padding: 60,
     display: 'flex',
-    alignItems: 'center',
-    paddingTop: -50
+    alignItems: 'center'
   },
   headerContainer: {
     display: 'flex',

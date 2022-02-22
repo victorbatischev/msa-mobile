@@ -30,7 +30,6 @@ function Orders({ route }) {
   const [activeBarCode, setActiveBarCode] = useState(false)
   const [orderStarted, setOrderStarted] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
-
   const [orderCancelModalVisible, setOrderCancelModalVisible] = useState(false)
   const [previousOperation, setPreviousOperation] = useState([])
 
@@ -51,7 +50,6 @@ function Orders({ route }) {
 
   const getOrders = (user) => {
     axios.get(`order_worker/${user.u_id}`).then((res) => {
-      console.log(res.data)
       setOrders(res.data)
       if (res.data.length) {
         getOrderInfo(res.data[0]._id, user.u_id)

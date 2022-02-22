@@ -8,10 +8,6 @@ import UsersMenuModal from './UsersMenuModal'
 const Header = ({ logOut, userName }) => {
   const [isModalWorkShiftVisible, setIsModalWorkShiftVisible] = useState(false)
   const [isUserMenuModal, setIsUserMenuModal] = useState(false)
-  
-  // const tryCompleteWorkShift = () => {
-  //   setIsModalWorkShiftVisible(true)
-  // }
 
   return (
     <View style={styles.headerContainer}>
@@ -22,28 +18,14 @@ const Header = ({ logOut, userName }) => {
         />
         <Text style={styles.headerName}>{userName}</Text>
       </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Pressable
-          style={componentStyles.headerButton}
-          onPress={() => setIsUserMenuModal(true)}
-        >
-          <View
-            style={[
-              componentStyles.headerButtonLine,
-              componentStyles.headerButtonTopLine
-            ]}
-          ></View>
-          <View style={componentStyles.headerButtonLine}></View>
-        </Pressable>
-        {/* <Icon.Button
-          name='exit-outline'
-          color={'#000'}
-          backgroundColor={'#fff'}
-          style={{ padding: 2, marginRight: -10 }}
-          size={20}
-          onPress={() => tryCompleteWorkShift()}
-        /> */}
-      </View>
+      <Pressable
+        style={componentStyles.headerButton}
+        onPress={() => setIsUserMenuModal(true)}
+        hitSlop={10}
+      >
+        <View style={componentStyles.headerButtonLine}></View>
+        <View style={componentStyles.headerButtonLine}></View>
+      </Pressable>
       {isModalWorkShiftVisible && (
         <CompleteWorkShift
           logOut={logOut}
@@ -65,10 +47,8 @@ const componentStyles = StyleSheet.create({
   },
   headerButtonLine: {
     backgroundColor: '#fff',
-    height: 3
-  },
-  headerButtonTopLine: {
-    marginBottom: 7
+    height: 3,
+    marginTop: 7
   }
 })
 

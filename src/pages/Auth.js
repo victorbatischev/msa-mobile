@@ -92,10 +92,10 @@ function Auth({ navigation }) {
   }
 
   return (
-    <View style={{ ...styles.container }} onLayout={onLayoutRootView}>
+    <View style={styles.container} onLayout={onLayoutRootView}>
       <View style={styles.authContainer}>
         <Image
-          style={{ width: 230, height: 100 }}
+          style={{ width: 230, height: 100, paddingBottom: 20 }}
           source={require('../assets/images/auth.png')}
         />
         <TextInput

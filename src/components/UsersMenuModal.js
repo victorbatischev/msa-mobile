@@ -37,18 +37,8 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
   }
 
   useEffect(() => {
-    if (createdOrderId) sendingOrdeForExecution()
+    if (createdOrderId) sendingOrderForExecution()
   }, [createdOrderId])
-
-  const addOrdersArr = (data) => {
-    let arr = []
-    for (let i = 0; ; i++) {
-      if (data[0].value[`Delivery (detail ${i + 1})`]) {
-        arr.push(data[0].value[`Delivery (detail ${i + 1})`])
-      } else break
-    }
-    setOrders(arr)
-  }
 
   const menuItemHandler = async (item) => {
     const user = JSON.parse(await AsyncStorage.getItem('user'))
@@ -60,7 +50,9 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
 
   const getNewOrder = async () => {
     axios.get('deskbook_info/61f5b6541f1d04747fffe837').then((res) => {
-      addOrdersArr(res.data)
+      console.log(res.data)
+      setOrders(Object.values(res.data[0].value))
+      setIsModalNewOrder(true)
     })
   }
 
@@ -82,7 +74,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
       })
   }
 
-  const sendingOrdeForExecution = () => {
+  const sendingOrderForExecution = () => {
     axios
       .post('worker_order_execution', {
         _id: createdOrderId,
@@ -126,13 +118,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
     <Modal animationType='slide' transparent={true} visible={true}>
       <View style={myStyles.container}>
         <View style={myStyles.menuItemBlock}>
-          <Pressable
-            style={myStyles.menuItem}
-            onPress={() => {
-              getNewOrder()
-              setIsModalNewOrder(true)
-            }}
-          >
+          <Pressable style={myStyles.menuItem} onPress={() => getNewOrder()}>
             <Text style={myStyles.menuItemText}>New order</Text>
           </Pressable>
           <Pressable
@@ -189,7 +175,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                       onPress={() => menuItemHandler(item)}
                     >
                       <Text style={myStyles.menuItemText}>
-                        {item.order.name}
+                        {item?.order?.name || ''}
                       </Text>
                     </Pressable>
                   )
