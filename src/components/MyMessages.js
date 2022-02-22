@@ -1,20 +1,42 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Text, ScrollView } from 'react-native'
 import MessageItem from './MessageItem'
 import NewMessagesItem from './NewMessageItem'
 
-const MyMessages = () => {
+const MyMessages = ({ orderId, userId }) => {
+  const [messages, setMessages] = useState([])
+  useEffect(() => {
+    axios.get(`order_worker_message/${orderId}`).then((res) => {
+      setMessages(res.data)
+    })
+  }, [])
   return (
     <View style={styles.container}>
-      {/* <Text style={{ fontFamily: 'Roboto', fontSize: 18, padding: 15 }}>
-        You have not messages
-      </Text> */}
       <ScrollView style={styles.scrool}>
-        <MessageItem />
+        {/* <MessageItem />
         <MessageItem />
         <MessageItem />
         <MessageItem isYourMessage />
-        <MessageItem isYourMessage />
+        <MessageItem isYourMessage /> */}
+        {messages.length === 0 ? (
+          <Text style={{ fontFamily: 'Roboto', fontSize: 18, padding: 15 }}>
+            You have not messages
+          </Text>
+        ) : (
+          messages.map((item, index) => {
+            return (
+              <MessageItem
+                key={index}
+                isYourMessage={userId === item.w_m_id}
+                userName={item.worker}
+                operation={item.operation}
+                date={item.m_data}
+                message={item.w_id}
+              />
+            )
+          })
+        )}
       </ScrollView>
 
       <View
