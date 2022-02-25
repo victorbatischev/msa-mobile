@@ -157,7 +157,7 @@ const ActiveOrder = ({
                         ...styles.container,
                         backgroundColor: '#009C6D'
                       }}
-                      onPress={setIsFinishConfirmation(true)}
+                      onPress={() => setIsFinishConfirmation(true)}
                     >
                       <Text
                         style={{
