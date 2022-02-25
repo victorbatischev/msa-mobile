@@ -222,7 +222,7 @@ function Orders({ route, navigation }) {
           </View>
         )}
       </View>
-      {orders.length ? (
+      {true ? (
         <View style={{ flexDirection: 'row', width: '100%', height: '100%' }}>
           <View style={{ flex: 3 }}>
             {!activeBarCode && (
@@ -263,7 +263,8 @@ function Orders({ route, navigation }) {
 
               <MyMessages orderId={activeOrder?._id} userId={user.u_id} />
             ) : null}
-            {activeIndex === 1 && orders.length && !activeBarCode ? (
+            {/* {activeIndex === 1 && orders.length && !activeBarCode ? ( */}
+            {true ? (
               <>
                 {windowWidth > 480 && <ActiveOrderHeader item={orders[0]} />}
                 <ActiveOrder
