@@ -54,10 +54,27 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
     })
   }
 
-  const addingEmployeeToOrder = () => {
+  // const addingEmployeeToOrder = () => {
+  //   axios
+  //     .put('worker_order_worker_add', {
+  //       _id: createdOrderId,
+  //       worker: {
+  //         o_id: tempDetail.worker.o_id,
+  //         w_id: tempDetail.order.composition['Worker id'],
+  //         name: tempDetail.order.composition['Worker']
+  //       }
+  //     })
+  //     .then(() => setModalVisible(false))
+  //     .catch((err) => {
+  //       console.log(err)
+  //     })
+  // }
+
+  const sendingOrderForExecution = () => {
     axios
-      .put('worker_order_worker_add', {
+      .post('worker_order_execution', {
         _id: createdOrderId,
+        s_id: tempDetail.stream,
         worker: {
           o_id: tempDetail.worker.o_id,
           w_id: tempDetail.order.composition['Worker id'],
@@ -65,18 +82,6 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
         }
       })
       .then(() => setModalVisible(false))
-      .catch((err) => {
-        console.log(err)
-      })
-  }
-
-  const sendingOrderForExecution = () => {
-    axios
-      .post('worker_order_execution', {
-        _id: createdOrderId,
-        s_id: tempDetail.stream
-      })
-      .then(() => addingEmployeeToOrder())
   }
 
   const sendFormData = () => {
