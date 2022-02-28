@@ -263,8 +263,7 @@ function Orders({ route, navigation }) {
 
               <MyMessages orderId={activeOrder?._id} userId={user.u_id} />
             ) : null}
-            {/* {activeIndex === 1 && orders.length && !activeBarCode ? ( */}
-            {true ? (
+            {activeIndex === 1 && orders.length && !activeBarCode ? (
               <>
                 {windowWidth > 480 && <ActiveOrderHeader item={orders[0]} />}
                 <ActiveOrder
