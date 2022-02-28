@@ -41,7 +41,7 @@ const Order = ({ item, idx, activeBarCode, setActiveBarCode, icon }) => {
         </Text>
         <Text
           style={{ fontFamily: 'Roboto', fontSize: 16 }}
-          numberOfLines={2}
+          numberOfLines={1}
           ellipsizeMode={'middle'}
         >
           {item.name}

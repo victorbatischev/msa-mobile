@@ -13,7 +13,6 @@ const Messages = ({ userName, userId, activeOrderId }) => {
 
   useEffect(() => {
     axios.get(`order_worker_message/${activeOrderId}`).then((res) => {
-      //console.log(res.data)
       if (res.data && res.data.length) {
         const newMessages = res.data.map((item, index) => {
           return {

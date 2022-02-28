@@ -74,9 +74,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
           name: tempDetail.order.composition['Worker']
         }
       })
-      .then((res) => {
-        setModalVisible(false)
-      })
+      .then(() => setModalVisible(false))
       .catch((err) => {
         console.log(err)
       })
@@ -88,10 +86,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
         _id: createdOrderId,
         s_id: tempDetail.stream
       })
-      .then((res) => {
-        console.log(res.data)
-        addingEmployeToOrder()
-      })
+      .then(() => addingEmployeToOrder())
   }
 
   const sendFormData = () => {

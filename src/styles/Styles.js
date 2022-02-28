@@ -42,7 +42,9 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: '#E31E24',
     padding: 20,
-    width: '100%'
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   authContainer: {
     width: 350,

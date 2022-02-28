@@ -13,10 +13,7 @@ const NewMessagesItem = ({ orderId, userId }) => {
         u_id: userId,
         message: newMessage
       })
-      .then((res) => {
-        setNewMessage('')
-        console.log(res.status)
-      })
+      .then(() => setNewMessage(''))
   }
   return (
     <View style={styles.container}>
@@ -25,7 +22,7 @@ const NewMessagesItem = ({ orderId, userId }) => {
         placeholder='New message'
         value={newMessage}
         onChangeText={(text) => setNewMessage(text)}
-      ></TextInput>
+      />
       <Pressable style={styles.sendButton} onPress={buttonHendler}>
         <Image source={sendButton} style={styles.sendButtonImage} />
       </Pressable>
