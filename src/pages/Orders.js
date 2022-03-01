@@ -253,12 +253,6 @@ function Orders({ route }) {
             </View>
           )}
           {activeIndex === 0 && orders.length && !activeBarCode ? (
-            // <Messages
-            //   userName={route.params.userName}
-            //   userId={user.id}
-            //   activeOrderId={orders[0]._id}
-            // />
-
             <MyMessages orderId={activeOrder?._id} userId={user.u_id} />
           ) : null}
           {activeIndex === 1 && orders.length && !activeBarCode ? (
@@ -295,7 +289,7 @@ function Orders({ route }) {
           </View>
         )}
       </View>
-      {orderCanselModalVisible && (
+      {orderCancelModalVisible && (
         <OrderCancelModal
           item={orders[0]}
           setOrderCancelModalVisible={setOrderCancelModalVisible}
