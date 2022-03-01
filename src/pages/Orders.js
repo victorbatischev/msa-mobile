@@ -252,7 +252,7 @@ function Orders({ route }) {
               />
             </View>
           )}
-          {activeIndex === 0 && orders.length && !activeBarCode ? (
+          {activeIndex === 0 && !activeBarCode ? (
             <MyMessages orderId={activeOrder?._id} userId={user.u_id} />
           ) : null}
           {activeIndex === 1 && orders.length && !activeBarCode ? (
@@ -268,9 +268,7 @@ function Orders({ route }) {
               />
             </>
           ) : null}
-          {activeIndex === 2 && orders.length && !activeBarCode ? (
-            <TechMaps />
-          ) : null}
+          {activeIndex === 2 && !activeBarCode ? <TechMaps /> : null}
           {activeBarCode && orders.length ? (
             <BarCode activeBarCode={activeBarCode} orders={orders} />
           ) : null}
