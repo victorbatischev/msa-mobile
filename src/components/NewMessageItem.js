@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   container: {
     width: windowWidth <= 480 ? '100%' : '77%',
     paddingHorizontal: 25,
-    paddingVertical: 20,
+    paddingVertical: 5,
     backgroundColor: '#F1F1F1',
     borderRadius: 30,
     flexDirection: 'row',

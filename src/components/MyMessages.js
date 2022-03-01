@@ -18,7 +18,7 @@ const MyMessages = ({ orderId, userId }) => {
   }, [])
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrool}>
+      <ScrollView style={styles.scroll}>
         {/* <MessageItem />
         <MessageItem />
         <MessageItem />
@@ -47,7 +47,7 @@ const MyMessages = ({ orderId, userId }) => {
       <View
         style={{
           position: 'absolute',
-          bottom: 135,
+          bottom: 0,
           width: '100%',
           padding: 5
         }}
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     flex: 1
   },
-  scrool: {
+  scroll: {
     flex: 1,
     marginBottom: 230
   }

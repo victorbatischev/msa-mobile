@@ -1,27 +1,39 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { View, Text, Alert, ScrollView, ActivityIndicator } from 'react-native'
+import {
+  View,
+  Text,
+  Alert,
+  ScrollView,
+  ActivityIndicator,
+  Pressable,
+  Image
+} from 'react-native'
 import Carousel from 'react-native-snap-carousel'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { StatusBar } from 'expo-status-bar'
 import * as Updates from 'expo-updates'
+import { Stopwatch } from '../lib/react-native-stopwatch-timer'
 
 import Header from '../components/Header'
 import Order from '../components/Order'
 import MenuItem from '../components/MenuItem'
 import ActiveOrder from '../components/ActiveOrder'
 import BarCode from '../components/BarCode'
-
-import styles from '../styles/Styles'
-import { carouselItems, windowWidth } from '../Constants'
-import Messages from '../components/Messages'
 import TechMaps from '../components/TechMaps'
 import ActiveOrderHeader from '../components/Adaptive/ActiveOrderHeader'
 import RightBlock from '../components/Adaptive/RightBlock'
-import arrowMain from '../assets/icons/arrowMain.jpg'
-import arrowNotMain from '../assets/icons/arrowNotMain.jpg'
 import OrderCancelModal from '../components/OrderCancelModal'
 import MyMessages from '../components/MyMessages'
+import OperationContainer from '../components/OperationContainer'
+
+import styles from '../styles/Styles'
+import { carouselItems, windowWidth, options } from '../Constants'
+
+import arrowMain from '../assets/icons/arrowMain.jpg'
+import arrowNotMain from '../assets/icons/arrowNotMain.jpg'
+import okButton from '../assets/images/ok.png'
+import closeButton from '../assets/images/close.png'
 
 function Orders({ route }) {
   const [user, setUser] = useState(null)
@@ -33,6 +45,8 @@ function Orders({ route }) {
   const [modalVisible, setModalVisible] = useState(false)
   const [orderCancelModalVisible, setOrderCancelModalVisible] = useState(false)
   const [previousOperation, setPreviousOperation] = useState([])
+  const [isStartConfirmation, setIsStartConfirmation] = useState(false)
+  const [isFinishConfirmation, setIsFinishConfirmation] = useState(false)
 
   const carousel = useRef()
 
@@ -221,7 +235,7 @@ function Orders({ route }) {
           </View>
         )}
       </View>
-      <View style={{ flexDirection: 'row', width: '100%', height: '100%' }}>
+      <View style={{ flexDirection: 'row', width: '100%', flex: 1 }}>
         <View style={{ flex: 3 }}>
           {!activeBarCode && (
             <View
@@ -252,7 +266,7 @@ function Orders({ route }) {
               />
             </View>
           )}
-          {activeIndex === 0 && !activeBarCode ? (
+          {activeIndex === 0 && orders.length && !activeBarCode ? (
             <MyMessages orderId={activeOrder?._id} userId={user.u_id} />
           ) : null}
           {activeIndex === 1 && orders.length && !activeBarCode ? (
@@ -262,7 +276,6 @@ function Orders({ route }) {
                 order={activeOrder}
                 orderStarted={orderStarted}
                 setOrderStarted={setOrderStarted}
-                startOrder={startOrder}
                 modalVisible={modalVisible}
                 setModalVisible={setModalVisible}
               />
@@ -287,6 +300,120 @@ function Orders({ route }) {
           </View>
         )}
       </View>
+      {windowWidth <= 480 && orders.length ? (
+        <View style={{ width: '100%' }}>
+          <OperationContainer order={activeOrder} />
+          <View style={{ ...styles.center, height: 75 }}>
+            <View style={{ ...styles.container, backgroundColor: '#000' }}>
+              <Text
+                style={{ fontFamily: 'Roboto', fontSize: 12, color: '#888' }}
+              >
+                Work time on the order
+              </Text>
+              <Stopwatch
+                reset={!orderStarted}
+                start={orderStarted}
+                options={options}
+              />
+            </View>
+            {orderStarted ? (
+              <View style={{ width: '50%' }}>
+                {isFinishConfirmation ? (
+                  <View style={{ flexDirection: 'row', flex: 1 }}>
+                    <Pressable
+                      style={{
+                        width: '50%',
+                        backgroundColor: '#029C6E',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}
+                      onPress={() => setModalVisible(true)}
+                    >
+                      <Image source={okButton} />
+                    </Pressable>
+                    <Pressable
+                      style={{
+                        width: '50%',
+                        backgroundColor: '#2D2D2D',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}
+                      onPress={() => setIsFinishConfirmation(false)}
+                    >
+                      <Image source={closeButton} />
+                    </Pressable>
+                  </View>
+                ) : (
+                  <Pressable
+                    style={{
+                      ...styles.container,
+                      backgroundColor: '#009C6D'
+                    }}
+                    onPress={() => setIsFinishConfirmation(true)}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: 'Montserrat',
+                        fontSize: 30,
+                        color: '#fff'
+                      }}
+                    >
+                      FINISH
+                    </Text>
+                  </Pressable>
+                )}
+              </View>
+            ) : (
+              <View style={{ width: '50%' }}>
+                {isStartConfirmation ? (
+                  <View style={{ flexDirection: 'row', flex: 1 }}>
+                    <Pressable
+                      style={{
+                        width: '50%',
+                        backgroundColor: '#0080FF',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}
+                      onPress={() => startOrder()}
+                    >
+                      <Image source={okButton} />
+                    </Pressable>
+                    <Pressable
+                      style={{
+                        width: '50%',
+                        backgroundColor: '#2D2D2D',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}
+                      onPress={() => setIsStartConfirmation(false)}
+                    >
+                      <Image source={closeButton} />
+                    </Pressable>
+                  </View>
+                ) : (
+                  <Pressable
+                    style={{
+                      ...styles.container,
+                      backgroundColor: '#0080FF'
+                    }}
+                    onPress={() => setIsStartConfirmation(true)}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: 'Montserrat',
+                        fontSize: 30,
+                        color: '#fff'
+                      }}
+                    >
+                      START
+                    </Text>
+                  </Pressable>
+                )}
+              </View>
+            )}
+          </View>
+        </View>
+      ) : null}
       {orderCancelModalVisible && (
         <OrderCancelModal
           item={orders[0]}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   View,
   Text,
@@ -8,27 +8,19 @@ import {
   Modal,
   Alert
 } from 'react-native'
-import { Stopwatch } from '../lib/react-native-stopwatch-timer'
 import JSONTree from 'react-native-json-tree'
 
 import axios from 'axios'
 import styles from '../styles/Styles'
-import { windowWidth, jsonTreeTheme, options, windowHeight } from '../Constants'
-import OperationContainer from './OperationContainer'
-
-import okButton from '../assets/images/ok.png'
-import closeButton from '../assets/images/close.png'
+import { windowWidth, jsonTreeTheme, windowHeight } from '../Constants'
 
 const ActiveOrder = ({
   order,
   orderStarted,
   setOrderStarted,
-  startOrder,
   modalVisible,
   setModalVisible
 }) => {
-  const [isStartConfirmation, setIsStartConfirmation] = useState(false)
-  const [isFinishConfirmation, setIsFinishConfirmation] = useState(false)
   const finishOrder = (nextOperationId, relationId) => {
     axios
       .put('order_worker_finish', {
@@ -108,120 +100,6 @@ const ActiveOrder = ({
             </>
           )}
         </View>
-        {windowWidth <= 480 && (
-          <View style={{ position: 'absolute', bottom: 25, width: '100%' }}>
-            <OperationContainer order={order} />
-            <View style={{ ...styles.center, height: 75 }}>
-              <View style={{ ...styles.container, backgroundColor: '#000' }}>
-                <Text
-                  style={{ fontFamily: 'Roboto', fontSize: 12, color: '#888' }}
-                >
-                  Work time on the order
-                </Text>
-                <Stopwatch
-                  reset={!orderStarted}
-                  start={orderStarted}
-                  options={options}
-                />
-              </View>
-              {orderStarted ? (
-                <View style={{ width: '50%' }}>
-                  {isFinishConfirmation ? (
-                    <View style={{ flexDirection: 'row', flex: 1 }}>
-                      <Pressable
-                        style={{
-                          width: '50%',
-                          backgroundColor: '#029C6E',
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        }}
-                        onPress={() => setModalVisible(true)}
-                      >
-                        <Image source={okButton} />
-                      </Pressable>
-                      <Pressable
-                        style={{
-                          width: '50%',
-                          backgroundColor: '#2D2D2D',
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        }}
-                        onPress={() => setIsFinishConfirmation(false)}
-                      >
-                        <Image source={closeButton} />
-                      </Pressable>
-                    </View>
-                  ) : (
-                    <Pressable
-                      style={{
-                        ...styles.container,
-                        backgroundColor: '#009C6D'
-                      }}
-                      onPress={() => setIsFinishConfirmation(true)}
-                    >
-                      <Text
-                        style={{
-                          fontFamily: 'Montserrat',
-                          fontSize: 30,
-                          color: '#fff'
-                        }}
-                      >
-                        FINISH
-                      </Text>
-                    </Pressable>
-                  )}
-                </View>
-              ) : (
-                <View style={{ width: '50%' }}>
-                  {isStartConfirmation ? (
-                    <View style={{ flexDirection: 'row', flex: 1 }}>
-                      <Pressable
-                        style={{
-                          width: '50%',
-                          backgroundColor: '#0080FF',
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        }}
-                        onPress={() => startOrder()}
-                      >
-                        <Image source={okButton} />
-                      </Pressable>
-                      <Pressable
-                        style={{
-                          width: '50%',
-                          backgroundColor: '#2D2D2D',
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        }}
-                        onPress={() => setIsStartConfirmation(false)}
-                      >
-                        <Image source={closeButton} />
-                      </Pressable>
-                    </View>
-                  ) : (
-                    <Pressable
-                      style={{
-                        ...styles.container,
-                        backgroundColor: '#0080FF'
-                      }}
-                      onPress={() => setIsStartConfirmation(true)}
-                    >
-                      <Text
-                        style={{
-                          fontFamily: 'Montserrat',
-                          fontSize: 30,
-                          color: '#fff'
-                        }}
-                      >
-                        START
-                      </Text>
-                    </Pressable>
-                  )}
-                </View>
-              )}
-            </View>
-          </View>
-        )}
         <Modal
           animationType='slide'
           transparent={true}
