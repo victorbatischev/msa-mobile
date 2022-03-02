@@ -324,11 +324,15 @@ function Orders({ route }) {
                       style={{
                         width: 80,
                         backgroundColor: '#029C6E',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        justifyContent: 'center'
                       }}
                       onPress={() => setModalVisible(true)}
                     >
-                      <Image source={okButton} style={{ marginTop: 4 }} />
+                      <Image
+                        source={okButton}
+                        style={{ width: 36, height: 36, marginBottom: 10 }}
+                      />
                     </Pressable>
                     <Pressable
                       style={{
@@ -339,7 +343,10 @@ function Orders({ route }) {
                       }}
                       onPress={() => setIsFinishConfirmation(false)}
                     >
-                      <Image source={closeButton} />
+                      <Image
+                        source={closeButton}
+                        style={{ width: 32, height: 32 }}
+                      />
                     </Pressable>
                   </View>
                 ) : (
@@ -370,11 +377,15 @@ function Orders({ route }) {
                       style={{
                         width: 80,
                         backgroundColor: '#0080FF',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        justifyContent: 'center'
                       }}
                       onPress={() => startOrder()}
                     >
-                      <Image source={okButton} style={{ marginTop: 4 }} />
+                      <Image
+                        source={okButton}
+                        style={{ width: 36, height: 36, marginBottom: 10 }}
+                      />
                     </Pressable>
                     <Pressable
                       style={{
@@ -385,7 +396,10 @@ function Orders({ route }) {
                       }}
                       onPress={() => setIsStartConfirmation(false)}
                     >
-                      <Image source={closeButton} />
+                      <Image
+                        source={closeButton}
+                        style={{ width: 32, height: 32 }}
+                      />
                     </Pressable>
                   </View>
                 ) : (

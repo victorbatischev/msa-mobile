@@ -5,9 +5,9 @@ import QRCode from 'react-native-qrcode-svg'
 import styles from '../../styles/Styles'
 
 const ActiveOrderHeader = ({ item, activeBarCode, setActiveBarCode }) => {
-  const print = () => {
-    console.log('print')
-  }
+  // const print = () => {
+  //   console.log('print')
+  // }
 
   return (
     <View
@@ -38,7 +38,7 @@ const ActiveOrderHeader = ({ item, activeBarCode, setActiveBarCode }) => {
           </Text>
         </View>
       </View>
-      <Pressable onPress={() => print()}>
+      {/* <Pressable onPress={() => print()}>
         <View
           style={{
             width: 76,
@@ -51,7 +51,7 @@ const ActiveOrderHeader = ({ item, activeBarCode, setActiveBarCode }) => {
         >
           <Text style={{ fontSize: 15 }}>print</Text>
         </View>
-      </Pressable>
+      </Pressable> */}
     </View>
   )
 }

@@ -6,9 +6,9 @@ import { windowWidth } from '../Constants'
 import styles from '../styles/Styles'
 
 const Order = ({ item, idx, activeBarCode, setActiveBarCode, icon }) => {
-  const print = () => {
-    console.log('print')
-  }
+  // const print = () => {
+  //   console.log('print')
+  // }
 
   return (
     <View
