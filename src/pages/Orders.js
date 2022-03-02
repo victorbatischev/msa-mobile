@@ -317,23 +317,22 @@ function Orders({ route }) {
               />
             </View>
             {orderStarted ? (
-              <View style={{ width: '50%' }}>
+              <View style={{ width: 160 }}>
                 {isFinishConfirmation ? (
                   <View style={{ flexDirection: 'row', flex: 1 }}>
                     <Pressable
                       style={{
-                        width: '50%',
+                        width: 80,
                         backgroundColor: '#029C6E',
-                        alignItems: 'center',
-                        justifyContent: 'center'
+                        alignItems: 'center'
                       }}
                       onPress={() => setModalVisible(true)}
                     >
-                      <Image source={okButton} />
+                      <Image source={okButton} style={{ marginTop: 4 }} />
                     </Pressable>
                     <Pressable
                       style={{
-                        width: '50%',
+                        width: 80,
                         backgroundColor: '#2D2D2D',
                         alignItems: 'center',
                         justifyContent: 'center'
@@ -364,23 +363,22 @@ function Orders({ route }) {
                 )}
               </View>
             ) : (
-              <View style={{ width: '50%' }}>
+              <View style={{ width: 160 }}>
                 {isStartConfirmation ? (
                   <View style={{ flexDirection: 'row', flex: 1 }}>
                     <Pressable
                       style={{
-                        width: '50%',
+                        width: 80,
                         backgroundColor: '#0080FF',
-                        alignItems: 'center',
-                        justifyContent: 'center'
+                        alignItems: 'center'
                       }}
                       onPress={() => startOrder()}
                     >
-                      <Image source={okButton} />
+                      <Image source={okButton} style={{ marginTop: 4 }} />
                     </Pressable>
                     <Pressable
                       style={{
-                        width: '50%',
+                        width: 80,
                         backgroundColor: '#2D2D2D',
                         alignItems: 'center',
                         justifyContent: 'center'
