@@ -47,7 +47,7 @@ const Order = ({ item, idx, activeBarCode, setActiveBarCode, icon }) => {
           {item.name}
         </Text>
       </View>
-      {windowWidth <= 480 && (
+      {/* {windowWidth <= 480 && (
         <Pressable>
           <Image
             onPress={() => print()}
@@ -55,7 +55,7 @@ const Order = ({ item, idx, activeBarCode, setActiveBarCode, icon }) => {
             source={require('../assets/images/print.png')}
           />
         </Pressable>
-      )}
+      )} */}
     </View>
   )
 }
