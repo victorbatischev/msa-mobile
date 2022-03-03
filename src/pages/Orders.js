@@ -86,7 +86,6 @@ function Orders({ route }) {
   }
 
   const startOrder = () => {
-    setIsStartConfirmation(false)
     axios
       .put('order_worker_start', {
         order_id: activeOrder?._id,
@@ -94,6 +93,7 @@ function Orders({ route }) {
         operation_id: activeOrder?.operation?._id
       })
       .then(() => {
+        setIsStartConfirmation(false)
         setOrderStarted(true)
         checkCancelOrder = setInterval(async () => {
           await axios
@@ -138,6 +138,10 @@ function Orders({ route }) {
 
     getData()
   }, [])
+
+  useEffect(() => {
+    if (modalVisible) setIsFinishConfirmation(false)
+  }, [modalVisible])
 
   const renderCarouselItem = ({ item, index }) => {
     return (
@@ -328,10 +332,7 @@ function Orders({ route }) {
                         alignItems: 'center',
                         justifyContent: 'center'
                       }}
-                      onPress={() => {
-                        setIsFinishConfirmation(false)
-                        setModalVisible(true)
-                      }}
+                      onPress={() => setModalVisible(true)}
                     >
                       <Image
                         source={okButton}
