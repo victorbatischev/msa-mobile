@@ -86,6 +86,7 @@ function Orders({ route }) {
   }
 
   const startOrder = () => {
+    setIsStartConfirmation(false)
     axios
       .put('order_worker_start', {
         order_id: activeOrder?._id,
@@ -327,7 +328,10 @@ function Orders({ route }) {
                         alignItems: 'center',
                         justifyContent: 'center'
                       }}
-                      onPress={() => setModalVisible(true)}
+                      onPress={() => {
+                        setIsFinishConfirmation(false)
+                        setModalVisible(true)
+                      }}
                     >
                       <Image
                         source={okButton}
