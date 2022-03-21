@@ -8,6 +8,7 @@ const BarCode = ({ activeBarCode, orders }) => {
   const [hasPermission, setHasPermission] = useState(null)
   const [scanned, setScanned] = useState(false)
   const [barCode, setBarcode] = useState(null)
+  const [bounds, setBounds] = useState(null)
 
   useEffect(() => {
     ;(async () => {
@@ -16,7 +17,14 @@ const BarCode = ({ activeBarCode, orders }) => {
     })()
   }, [])
 
-  const handleBarCodeScanned = ({ data }) => {
+  const handleBarCodeScanned = ({ data, bounds }) => {
+    console.log(bounds)
+    setBounds({
+      x: bounds.origin.x,
+      y: bounds.origin.y,
+      width: bounds.size.width,
+      height: bounds.size.height
+    })
     setScanned(true)
     setBarcode(data)
   }
@@ -35,8 +43,22 @@ const BarCode = ({ activeBarCode, orders }) => {
       />
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFill}
+        style={{ width: '105%', height: '200%' }}
       />
+      {scanned && (
+        <View
+          style={{
+            position: 'absolute',
+            width: bounds.width,
+            height: bounds.height,
+            top: bounds.y,
+            left: bounds.x,
+            borderColor: barCode === activeBarCode ? 'green' : 'red',
+            borderWidth: 4,
+            borderRadius: 10
+          }}
+        />
+      )}
       {scanned && (
         <View style={{ position: 'absolute', bottom: 0 }}>
           <Button

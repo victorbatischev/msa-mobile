@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   View,
   Text,
@@ -6,13 +6,15 @@ import {
   Pressable,
   ScrollView,
   Modal,
-  Alert
+  Alert,
+  Button
 } from 'react-native'
 import JSONTree from 'react-native-json-tree'
 
 import axios from 'axios'
 import styles from '../styles/Styles'
 import { windowWidth, jsonTreeTheme, windowHeight } from '../Constants'
+import { Audio } from 'expo-av'
 
 const ActiveOrder = ({
   order,
@@ -21,6 +23,21 @@ const ActiveOrder = ({
   modalVisible,
   setModalVisible
 }) => {
+  const [sound, setSound] = useState()
+  async function playSound() {
+    const { sound } = await Audio.Sound.createAsync(
+      require('../assets/sounds/sound.mp3')
+    )
+    setSound(sound)
+    await sound.playAsync()
+  }
+
+  useEffect(() => {
+    ;(async () => {
+      await playSound()
+      sound.unloadAsync()
+    })()
+  }, [])
   const finishOrder = (nextOperationId, relationId) => {
     axios
       .put('order_worker_finish', {
