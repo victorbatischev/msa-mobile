@@ -19,11 +19,6 @@ const MyMessages = ({ orderId, userId }) => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scroll}>
-        {/* <MessageItem />
-        <MessageItem />
-        <MessageItem />
-        <MessageItem isYourMessage />
-        <MessageItem isYourMessage /> */}
         {messages.length === 0 ? (
           <Text style={{ fontFamily: 'Roboto', fontSize: 18, padding: 15 }}>
             You have not messages
@@ -33,7 +28,7 @@ const MyMessages = ({ orderId, userId }) => {
             return (
               <MessageItem
                 key={index}
-                isYourMessage={userId === item.w_m_id}
+                isYourMessage={userId === item.w_id}
                 userName={item.worker}
                 operation={item.operation}
                 date={item.m_data}
@@ -42,6 +37,7 @@ const MyMessages = ({ orderId, userId }) => {
             )
           })
         )}
+        <View style={{ height: 80 }} />
       </ScrollView>
 
       <View
@@ -65,7 +61,8 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
-    marginBottom: 230
+    paddingLeft: 10,
+    marginBottom: 0
   }
 })
 

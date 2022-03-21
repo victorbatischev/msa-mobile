@@ -32,7 +32,7 @@ const MessageItem = ({ isYourMessage, userName, operation, date, message }) => {
           </Text>
         </View>
         <Text style={[styles.text, isYourMessage && { color: '#ffffff' }]}>
-          {date}
+          {new Date(date).toLocaleString().split(',').join('')}
         </Text>
       </View>
       <Text style={[styles.message, isYourMessage && { color: '#ffffff' }]}>
