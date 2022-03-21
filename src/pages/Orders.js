@@ -6,7 +6,8 @@ import {
   ScrollView,
   ActivityIndicator,
   Pressable,
-  Image
+  Image,
+  Modal
 } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -107,6 +108,24 @@ function Orders({ route }) {
               }
             })
         }, 10000)
+      })
+      .catch((err) => console.error(err))
+  }
+
+  const finishOrder = (nextOperationId, relationId) => {
+    axios
+      .put('order_worker_finish', {
+        order_id: activeOrder?._id,
+        stream_id: activeOrder?.s_id,
+        next_operation_id: nextOperationId,
+        current_operation_id: activeOrder?.operation?._id,
+        relation_id: relationId
+      })
+      .then(() => {
+        setOrderStarted(false)
+        setModalVisible(false)
+        // обновляем список заказов после завершения активной операции
+        Alert.alert('MSA Mobile', 'Your operation has been completed.')
       })
       .catch((err) => console.error(err))
   }
@@ -280,9 +299,6 @@ function Orders({ route }) {
               <ActiveOrder
                 order={activeOrder}
                 orderStarted={orderStarted}
-                setOrderStarted={setOrderStarted}
-                modalVisible={modalVisible}
-                setModalVisible={setModalVisible}
               />
             </>
           ) : null}
@@ -437,6 +453,63 @@ function Orders({ route }) {
           setOrderCancelModalVisible={setOrderCancelModalVisible}
         />
       )}
+      <Modal
+        animationType='slide'
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={{ ...styles.container, backgroundColor: '#000' }}>
+          {activeOrder?.operation?.relation.map((item) => (
+            <Pressable
+              onPress={() => finishOrder(item.so_id, item._id)}
+              key={item._id}
+              style={{
+                ...styles.center,
+                ...styles.operationItem,
+                backgroundColor: item.bgr_color
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: 'Montserrat',
+                  fontSize: 18,
+                  color: '#fff'
+                }}
+              >
+                {item.result}
+              </Text>
+              <Image
+                style={{ width: 20, height: 20 }}
+                source={require('../assets/images/arrow_white.png')}
+              />
+            </Pressable>
+          ))}
+          <View style={{ marginTop: 100 }}>
+            <Pressable
+              style={{
+                ...styles.center,
+                ...styles.cancelContainer
+              }}
+              onPress={() => setModalVisible(false)}
+            >
+              <Image
+                style={{ width: 20, height: 20, marginRight: 15 }}
+                source={require('../assets/images/close.png')}
+              />
+              <Text
+                style={{
+                  fontFamily: 'Roboto',
+                  fontSize: 18,
+                  color: '#6C6F72'
+                }}
+              >
+                Cancel
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   )
 }

@@ -1,27 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import {
-  View,
-  Text,
-  Image,
-  Pressable,
-  ScrollView,
-  Modal,
-  Alert
-} from 'react-native'
+import { View, Text, Image, ScrollView } from 'react-native'
 import JSONTree from 'react-native-json-tree'
 
-import axios from 'axios'
 import styles from '../styles/Styles'
 import { windowWidth, jsonTreeTheme, windowHeight } from '../Constants'
 import { Audio } from 'expo-av'
 
-const ActiveOrder = ({
-  order,
-  orderStarted,
-  setOrderStarted,
-  modalVisible,
-  setModalVisible
-}) => {
+const ActiveOrder = ({ order, orderStarted }) => {
   const [sound, setSound] = useState()
   async function playSound() {
     const { sound } = await Audio.Sound.createAsync(
@@ -44,24 +29,6 @@ const ActiveOrder = ({
         }
       : undefined
   }, [sound])
-
-  const finishOrder = (nextOperationId, relationId) => {
-    axios
-      .put('order_worker_finish', {
-        order_id: order?._id,
-        stream_id: order?.s_id,
-        next_operation_id: nextOperationId,
-        current_operation_id: order?.operation?._id,
-        relation_id: relationId
-      })
-      .then(() => {
-        setOrderStarted(false)
-        setModalVisible(false)
-        // обновляем список заказов после завершения активной операции
-        Alert.alert('MSA Mobile', 'Your operation has been completed.')
-      })
-      .catch((err) => console.error(err))
-  }
 
   return (
     <ScrollView>
@@ -124,63 +91,6 @@ const ActiveOrder = ({
             </>
           )}
         </View>
-        <Modal
-          animationType='slide'
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => setModalVisible(false)}
-        >
-          <View style={{ ...styles.container, backgroundColor: '#000' }}>
-            {order?.operation?.relation.map((item) => (
-              <Pressable
-                onPress={() => finishOrder(item.so_id, item._id)}
-                key={item._id}
-                style={{
-                  ...styles.center,
-                  ...styles.operationItem,
-                  backgroundColor: item.bgr_color
-                }}
-              >
-                <Text
-                  style={{
-                    fontFamily: 'Montserrat',
-                    fontSize: 18,
-                    color: '#fff'
-                  }}
-                >
-                  {item.result}
-                </Text>
-                <Image
-                  style={{ width: 20, height: 20 }}
-                  source={require('../assets/images/arrow_white.png')}
-                />
-              </Pressable>
-            ))}
-            <View style={{ marginTop: 100 }}>
-              <Pressable
-                style={{
-                  ...styles.center,
-                  ...styles.cancelContainer
-                }}
-                onPress={() => setModalVisible(false)}
-              >
-                <Image
-                  style={{ width: 20, height: 20, marginRight: 15 }}
-                  source={require('../assets/images/close.png')}
-                />
-                <Text
-                  style={{
-                    fontFamily: 'Roboto',
-                    fontSize: 18,
-                    color: '#6C6F72'
-                  }}
-                >
-                  Cancel
-                </Text>
-              </Pressable>
-            </View>
-          </View>
-        </Modal>
       </View>
     </ScrollView>
   )
