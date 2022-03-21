@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, Button, Image } from 'react-native'
+import { View, Text, Button, Image } from 'react-native'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 
 import styles from '../styles/Styles'
@@ -18,7 +18,6 @@ const BarCode = ({ activeBarCode, orders }) => {
   }, [])
 
   const handleBarCodeScanned = ({ data, bounds }) => {
-    console.log(bounds)
     setBounds({
       x: bounds.origin.x,
       y: bounds.origin.y,
@@ -38,12 +37,9 @@ const BarCode = ({ activeBarCode, orders }) => {
 
   return (
     <View style={styles.container}>
-      <View
-        style={{ height: '100%', width: '100%', backgroundColor: 'black' }}
-      />
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={{ width: '105%', height: '200%' }}
+        style={{ width: '100%', height: '100%' }}
       />
       {scanned && (
         <View
