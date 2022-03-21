@@ -52,7 +52,7 @@ const ActiveOrder = ({
           {orderStarted ? (
             <ScrollView style={{ maxHeight: windowWidth }}>
               <JSONTree
-                data={order?.order?.list}
+                data={order?.order?.list || {}}
                 theme={{
                   extend: jsonTreeTheme,
                   nestedNodeLabel: ({ style }, nodeType, expanded) => ({

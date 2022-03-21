@@ -93,6 +93,7 @@ function Orders({ route }) {
         operation_id: activeOrder?.operation?._id
       })
       .then(() => {
+        setIsStartConfirmation(false)
         setOrderStarted(true)
         checkCancelOrder = setInterval(async () => {
           await axios
@@ -137,6 +138,10 @@ function Orders({ route }) {
 
     getData()
   }, [])
+
+  useEffect(() => {
+    if (modalVisible) setIsFinishConfirmation(false)
+  }, [modalVisible])
 
   const renderCarouselItem = ({ item, index }) => {
     return (
@@ -317,30 +322,36 @@ function Orders({ route }) {
               />
             </View>
             {orderStarted ? (
-              <View style={{ width: '50%' }}>
+              <View style={{ width: 160 }}>
                 {isFinishConfirmation ? (
                   <View style={{ flexDirection: 'row', flex: 1 }}>
                     <Pressable
                       style={{
-                        width: '50%',
+                        width: 80,
                         backgroundColor: '#029C6E',
                         alignItems: 'center',
                         justifyContent: 'center'
                       }}
                       onPress={() => setModalVisible(true)}
                     >
-                      <Image source={okButton} />
+                      <Image
+                        source={okButton}
+                        style={{ width: 36, height: 36, marginBottom: 10 }}
+                      />
                     </Pressable>
                     <Pressable
                       style={{
-                        width: '50%',
+                        width: 80,
                         backgroundColor: '#2D2D2D',
                         alignItems: 'center',
                         justifyContent: 'center'
                       }}
                       onPress={() => setIsFinishConfirmation(false)}
                     >
-                      <Image source={closeButton} />
+                      <Image
+                        source={closeButton}
+                        style={{ width: 32, height: 32 }}
+                      />
                     </Pressable>
                   </View>
                 ) : (
@@ -364,30 +375,36 @@ function Orders({ route }) {
                 )}
               </View>
             ) : (
-              <View style={{ width: '50%' }}>
+              <View style={{ width: 160 }}>
                 {isStartConfirmation ? (
                   <View style={{ flexDirection: 'row', flex: 1 }}>
                     <Pressable
                       style={{
-                        width: '50%',
+                        width: 80,
                         backgroundColor: '#0080FF',
                         alignItems: 'center',
                         justifyContent: 'center'
                       }}
                       onPress={() => startOrder()}
                     >
-                      <Image source={okButton} />
+                      <Image
+                        source={okButton}
+                        style={{ width: 36, height: 36, marginBottom: 10 }}
+                      />
                     </Pressable>
                     <Pressable
                       style={{
-                        width: '50%',
+                        width: 80,
                         backgroundColor: '#2D2D2D',
                         alignItems: 'center',
                         justifyContent: 'center'
                       }}
                       onPress={() => setIsStartConfirmation(false)}
                     >
-                      <Image source={closeButton} />
+                      <Image
+                        source={closeButton}
+                        style={{ width: 32, height: 32 }}
+                      />
                     </Pressable>
                   </View>
                 ) : (
