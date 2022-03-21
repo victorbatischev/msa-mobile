@@ -6,8 +6,7 @@ import {
   Pressable,
   ScrollView,
   Modal,
-  Alert,
-  Button
+  Alert
 } from 'react-native'
 import JSONTree from 'react-native-json-tree'
 
@@ -35,9 +34,17 @@ const ActiveOrder = ({
   useEffect(() => {
     ;(async () => {
       await playSound()
-      sound.unloadAsync()
     })()
   }, [])
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          sound.unloadAsync()
+        }
+      : undefined
+  }, [sound])
+
   const finishOrder = (nextOperationId, relationId) => {
     axios
       .put('order_worker_finish', {
