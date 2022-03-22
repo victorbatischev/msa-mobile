@@ -75,33 +75,3 @@ export const options = {
     color: '#fff'
   }
 }
-
-export const currentMessages = [
-  {
-    _id: 9,
-    text: '#awesome 3',
-    createdAt: new Date(),
-    user: {
-      _id: 1,
-      name: 'Developer'
-    }
-  },
-  {
-    _id: 8,
-    text: '#awesome 2',
-    createdAt: new Date(),
-    user: {
-      _id: 1,
-      name: 'Developer'
-    }
-  },
-  {
-    _id: 7,
-    text: '#awesome',
-    createdAt: new Date(),
-    user: {
-      _id: 1,
-      name: 'Developer'
-    }
-  }
-]
