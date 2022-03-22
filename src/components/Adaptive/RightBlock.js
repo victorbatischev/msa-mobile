@@ -24,7 +24,7 @@ const RightBlock = ({
           </Text>
         </View>
         <View style={styles.resultPreviousOperation}>
-          <Text style={[styles.previusOperationTitle, { paddingLeft: '10%' }]}>
+          <Text style={{ ...styles.previusOperationTitle, paddingLeft: 10 }}>
             Result of previous operation
           </Text>
           <View style={styles.previusOperationTextContainer}>

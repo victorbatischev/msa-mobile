@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, StyleSheet } from 'react-native'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 
 import styles from '../styles/Styles'
-import { windowWidth } from '../Constants'
 
 const BarCode = ({ activeBarCode, orders }) => {
   const [hasPermission, setHasPermission] = useState(null)
@@ -32,6 +31,7 @@ const BarCode = ({ activeBarCode, orders }) => {
   if (hasPermission === null) {
     return <Text>Requesting for camera permission</Text>
   }
+
   if (hasPermission === false) {
     return <Text>No access to camera</Text>
   }
@@ -40,7 +40,7 @@ const BarCode = ({ activeBarCode, orders }) => {
     <View style={styles.container}>
       <BarCodeScanner
         onBarCodeScanned={handleBarCodeScanned}
-        style={{ width: windowWidth, height: '100%' }}
+        style={[StyleSheet.absoluteFillObject, styles.cameraContainer]}
       />
       {bounds && (
         <View

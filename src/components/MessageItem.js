@@ -44,7 +44,7 @@ const MessageItem = ({ isYourMessage, userName, operation, date, message }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: windowWidth <= 480 ? '98%' : '77%',
+    width: windowWidth <= 480 ? '100%' : '80%',
     borderRadius: 14,
     paddingHorizontal: 5,
     paddingVertical: 15,

@@ -11,10 +11,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: '100%',
-    width: '100%',
-    backgroundColor: '#fff',
+    width: windowWidth,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  cameraContainer: {
+    height: '142%'
   },
   authInput: {
     width: '100%',
@@ -49,6 +51,7 @@ const styles = StyleSheet.create({
   authContainer: {
     width: 350,
     padding: 60,
+    marginTop: -30,
     display: 'flex',
     alignItems: 'center'
   },

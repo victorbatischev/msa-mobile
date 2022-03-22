@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
-    paddingLeft: 10,
+    padding: 10,
     marginBottom: 0
   }
 })

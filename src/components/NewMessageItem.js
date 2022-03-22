@@ -1,12 +1,21 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { StyleSheet, View, Pressable, TextInput, Image } from 'react-native'
+import {
+  StyleSheet,
+  View,
+  Pressable,
+  TextInput,
+  Image,
+  Keyboard
+} from 'react-native'
 import sendButton from '../assets/images/send.png'
 import { windowWidth } from '../Constants'
 
 const NewMessagesItem = ({ orderId, userId }) => {
   const [newMessage, setNewMessage] = useState('')
+
   const buttonHendler = () => {
+    Keyboard.dismiss()
     axios
       .post('order_worker_new_message', {
         _id: orderId,
@@ -15,6 +24,7 @@ const NewMessagesItem = ({ orderId, userId }) => {
       })
       .then(() => setNewMessage(''))
   }
+  
   return (
     <View style={styles.container}>
       <TextInput
@@ -32,7 +42,7 @@ const NewMessagesItem = ({ orderId, userId }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: windowWidth <= 480 ? '100%' : '77%',
+    width: windowWidth <= 480 ? '100%' : '80%',
     paddingHorizontal: 25,
     paddingVertical: 5,
     backgroundColor: '#F1F1F1',
