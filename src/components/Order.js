@@ -31,11 +31,7 @@ const Order = ({ item, idx, activeBarCode, setActiveBarCode, icon }) => {
           <Image source={icon} style={{ marginRight: 10 }}></Image>
         )}
       </Pressable>
-      <View
-        style={{
-          width: windowWidth <= 480 ? '70%' : '90%'
-        }}
-      >
+      <View style={{ width: windowWidth - 70 }}>
         <Text style={{ fontFamily: 'Roboto', color: '#8F8F8F' }}>
           {item._id}
         </Text>

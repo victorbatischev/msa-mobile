@@ -8,7 +8,7 @@ const OperationContainer = ({ order }) => {
     <View
       style={{
         ...styles.operationContainer,
-        paddingLeft: '10%',
+        paddingLeft: 10,
         backgroundColor: windowWidth > 480 ? 'transparent' : '#F5F5F5'
       }}
     >

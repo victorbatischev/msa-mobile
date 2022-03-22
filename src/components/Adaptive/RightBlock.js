@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   previousOperation: {
-    paddingHorizontal: '10%'
+    paddingHorizontal: 10
   },
   previusOperationTitle: {
     color: '#8F8F8F'
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     height: 55,
     backgroundColor: '#CF3B23',
     alignSelf: 'center',
-    padding: '4.5%'
+    padding: 5
   },
   resultPreviousOperation: {
     marginTop: 5
