@@ -296,13 +296,12 @@ function Orders({ route }) {
           {activeIndex === 1 && orders.length && !activeBarCode ? (
             <>
               {windowWidth > 480 && <ActiveOrderHeader item={orders[0]} />}
-              <ActiveOrder
-                order={activeOrder}
-                orderStarted={orderStarted}
-              />
+              <ActiveOrder order={activeOrder} orderStarted={orderStarted} />
             </>
           ) : null}
-          {activeIndex === 2 && !activeBarCode ? <TechMaps /> : null}
+          {activeIndex === 2 && !activeBarCode ? (
+            <TechMaps operationId={activeOrder.operation._id} />
+          ) : null}
           {activeBarCode && orders.length ? (
             <BarCode activeBarCode={activeBarCode} orders={orders} />
           ) : null}
