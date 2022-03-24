@@ -1,28 +1,72 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, Image } from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Pressable,
+  Modal,
+  Dimensions
+} from 'react-native'
 import AppIntroSlider from 'react-native-app-intro-slider'
 import ImageZoom from 'react-native-image-pan-zoom'
 
 const TechMaps = ({ operationId }) => {
   const [mapsArr, setMapsArr] = useState(null)
+  const [modalVisible, setModalVisible] = useState(false)
   useEffect(() => {
     axios
       .get(`order_worker_techmap/6178503ecb30bb6aa7dc2020`)
       .then((response) => {
-        console.log(response.data[0].technical_maps)
         setMapsArr(response.data[0].technical_maps)
       })
   }, [])
   const renderItem = ({ item }) => {
     return (
-      <View style={styles.container}>
+      <Pressable style={styles.container} onPress={() => setModalVisible(true)}>
         <Image
           source={{ uri: item.file_url }}
           style={{ height: '90%' }}
           resizeMode={'contain'}
         />
-      </View>
+        <Modal visible={modalVisible} transparent={false}>
+          <Pressable
+            style={styles.closeModalButton}
+            onPress={() => {
+              setModalVisible(false)
+            }}
+          >
+            <View
+              style={[
+                styles.closeModalButtonLeftLine,
+                styles.closeModalButtonLine
+              ]}
+            />
+            <View
+              style={[
+                styles.closeModalButtonRightLine,
+                styles.closeModalButtonLine
+              ]}
+            />
+          </Pressable>
+          <ImageZoom
+            cropWidth={Dimensions.get('window').width}
+            cropHeight={Dimensions.get('window').height}
+            imageWidth={Dimensions.get('window').width}
+            imageHeight={Dimensions.get('window').width / 1.43}
+          >
+            <Image
+              source={{ uri: item.file_url }}
+              style={{
+                height: Dimensions.get('window').width / 1.43,
+                width: Dimensions.get('window').width
+              }}
+              resizeMode={'contain'}
+            />
+          </ImageZoom>
+        </Modal>
+      </Pressable>
     )
   }
   const renderNextButton = () => {
@@ -50,6 +94,7 @@ const TechMaps = ({ operationId }) => {
           data={mapsArr}
           renderNextButton={renderNextButton}
           showPrevButton={true}
+          showDoneButton={false}
           renderPrevButton={renderPrevButton}
         />
       ) : (
@@ -87,6 +132,26 @@ const styles = StyleSheet.create({
   },
   downLinePrew: {
     transform: [{ rotate: '45deg' }, { translateY: 7 }]
+  },
+  closeModalButton: {
+    width: 40,
+    height: 40,
+    backgroundColor: 'blue',
+    margin: 5,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  closeModalButtonLine: {
+    width: 30,
+    height: 2,
+    backgroundColor: '#fff'
+  },
+  closeModalButtonLeftLine: {
+    transform: [{ rotate: '45deg' }, { translateY: 1 }]
+  },
+  closeModalButtonRightLine: {
+    transform: [{ rotate: '-45deg' }, { translateY: -1 }]
   }
 })
 
