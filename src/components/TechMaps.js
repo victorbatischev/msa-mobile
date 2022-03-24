@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native'
 import AppIntroSlider from 'react-native-app-intro-slider'
-import Pressable from 'react-native/Libraries/Components/Pressable/Pressable'
+import ImageZoom from 'react-native-image-pan-zoom'
 
 const TechMaps = ({ operationId }) => {
   const [mapsArr, setMapsArr] = useState(null)
@@ -20,7 +20,7 @@ const TechMaps = ({ operationId }) => {
         <Image
           source={{ uri: item.file_url }}
           style={{ height: '90%' }}
-          resizeMode='contain'
+          resizeMode={'contain'}
         />
       </View>
     )
