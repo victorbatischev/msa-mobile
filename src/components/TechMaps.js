@@ -16,18 +16,19 @@ const TechMaps = ({ operationId }) => {
   const [mapsArr, setMapsArr] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
   useEffect(() => {
-    axios
-      .get(`order_worker_techmap/6178503ecb30bb6aa7dc2020`)
-      .then((response) => {
-        setMapsArr(response.data[0].technical_maps)
-      })
+    axios.get(`order_worker_techmap/${operationId}`).then((response) => {
+      setMapsArr(response.data[0].technical_maps)
+    })
   }, [])
   const renderItem = ({ item }) => {
     return (
       <Pressable style={styles.container} onPress={() => setModalVisible(true)}>
+        <View style={styles.mapName}>
+          <Text>{item.name}</Text>
+        </View>
         <Image
           source={{ uri: item.file_url }}
-          style={{ height: '90%' }}
+          style={{ height: '80%' }}
           resizeMode={'contain'}
         />
         <Modal visible={modalVisible} transparent={false}>
@@ -108,6 +109,9 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '85%'
+  },
+  mapName: {
+    alignItems: 'center'
   },
   button: {
     width: 70,

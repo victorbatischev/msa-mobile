@@ -300,7 +300,7 @@ function Orders({ route }) {
             </>
           ) : null}
           {activeIndex === 2 && !activeBarCode ? (
-            <TechMaps operationId={activeOrder.operation._id} />
+            <TechMaps operationId={activeOrder?.description?.o_id} />
           ) : null}
           {activeBarCode && orders.length ? (
             <BarCode activeBarCode={activeBarCode} orders={orders} />
