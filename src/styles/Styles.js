@@ -171,6 +171,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10
+  },
+  versionBlock: {
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
+    zIndex: 10
+  },
+  versionText: {
+    fontFamily: 'Roboto',
+    fontSize: 12,
+    color: '#707070',
+    fontWeight: 'bold'
   }
 })
 
