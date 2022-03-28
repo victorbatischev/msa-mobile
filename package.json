@@ -41,7 +41,8 @@
     "react-native-stopwatch-timer": "^0.0.21",
     "react-native-svg": "12.1.1",
     "react-native-vector-icons": "^8.1.0",
-    "react-native-web": "~0.13.12"
+    "react-native-web": "~0.13.12",
+    "expo-application": "~3.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
