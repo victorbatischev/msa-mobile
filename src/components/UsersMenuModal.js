@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import styles from '../styles/Styles'
 import axios from 'axios'
 import CompleteWorkShift from './CompleteWorkShiftModal'
+import * as Application from 'expo-application'
 
 const UsersMenuModal = ({ setModalVisible, logOut }) => {
   const [isModalNewOrder, setIsModalNewOrder] = useState(false)
@@ -145,6 +146,9 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
             </Text>
           </Pressable>
         </View>
+        <Text style={styles.versionText}>
+          Version: {Application.nativeApplicationVersion}
+        </Text>
         <Modal
           animationType='slider'
           transparent={true}

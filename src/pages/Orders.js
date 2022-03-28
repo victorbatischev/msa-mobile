@@ -14,7 +14,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { StatusBar } from 'expo-status-bar'
 import * as Updates from 'expo-updates'
-import * as Application from 'expo-application'
 import { Stopwatch } from '../lib/react-native-stopwatch-timer'
 
 import Header from '../components/Header'
@@ -507,11 +506,6 @@ function Orders({ route }) {
           </View>
         </View>
       </Modal>
-      <View style={styles.versionBlock}>
-        <Text style={styles.versionText}>
-          Version: {Application.nativeApplicationVersion}
-        </Text>
-      </View>
     </View>
   )
 }

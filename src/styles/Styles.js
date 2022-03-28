@@ -172,16 +172,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 10
   },
-  versionBlock: {
+  versionText: {
     position: 'absolute',
     bottom: 10,
-    left: 10,
-    zIndex: 10
-  },
-  versionText: {
+    left: 5,
+    color: '#707070',
     fontFamily: 'Roboto',
     fontSize: 12,
-    color: '#707070',
     fontWeight: 'bold'
   }
 })
