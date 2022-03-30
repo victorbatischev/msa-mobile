@@ -39,6 +39,10 @@ import closeButton from '../assets/images/close.png'
 function Orders({ route }) {
   const [user, setUser] = useState(null)
   const [orders, setOrders] = useState([])
+
+  const [ordersCount, setOrdersCount] = useState(0)
+  const [isPlaySound, setIsPlaySound] = useState(false)
+
   const [activeOrder, setActiveOrder] = useState(null)
   const [activeIndex, setActiveIndex] = useState(1)
   const [activeBarCode, setActiveBarCode] = useState(false)
@@ -67,12 +71,17 @@ function Orders({ route }) {
   const getOrders = (user) => {
     axios.get(`order_worker/${user.u_id}`).then((res) => {
       setOrders(res.data)
+      setOrdersCount(res.data.length)
       if (res.data.length) {
         getOrderInfo(res.data[0]._id, user.u_id)
         getPreviousOperation(user)
       }
     })
   }
+
+  useEffect(() => {
+    setIsPlaySound(true)
+  }, [ordersCount])
 
   const getPreviousOperation = (user) => {
     axios.get(`order_prev_operation/${user.u_id}`).then((res) => {
@@ -296,7 +305,12 @@ function Orders({ route }) {
           {activeIndex === 1 && orders.length && !activeBarCode ? (
             <>
               {windowWidth > 480 && <ActiveOrderHeader item={orders[0]} />}
-              <ActiveOrder order={activeOrder} orderStarted={orderStarted} />
+              <ActiveOrder
+                isPlaySound={isPlaySound}
+                setIsPlaySound={setIsPlaySound}
+                order={activeOrder}
+                orderStarted={orderStarted}
+              />
             </>
           ) : null}
           {activeIndex === 2 && !activeBarCode ? (

@@ -6,7 +6,7 @@ import styles from '../styles/Styles'
 import { windowWidth, jsonTreeTheme, windowHeight } from '../Constants'
 import { Audio } from 'expo-av'
 
-const ActiveOrder = ({ order, orderStarted }) => {
+const ActiveOrder = ({ order, orderStarted, isPlaySound, setIsPlaySound }) => {
   const [sound, setSound] = useState()
   async function playSound() {
     const { sound } = await Audio.Sound.createAsync(
@@ -17,10 +17,13 @@ const ActiveOrder = ({ order, orderStarted }) => {
   }
 
   useEffect(() => {
-    ;(async () => {
-      await playSound()
-    })()
-  }, [])
+    if (isPlaySound) {
+      ;(async () => {
+        await playSound()
+        setIsPlaySound(false)
+      })()
+    }
+  }, [isPlaySound])
 
   useEffect(() => {
     return sound
@@ -39,7 +42,13 @@ const ActiveOrder = ({ order, orderStarted }) => {
           height: windowHeight - 190
         }}
       >
-        <View style={{ ...styles.container, justifyContent: 'flex-start' }}>
+        <View
+          style={{
+            ...styles.container,
+            justifyContent: 'flex-start',
+            backgroundColor: '#fff'
+          }}
+        >
           {orderStarted ? (
             <ScrollView style={{ maxHeight: windowWidth }}>
               <JSONTree
