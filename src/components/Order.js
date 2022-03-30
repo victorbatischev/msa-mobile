@@ -12,15 +12,16 @@ const Order = ({ item, idx, activeBarCode, setActiveBarCode, icon }) => {
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
   </head>
-  <body style="text-align: center;">
-    <h1 style="font-size: 50px; font-family: Helvetica Neue; font-weight: normal;">
+  <body>
+    <div style="font-size: 50px; font-family: Helvetica Neue; text-align: center;">
       <p style="margin: 0 0 20px; font-weight: bold";>Order's id</p>
       <p style="margin: 0px">${item._id}</p>
       <p style="margin: 40px 0 20px; font-weight: bold"">Order's name</p>
       <p style="margin: 0px">${item.name}</p>
-    </h1>
+    </div>
   </body>
-</html>`
+</html>
+`
 
   const print = async () => {
     await Print.printAsync({
