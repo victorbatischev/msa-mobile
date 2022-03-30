@@ -2,13 +2,31 @@ import React from 'react'
 import { View, Text, Pressable, Image } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
 import { windowWidth } from '../Constants'
+import * as Print from 'expo-print'
 
 import styles from '../styles/Styles'
 
 const Order = ({ item, idx, activeBarCode, setActiveBarCode, icon }) => {
-  // const print = () => {
-  //   console.log('print')
-  // }
+  const html = `
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+  </head>
+  <body style="text-align: center;">
+    <h1 style="font-size: 50px; font-family: Helvetica Neue; font-weight: normal;">
+      <p style="margin: 0 0 20px; font-weight: bold";>Order's id</p>
+      <p style="margin: 0px">${item._id}</p>
+      <p style="margin: 40px 0 20px; font-weight: bold"">Order's name</p>
+      <p style="margin: 0px">${item.name}</p>
+    </h1>
+  </body>
+</html>`
+
+  const print = async () => {
+    await Print.printAsync({
+      html
+    })
+  }
 
   return (
     <View
@@ -31,7 +49,7 @@ const Order = ({ item, idx, activeBarCode, setActiveBarCode, icon }) => {
           <Image source={icon} style={{ marginRight: 10 }}></Image>
         )}
       </Pressable>
-      <View style={{ width: windowWidth - 70 }}>
+      <View>
         <Text style={{ fontFamily: 'Roboto', color: '#8F8F8F' }}>
           {item._id}
         </Text>
@@ -43,15 +61,14 @@ const Order = ({ item, idx, activeBarCode, setActiveBarCode, icon }) => {
           {item.name}
         </Text>
       </View>
-      {/* {windowWidth <= 480 && (
-        <Pressable>
+      {windowWidth <= 480 && (
+        <Pressable onPress={() => print()}>
           <Image
-            onPress={() => print()}
             style={{ width: 40, height: 40 }}
             source={require('../assets/images/print.png')}
           />
         </Pressable>
-      )} */}
+      )}
     </View>
   )
 }
