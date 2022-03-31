@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 
 import styles from '../styles/Styles'
 
-const BarCode = ({ activeBarCode, orders }) => {
+const BarCode = ({ activeBarCode, setActiveBarCode, orders }) => {
   const [hasPermission, setHasPermission] = useState(null)
   const [scanned, setScanned] = useState(false)
   const [barCode, setBarcode] = useState(null)
@@ -42,6 +42,23 @@ const BarCode = ({ activeBarCode, orders }) => {
         onBarCodeScanned={handleBarCodeScanned}
         style={[StyleSheet.absoluteFillObject, styles.cameraContainer]}
       />
+      <Pressable
+        style={componentStyle.closeButton}
+        onPress={() => setActiveBarCode(false)}
+      >
+        <View
+          style={[
+            componentStyle.closeButonLine,
+            componentStyle.closeButonUpLine
+          ]}
+        />
+        <View
+          style={[
+            componentStyle.closeButonLine,
+            componentStyle.closeButonDownLine
+          ]}
+        />
+      </Pressable>
       {bounds && (
         <View
           style={{
@@ -57,9 +74,14 @@ const BarCode = ({ activeBarCode, orders }) => {
         />
       )}
       {scanned && (
-        <View style={{ position: 'absolute', bottom: 0 }}>
+        <View style={{ position: 'absolute', bottom: 25 }}>
           <View
-            style={{ ...styles.orderContainer, backgroundColor: '#FFFFFF' }}
+            style={{
+              ...styles.orderContainer,
+              backgroundColor: '#0000007f',
+              borderRadius: 4,
+              justifyContent: 'flex-start'
+            }}
           >
             {barCode === activeBarCode ? (
               <View
@@ -94,15 +116,17 @@ const BarCode = ({ activeBarCode, orders }) => {
               }}
             >
               <Text
-                style={{ fontFamily: 'Roboto', fontSize: 16 }}
+                style={{ fontFamily: 'Roboto', color: '#fff', fontSize: 10 }}
+              >
+                {barCode}
+              </Text>
+              <Text
+                style={{ fontFamily: 'Roboto', fontSize: 14, color: '#fff' }}
                 numberOfLines={2}
                 ellipsizeMode={'middle'}
               >
                 {orders.find((item) => item._id === barCode)?.name ||
-                  'Wrong bar code!'}
-              </Text>
-              <Text style={{ fontFamily: 'Roboto', color: '#8F8F8F' }}>
-                {barCode}
+                  'Wrong QR code'}
               </Text>
             </View>
           </View>
@@ -111,5 +135,30 @@ const BarCode = ({ activeBarCode, orders }) => {
     </View>
   )
 }
+
+const componentStyle = StyleSheet.create({
+  closeButton: {
+    position: 'absolute',
+    top: 15,
+    right: 15,
+    width: 40,
+    height: 40,
+    backgroundColor: '#0000007f',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  closeButonLine: {
+    width: 30,
+    height: 2,
+    backgroundColor: '#fff'
+  },
+  closeButonUpLine: {
+    transform: [{ rotate: '45deg' }, { translateY: 1 }]
+  },
+  closeButonDownLine: {
+    transform: [{ rotate: '-45deg' }, { translateY: -1 }]
+  }
+})
 
 export default BarCode

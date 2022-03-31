@@ -41,7 +41,7 @@ const Order = ({ item, idx, activeBarCode, setActiveBarCode, icon }) => {
     >
       <Pressable
         onPress={() => {
-          activeBarCode ? setActiveBarCode(null) : setActiveBarCode(item._id)
+          setActiveBarCode(!activeBarCode)
         }}
       >
         {windowWidth <= 480 ? (

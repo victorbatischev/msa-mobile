@@ -84,10 +84,6 @@ function Orders({ route }) {
     })
   }
 
-  useEffect(() => {
-    setIsPlaySound(true)
-  }, [ordersCount])
-
   const getPreviousOperation = (user) => {
     axios.get(`order_prev_operation/${user.u_id}`).then((res) => {
       setPreviousOperation(res.data)
@@ -322,7 +318,11 @@ function Orders({ route }) {
             <TechMaps operationId={activeOrder?.description?.o_id} />
           ) : null}
           {activeBarCode && orders.length ? (
-            <BarCode activeBarCode={activeBarCode} orders={orders} />
+            <BarCode
+              activeBarCode={activeBarCode}
+              setActiveBarCode={setActiveBarCode}
+              orders={orders}
+            />
           ) : null}
         </View>
         {windowWidth > 480 && (
@@ -339,7 +339,7 @@ function Orders({ route }) {
           </View>
         )}
       </View>
-      {windowWidth <= 480 && orders.length ? (
+      {windowWidth <= 480 && orders.length && !activeBarCode ? (
         <View style={{ width: '100%' }}>
           <OperationContainer order={activeOrder} />
           <View style={{ ...styles.center, height: 75 }}>
