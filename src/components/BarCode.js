@@ -63,13 +63,12 @@ const BarCode = ({ activeBarCode, setActiveBarCode, orders }) => {
         <View
           style={{
             position: 'absolute',
-            width: bounds.width,
-            height: bounds.height,
-            top: bounds.y,
-            left: bounds.x,
-            borderColor: barCode === activeBarCode ? 'green' : 'red',
-            borderWidth: 4,
-            borderRadius: 10
+            width: bounds.width + 10,
+            height: bounds.height + 10,
+            top: bounds.y - 5,
+            left: bounds.x - 5,
+            borderColor: barCode === activeBarCode ? '#0DDFA0' : '#FF4646',
+            borderWidth: 4
           }}
         />
       )}
@@ -78,6 +77,7 @@ const BarCode = ({ activeBarCode, setActiveBarCode, orders }) => {
           <View
             style={{
               ...styles.orderContainer,
+              height: 55,
               backgroundColor: '#0000007f',
               borderRadius: 4,
               justifyContent: 'flex-start'
