@@ -71,7 +71,12 @@ function Orders({ route }) {
   const getOrders = (user) => {
     axios.get(`order_worker/${user.u_id}`).then((res) => {
       setOrders(res.data)
-      setOrdersCount(res.data.length)
+      setOrdersCount((prev) => {
+        if (res.data.length > prev) {
+          setIsPlaySound(true)
+        }
+        return res.data.length
+      })
       if (res.data.length) {
         getOrderInfo(res.data[0]._id, user.u_id)
         getPreviousOperation(user)
@@ -221,7 +226,7 @@ function Orders({ route }) {
                   style={{
                     fontFamily: 'Roboto',
                     fontSize: 18,
-                    padding: 15
+                    padding: 5
                   }}
                 >
                   Searching for available orders
