@@ -84,7 +84,7 @@ const ActiveOrder = ({ order, orderStarted, isPlaySound, setIsPlaySound }) => {
                   marginBottom: 20,
                   marginTop: 20
                 }}
-                source={require('../assets/images/warning.png')}
+                source={require('../assets/images/qrcodeIcon.png')}
               />
               <Text
                 style={{

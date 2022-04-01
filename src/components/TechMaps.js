@@ -23,9 +23,7 @@ const TechMaps = ({ operationId }) => {
   const renderItem = ({ item }) => {
     return (
       <Pressable style={styles.container} onPress={() => setModalVisible(true)}>
-        <View style={styles.mapName}>
-          <Text>{item.name}</Text>
-        </View>
+        <Text style={styles.mapName}>{item.name}</Text>
         <Image
           source={{ uri: item.file_url }}
           style={{ height: '80%' }}
@@ -93,10 +91,11 @@ const TechMaps = ({ operationId }) => {
           keyExtractor={(item, index) => 'key' + index}
           renderItem={renderItem}
           data={mapsArr}
+          showNextButton={false}
           renderNextButton={renderNextButton}
-          showPrevButton={true}
-          showDoneButton={false}
           renderPrevButton={renderPrevButton}
+          dotStyle={{ backgroundColor: '#DFDFDF' }}
+          activeDotStyle={{ backgroundColor: '#009C6D' }}
         />
       ) : (
         <Text>loading...</Text>
@@ -108,10 +107,11 @@ const TechMaps = ({ operationId }) => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: '85%'
+    height: '85%',
+    backgroundColor: '#fff'
   },
   mapName: {
-    alignItems: 'center'
+    alignSelf: 'center'
   },
   button: {
     width: 70,
@@ -140,14 +140,16 @@ const styles = StyleSheet.create({
   closeModalButton: {
     width: 40,
     height: 40,
-    backgroundColor: 'blue',
-    margin: 5,
+    backgroundColor: '#8F8F8F',
+    alignSelf: 'flex-end',
+    marginTop: 10,
+    marginRight: 10,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center'
   },
   closeModalButtonLine: {
-    width: 30,
+    width: 25,
     height: 2,
     backgroundColor: '#fff'
   },
