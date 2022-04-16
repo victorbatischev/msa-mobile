@@ -24,7 +24,6 @@ const BarCode = ({ activeBarCode, setActiveBarCode, orders }) => {
       width: bounds.size.width,
       height: bounds.size.height
     })
-    setQrData(data)
     setScanned(true)
     setBarcode(data)
   }
