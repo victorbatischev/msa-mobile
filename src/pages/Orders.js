@@ -186,89 +186,91 @@ function Orders({ route }) {
     <View style={{ flex: 1, alignItems: 'center' }}>
       <StatusBar style='light' translucent={false} />
       <Header logOut={logOut} userName={route.params.userName} />
-      <View style={{ ...styles.shadow, height: 80 }}>
-        {windowWidth <= 480 ? (
-          <ScrollView
-            horizontal={true}
-            decelerationRate={0}
-            snapToInterval={windowWidth}
-            snapToAlignment={'center'}
-            style={{ height: 60, width: windowWidth }}
-          >
-            {orders.length ? (
-              orders.map((item, idx) => {
-                return (
-                  <Order
-                    item={item}
-                    key={idx}
-                    idx={idx}
-                    activeBarCode={activeBarCode}
-                    setActiveBarCode={setActiveBarCode}
-                  />
-                )
-              })
-            ) : (
-              <View
-                style={{
-                  ...styles.center,
-                  flex: 1,
-                  width: windowWidth,
-                  backgroundColor: '#fff',
-                  paddingHorizontal: 10
-                }}
-              >
-                <ActivityIndicator size='large' color='#000088' />
-                <Text
+      {!activeBarCode && (
+        <View style={{ ...styles.shadow, height: 80 }}>
+          {windowWidth <= 480 ? (
+            <ScrollView
+              horizontal={true}
+              decelerationRate={0}
+              snapToInterval={windowWidth}
+              snapToAlignment={'center'}
+              style={{ height: 60, width: windowWidth }}
+            >
+              {orders.length ? (
+                orders.map((item, idx) => {
+                  return (
+                    <Order
+                      item={item}
+                      key={idx}
+                      idx={idx}
+                      activeBarCode={activeBarCode}
+                      setActiveBarCode={setActiveBarCode}
+                    />
+                  )
+                })
+              ) : (
+                <View
                   style={{
-                    fontFamily: 'Roboto',
-                    fontSize: 18,
-                    padding: 5
+                    ...styles.center,
+                    flex: 1,
+                    width: windowWidth,
+                    backgroundColor: '#fff',
+                    paddingHorizontal: 10
                   }}
                 >
-                  Searching for available orders
-                </Text>
-              </View>
-            )}
-          </ScrollView>
-        ) : (
-          <View style={{ width: windowWidth, flexDirection: 'row' }}>
-            {orders.length ? (
-              orders.map((item, idx) => {
-                return (
-                  <Order
-                    item={item}
-                    key={idx}
-                    idx={idx}
-                    activeBarCode={activeBarCode}
-                    setActiveBarCode={setActiveBarCode}
-                    icon={idx === 0 ? arrowMain : arrowNotMain}
-                  />
-                )
-              })
-            ) : (
-              <View
-                style={{
-                  ...styles.center,
-                  flex: 1,
-                  paddingTop: 15,
-                  backgroundColor: '#fff'
-                }}
-              >
-                <ActivityIndicator size='large' color='#000088' />
-                <Text
+                  <ActivityIndicator size='large' color='#000088' />
+                  <Text
+                    style={{
+                      fontFamily: 'Roboto',
+                      fontSize: 18,
+                      padding: 5
+                    }}
+                  >
+                    Searching for available orders
+                  </Text>
+                </View>
+              )}
+            </ScrollView>
+          ) : (
+            <View style={{ width: windowWidth, flexDirection: 'row' }}>
+              {orders.length ? (
+                orders.map((item, idx) => {
+                  return (
+                    <Order
+                      item={item}
+                      key={idx}
+                      idx={idx}
+                      activeBarCode={activeBarCode}
+                      setActiveBarCode={setActiveBarCode}
+                      icon={idx === 0 ? arrowMain : arrowNotMain}
+                    />
+                  )
+                })
+              ) : (
+                <View
                   style={{
-                    fontFamily: 'Roboto',
-                    fontSize: 18,
-                    padding: 15
+                    ...styles.center,
+                    flex: 1,
+                    paddingTop: 15,
+                    backgroundColor: '#fff'
                   }}
                 >
-                  Searching for available orders
-                </Text>
-              </View>
-            )}
-          </View>
-        )}
-      </View>
+                  <ActivityIndicator size='large' color='#000088' />
+                  <Text
+                    style={{
+                      fontFamily: 'Roboto',
+                      fontSize: 18,
+                      padding: 15
+                    }}
+                  >
+                    Searching for available orders
+                  </Text>
+                </View>
+              )}
+            </View>
+          )}
+        </View>
+      )}
       <View style={{ flexDirection: 'row', width: '100%', flex: 1 }}>
         <View style={{ flex: 3 }}>
           {!activeBarCode && (
@@ -311,6 +313,7 @@ function Orders({ route }) {
                 setIsPlaySound={setIsPlaySound}
                 order={activeOrder}
                 orderStarted={orderStarted}
+                setActiveBarCode={setActiveBarCode}
               />
             </>
           ) : null}

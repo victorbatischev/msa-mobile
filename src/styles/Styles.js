@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   cameraContainer: {
-    height: '134%'
+    height: '114%'
   },
   authInput: {
     width: '100%',

@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Image, ScrollView } from 'react-native'
+import { View, Text, Image, ScrollView, Pressable } from 'react-native'
 import JSONTree from 'react-native-json-tree'
 
 import styles from '../styles/Styles'
 import { windowWidth, jsonTreeTheme, windowHeight } from '../Constants'
 import { Audio } from 'expo-av'
 
-const ActiveOrder = ({ order, orderStarted, isPlaySound, setIsPlaySound }) => {
+const ActiveOrder = ({
+  order,
+  orderStarted,
+  isPlaySound,
+  setIsPlaySound,
+  setActiveBarCode
+}) => {
   const [sound, setSound] = useState()
   async function playSound() {
     const { sound } = await Audio.Sound.createAsync(
@@ -77,15 +83,21 @@ const ActiveOrder = ({ order, orderStarted, isPlaySound, setIsPlaySound }) => {
             </ScrollView>
           ) : (
             <>
-              <Image
-                style={{
-                  width: 60,
-                  height: 60,
-                  marginBottom: 20,
-                  marginTop: 20
+              <Pressable
+                onPress={() => {
+                  setActiveBarCode(true)
                 }}
-                source={require('../assets/images/qrcodeIcon.png')}
-              />
+              >
+                <Image
+                  style={{
+                    width: 60,
+                    height: 60,
+                    marginBottom: 20,
+                    marginTop: 20
+                  }}
+                  source={require('../assets/images/qrcodeIcon.png')}
+                />
+              </Pressable>
               <Text
                 style={{
                   fontFamily: 'Roboto',
