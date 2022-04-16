@@ -7,15 +7,9 @@ import styles from '../styles/Styles'
 
 import qrcode from '../lib/createImgTagQr/qrcode'
 
-const Order = ({
-  item,
-  idx,
-  activeBarCode,
-  setActiveBarCode,
-  icon,
-  qrData
-}) => {
+const Order = ({ item, idx, activeBarCode, setActiveBarCode, icon }) => {
   const [ImgTag, setImgTag] = useState('')
+
   const html = `
 <html>
   <head>
@@ -28,7 +22,7 @@ const Order = ({
       <p style="margin: 40px 0 20px; font-weight: bold"">Order's name</p>
       <p style="margin: 0px">${item.name}</p>
       <div style="width: 500px; height: 500px; margin: 0 auto;">
-        ${ImgTag}
+       ${ImgTag}
       </div>
     </div>
   </body>
@@ -36,12 +30,12 @@ const Order = ({
 `
   useEffect(() => {
     imgCreate()
-  }, [qrData])
+  }, [item])
 
   const imgCreate = () => {
-    if (qrData) {
+    if (item._id) {
       const qr = qrcode(0, 'L')
-      qr.addData(qrData)
+      qr.addData(item._id)
       qr.make()
       const res = qr.createImgTag()
       setImgTag(res)

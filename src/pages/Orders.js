@@ -52,7 +52,6 @@ function Orders({ route }) {
   const [previousOperation, setPreviousOperation] = useState([])
   const [isStartConfirmation, setIsStartConfirmation] = useState(false)
   const [isFinishConfirmation, setIsFinishConfirmation] = useState(false)
-  const [qrData, setQrData] = useState('')
 
   const carousel = useRef()
 
@@ -206,7 +205,6 @@ function Orders({ route }) {
                       idx={idx}
                       activeBarCode={activeBarCode}
                       setActiveBarCode={setActiveBarCode}
-                      qrData={qrData}
                     />
                   )
                 })
@@ -327,7 +325,6 @@ function Orders({ route }) {
               activeBarCode={activeBarCode}
               setActiveBarCode={setActiveBarCode}
               orders={orders}
-              setQrData={setQrData}
             />
           ) : null}
         </View>
