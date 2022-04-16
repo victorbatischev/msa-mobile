@@ -4,7 +4,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner'
 
 import styles from '../styles/Styles'
 
-const BarCode = ({ activeBarCode, setActiveBarCode, orders }) => {
+const BarCode = ({ activeBarCode, setActiveBarCode, orders, setQrData }) => {
   const [hasPermission, setHasPermission] = useState(null)
   const [scanned, setScanned] = useState(false)
   const [barCode, setBarcode] = useState(null)
@@ -24,6 +24,7 @@ const BarCode = ({ activeBarCode, setActiveBarCode, orders }) => {
       width: bounds.size.width,
       height: bounds.size.height
     })
+    setQrData(data)
     setScanned(true)
     setBarcode(data)
   }

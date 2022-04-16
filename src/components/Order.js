@@ -1,12 +1,21 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, Pressable, Image } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
 import { windowWidth } from '../Constants'
 import * as Print from 'expo-print'
-
 import styles from '../styles/Styles'
 
-const Order = ({ item, idx, activeBarCode, setActiveBarCode, icon }) => {
+import qrcode from '../lib/createImgTagQr/qrcode'
+
+const Order = ({
+  item,
+  idx,
+  activeBarCode,
+  setActiveBarCode,
+  icon,
+  qrData
+}) => {
+  const [ImgTag, setImgTag] = useState('')
   const html = `
 <html>
   <head>
@@ -18,10 +27,26 @@ const Order = ({ item, idx, activeBarCode, setActiveBarCode, icon }) => {
       <p style="margin: 0px">${item._id}</p>
       <p style="margin: 40px 0 20px; font-weight: bold"">Order's name</p>
       <p style="margin: 0px">${item.name}</p>
+      <div style="width: 500px; height: 500px; margin: 0 auto;">
+        ${ImgTag}
+      </div>
     </div>
   </body>
 </html>
 `
+  useEffect(() => {
+    imgCreate()
+  }, [qrData])
+
+  const imgCreate = () => {
+    if (qrData) {
+      const qr = qrcode(0, 'L')
+      qr.addData(qrData)
+      qr.make()
+      const res = qr.createImgTag()
+      setImgTag(res)
+    }
+  }
 
   const print = async () => {
     await Print.printAsync({
