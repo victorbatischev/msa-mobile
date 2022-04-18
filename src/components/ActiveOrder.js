@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Image, ScrollView, Pressable } from 'react-native'
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  Pressable,
+  AppState
+} from 'react-native'
 import JSONTree from 'react-native-json-tree'
 
 import styles from '../styles/Styles'
 import { windowWidth, jsonTreeTheme, windowHeight } from '../Constants'
 import { Audio } from 'expo-av'
+import * as Notifications from 'expo-notifications'
 
 const ActiveOrder = ({
   order,
@@ -21,12 +29,29 @@ const ActiveOrder = ({
     setSound(sound)
     await sound.playAsync()
   }
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: false
+    })
+  })
+  async function schedulePushNotification() {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: 'New order 📬',
+        body: 'You have a new order'
+      },
+      trigger: { seconds: 2 }
+    })
+  }
 
   useEffect(() => {
     if (isPlaySound) {
       ;(async () => {
         await playSound()
         setIsPlaySound(false)
+        await schedulePushNotification()
       })()
     }
   }, [isPlaySound])
