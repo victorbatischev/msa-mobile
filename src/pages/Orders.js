@@ -35,6 +35,8 @@ import arrowMain from '../assets/icons/arrowMain.jpg'
 import arrowNotMain from '../assets/icons/arrowNotMain.jpg'
 import okButton from '../assets/images/ok.png'
 import closeButton from '../assets/images/close.png'
+import Materials from '../components/Materials'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 function Orders({ route }) {
   const [user, setUser] = useState(null)
@@ -44,7 +46,7 @@ function Orders({ route }) {
   const [isPlaySound, setIsPlaySound] = useState(false)
 
   const [activeOrder, setActiveOrder] = useState(null)
-  const [activeIndex, setActiveIndex] = useState(1)
+  const [activeIndex, setActiveIndex] = useState(2)
   const [activeBarCode, setActiveBarCode] = useState(false)
   const [orderStarted, setOrderStarted] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
@@ -52,6 +54,8 @@ function Orders({ route }) {
   const [previousOperation, setPreviousOperation] = useState([])
   const [isStartConfirmation, setIsStartConfirmation] = useState(false)
   const [isFinishConfirmation, setIsFinishConfirmation] = useState(false)
+  const [activeInput, setActiveInput] = useState(false)
+  const [materialsArr, setMaterialsArr] = useState([])
 
   const carousel = useRef()
 
@@ -129,7 +133,8 @@ function Orders({ route }) {
         stream_id: activeOrder?.s_id,
         next_operation_id: nextOperationId,
         current_operation_id: activeOrder?.operation?._id,
-        relation_id: relationId
+        relation_id: relationId,
+        function: materialsArr
       })
       .then(() => {
         setOrderStarted(false)
@@ -171,6 +176,14 @@ function Orders({ route }) {
   useEffect(() => {
     if (modalVisible) setIsFinishConfirmation(false)
   }, [modalVisible])
+
+  useEffect(() => {
+    axios
+      .get(`order_id_worker/${activeOrder?._id}/${user?.u_id}/`)
+      .then((res) =>
+        setMaterialsArr(res.data[0].operation.relation[0].function)
+      )
+  }, [activeOrder?._id])
 
   const renderCarouselItem = ({ item, index }) => {
     return (
@@ -284,7 +297,7 @@ function Orders({ route }) {
             >
               <Carousel
                 ref={carousel}
-                firstItem={1}
+                firstItem={2}
                 activeSlideOffset={0}
                 swipeThreshold={0}
                 callbackOffsetMargin={20}
@@ -306,6 +319,13 @@ function Orders({ route }) {
             <MyMessages orderId={activeOrder?._id} userId={user.u_id} />
           ) : null}
           {activeIndex === 1 && orders.length && !activeBarCode ? (
+            <Materials
+              setActiveInput={setActiveInput}
+              materialsArr={materialsArr}
+              setMaterialsArr={setMaterialsArr}
+            />
+          ) : null}
+          {activeIndex === 2 && orders.length && !activeBarCode ? (
             <>
               {windowWidth > 480 && <ActiveOrderHeader item={orders[0]} />}
               <ActiveOrder
@@ -317,7 +337,7 @@ function Orders({ route }) {
               />
             </>
           ) : null}
-          {activeIndex === 2 && !activeBarCode ? (
+          {activeIndex === 3 && !activeBarCode ? (
             <TechMaps operationId={activeOrder?.description?.o_id} />
           ) : null}
           {activeBarCode && orders.length ? (
@@ -342,7 +362,7 @@ function Orders({ route }) {
           </View>
         )}
       </View>
-      {windowWidth <= 480 && orders.length && !activeBarCode ? (
+      {windowWidth <= 480 && orders.length && !activeBarCode && !activeInput ? (
         <View style={{ width: '100%' }}>
           <OperationContainer order={activeOrder} />
           <View style={{ ...styles.center, height: 75 }}>
