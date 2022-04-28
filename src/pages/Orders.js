@@ -480,11 +480,14 @@ function Orders({ route }) {
                     style={{
                       ...styles.container,
                       backgroundColor:
-                        selectedItems.length > 0 ? '#0080FF' : 'gray'
+                        selectedItems.length > 0 || equipmentArr.length === 0
+                          ? '#0080FF'
+                          : 'gray'
                     }}
-                    onPress={() =>
+                    onPress={() => {
+                      equipmentArr.length === 0 && setIsStartConfirmation(true)
                       selectedItems.length > 0 && setIsStartConfirmation(true)
-                    }
+                    }}
                   >
                     <Text
                       style={{
