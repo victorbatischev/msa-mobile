@@ -2,12 +2,20 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, Pressable, Image } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
 import { windowWidth } from '../Constants'
+import axios from 'axios'
 import * as Print from 'expo-print'
 import styles from '../styles/Styles'
 
 import qrcode from '../lib/createImgTagQr/qrcode'
 
-const Order = ({ item, idx, activeBarCode, setActiveBarCode, icon }) => {
+const Order = ({
+  item,
+  idx,
+  activeBarCode,
+  setActiveBarCode,
+  icon,
+  setEquipmentArr
+}) => {
   const [ImgTag, setImgTag] = useState('')
 
   const html = `
@@ -31,6 +39,12 @@ const Order = ({ item, idx, activeBarCode, setActiveBarCode, icon }) => {
   useEffect(() => {
     imgCreate()
   }, [item])
+
+  useEffect(() => {
+    axios.get(`equipment_o_id/${item.operation.o_id}`).then((res) => {
+      setEquipmentArr(res.data)
+    })
+  }, [])
 
   const imgCreate = () => {
     if (item._id) {

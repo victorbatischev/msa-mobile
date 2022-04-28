@@ -37,6 +37,7 @@ import okButton from '../assets/images/ok.png'
 import closeButton from '../assets/images/close.png'
 import Materials from '../components/Materials'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import Equipment from '../components/Equipment'
 
 function Orders({ route }) {
   const [user, setUser] = useState(null)
@@ -56,6 +57,8 @@ function Orders({ route }) {
   const [isFinishConfirmation, setIsFinishConfirmation] = useState(false)
   const [activeInput, setActiveInput] = useState(false)
   const [materialsArr, setMaterialsArr] = useState([])
+  const [equipmentArr, setEquipmentArr] = useState([])
+  const [selectedItems, setSelectedItems] = useState([])
 
   const carousel = useRef()
 
@@ -218,6 +221,7 @@ function Orders({ route }) {
                       idx={idx}
                       activeBarCode={activeBarCode}
                       setActiveBarCode={setActiveBarCode}
+                      setEquipmentArr={setEquipmentArr}
                     />
                   )
                 })
@@ -328,13 +332,20 @@ function Orders({ route }) {
           {activeIndex === 2 && orders.length && !activeBarCode ? (
             <>
               {windowWidth > 480 && <ActiveOrderHeader item={orders[0]} />}
-              <ActiveOrder
-                isPlaySound={isPlaySound}
-                setIsPlaySound={setIsPlaySound}
-                order={activeOrder}
-                orderStarted={orderStarted}
-                setActiveBarCode={setActiveBarCode}
-              />
+              {equipmentArr.length === 0 ? (
+                <ActiveOrder
+                  isPlaySound={isPlaySound}
+                  setIsPlaySound={setIsPlaySound}
+                  order={activeOrder}
+                  orderStarted={orderStarted}
+                  setActiveBarCode={setActiveBarCode}
+                />
+              ) : (
+                <Equipment
+                  equipmentArr={equipmentArr}
+                  setSelectedItems={setSelectedItems}
+                />
+              )}
             </>
           ) : null}
           {activeIndex === 3 && !activeBarCode ? (
@@ -468,9 +479,12 @@ function Orders({ route }) {
                   <Pressable
                     style={{
                       ...styles.container,
-                      backgroundColor: '#0080FF'
+                      backgroundColor:
+                        selectedItems.length > 0 ? '#0080FF' : 'gray'
                     }}
-                    onPress={() => setIsStartConfirmation(true)}
+                    onPress={() =>
+                      selectedItems.length > 0 && setIsStartConfirmation(true)
+                    }
                   >
                     <Text
                       style={{
