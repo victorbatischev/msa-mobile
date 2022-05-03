@@ -38,7 +38,6 @@ export const windowHeight = Dimensions.get('window').height
 
 export const carouselItems = [
   { title: 'Messages' },
-  { title: 'Materials' },
   { title: 'Order' },
   { title: 'Tech. maps' }
 ]

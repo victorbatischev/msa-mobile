@@ -47,7 +47,7 @@ function Orders({ route }) {
   const [isPlaySound, setIsPlaySound] = useState(false)
 
   const [activeOrder, setActiveOrder] = useState(null)
-  const [activeIndex, setActiveIndex] = useState(2)
+  const [activeIndex, setActiveIndex] = useState(1)
   const [activeBarCode, setActiveBarCode] = useState(false)
   const [orderStarted, setOrderStarted] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
@@ -55,8 +55,8 @@ function Orders({ route }) {
   const [previousOperation, setPreviousOperation] = useState([])
   const [isStartConfirmation, setIsStartConfirmation] = useState(false)
   const [isFinishConfirmation, setIsFinishConfirmation] = useState(false)
-  const [activeInput, setActiveInput] = useState(false)
   const [materialsArr, setMaterialsArr] = useState([])
+  const [showMaterialsComponent, setShowMaterialsComponent] = useState(true)
   const [equipmentArr, setEquipmentArr] = useState([])
   const [selectedItems, setSelectedItems] = useState([])
 
@@ -301,7 +301,7 @@ function Orders({ route }) {
             >
               <Carousel
                 ref={carousel}
-                firstItem={2}
+                firstItem={1}
                 activeSlideOffset={0}
                 swipeThreshold={0}
                 callbackOffsetMargin={20}
@@ -323,13 +323,6 @@ function Orders({ route }) {
             <MyMessages orderId={activeOrder?._id} userId={user.u_id} />
           ) : null}
           {activeIndex === 1 && orders.length && !activeBarCode ? (
-            <Materials
-              setActiveInput={setActiveInput}
-              materialsArr={materialsArr}
-              setMaterialsArr={setMaterialsArr}
-            />
-          ) : null}
-          {activeIndex === 2 && orders.length && !activeBarCode ? (
             <>
               {windowWidth > 480 && <ActiveOrderHeader item={orders[0]} />}
               {equipmentArr.length === 0 ? (
@@ -348,7 +341,7 @@ function Orders({ route }) {
               )}
             </>
           ) : null}
-          {activeIndex === 3 && !activeBarCode ? (
+          {activeIndex === 2 && !activeBarCode ? (
             <TechMaps operationId={activeOrder?.description?.o_id} />
           ) : null}
           {activeBarCode && orders.length ? (
@@ -373,7 +366,7 @@ function Orders({ route }) {
           </View>
         )}
       </View>
-      {windowWidth <= 480 && orders.length && !activeBarCode && !activeInput ? (
+      {windowWidth <= 480 && orders.length && !activeBarCode ? (
         <View style={{ width: '100%' }}>
           <OperationContainer order={activeOrder} />
           <View style={{ ...styles.center, height: 75 }}>
@@ -513,57 +506,69 @@ function Orders({ route }) {
       )}
       <Modal
         animationType='slide'
-        transparent={true}
+        transparent={false}
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
-        <View style={{ ...styles.container, backgroundColor: '#000' }}>
-          {activeOrder?.operation?.relation.map((item) => (
-            <Pressable
-              onPress={() => finishOrder(item.so_id, item._id)}
-              key={item._id}
-              style={{
-                ...styles.center,
-                ...styles.operationItem,
-                backgroundColor: item.bgr_color
-              }}
-            >
-              <Text
+        {/*===================================================================================================================================== */}
+        {showMaterialsComponent ? (
+          <Materials
+            materialsArr={materialsArr}
+            setMaterialsArr={setMaterialsArr}
+            setShowMaterialsComponent={setShowMaterialsComponent}
+          />
+        ) : (
+          <View style={{ ...styles.container, backgroundColor: '#000' }}>
+            {activeOrder?.operation?.relation.map((item) => (
+              <Pressable
+                onPress={() => finishOrder(item.so_id, item._id)}
+                key={item._id}
                 style={{
-                  fontFamily: 'Montserrat',
-                  fontSize: 18,
-                  color: '#fff'
+                  ...styles.center,
+                  ...styles.operationItem,
+                  backgroundColor: item.bgr_color
                 }}
               >
-                {item.result}
-              </Text>
-              <Image
-                style={{ width: 20, height: 20 }}
-                source={require('../assets/images/arrow_white.png')}
-              />
-            </Pressable>
-          ))}
-          <View style={{ marginTop: 100 }}>
-            <Pressable
-              style={{ ...styles.center, ...styles.cancelContainer }}
-              onPress={() => setModalVisible(false)}
-            >
-              <Image
-                style={{ width: 20, height: 20, marginRight: 15 }}
-                source={require('../assets/images/close.png')}
-              />
-              <Text
-                style={{
-                  fontFamily: 'Roboto',
-                  fontSize: 18,
-                  color: '#6C6F72'
+                <Text
+                  style={{
+                    fontFamily: 'Montserrat',
+                    fontSize: 18,
+                    color: '#fff'
+                  }}
+                >
+                  {item.result}
+                </Text>
+                <Image
+                  style={{ width: 20, height: 20 }}
+                  source={require('../assets/images/arrow_white.png')}
+                />
+              </Pressable>
+            ))}
+            <View style={{ marginTop: 100 }}>
+              <Pressable
+                style={{ ...styles.center, ...styles.cancelContainer }}
+                onPress={() => {
+                  setModalVisible(false)
+                  setShowMaterialsComponent(true)
                 }}
               >
-                Cancel
-              </Text>
-            </Pressable>
+                <Image
+                  style={{ width: 20, height: 20, marginRight: 15 }}
+                  source={require('../assets/images/close.png')}
+                />
+                <Text
+                  style={{
+                    fontFamily: 'Roboto',
+                    fontSize: 18,
+                    color: '#6C6F72'
+                  }}
+                >
+                  Cancel
+                </Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
+        )}
       </Modal>
     </View>
   )

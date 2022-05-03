@@ -9,12 +9,7 @@ import {
 } from 'react-native'
 import axios from 'axios'
 
-const MaterialItem = ({
-  setActiveInput,
-  materials,
-  setMaterialsArr,
-  index
-}) => {
+const MaterialItem = ({ materials, setMaterialsArr, index }) => {
   const changeCondition = () => {
     setMaterialsArr((prev) => {
       let copy = Object.assign([], prev)
@@ -46,8 +41,6 @@ const MaterialItem = ({
         style={materialItemStyles.input}
         keyboardType='numeric'
         textAlign='center'
-        onFocus={() => setActiveInput(true)}
-        onEndEditing={() => setActiveInput(false)}
         value={materials.value.toString()}
         onChangeText={(text) => changeValue(text)}
       />
@@ -84,33 +77,78 @@ const materialItemStyles = StyleSheet.create({
   }
 })
 
-const Materials = ({ setActiveInput, materialsArr, setMaterialsArr }) => {
+const Materials = ({
+  materialsArr,
+  setMaterialsArr,
+  setShowMaterialsComponent
+}) => {
   return (
-    <ScrollView style={materialsStyles.container}>
-      {materialsArr.length === 0 ? (
-        <Text>Loading... Please wait</Text>
-      ) : (
-        materialsArr.map((item, index) => {
-          return (
-            <MaterialItem
-              key={item._id}
-              setActiveInput={setActiveInput}
-              materials={materialsArr[index]}
-              setMaterialsArr={setMaterialsArr}
-              index={index}
-            />
-          )
-        })
-      )}
-    </ScrollView>
+    <>
+      <View style={materialsStyles.header}>
+        <Text style={materialsStyles.headerText}>
+          Materials, semi-finished products, finished products
+        </Text>
+      </View>
+      <ScrollView style={materialsStyles.container}>
+        {materialsArr.length === 0 ? (
+          <Text>Loading... Please wait</Text>
+        ) : (
+          <>
+            {materialsArr.map((item, index) => {
+              return (
+                <MaterialItem
+                  key={item._id}
+                  materials={materialsArr[index]}
+                  setMaterialsArr={setMaterialsArr}
+                  index={index}
+                />
+              )
+            })}
+            <Pressable
+              style={materialsStyles.okButton}
+              onPress={() => setShowMaterialsComponent(false)}
+            >
+              <Text style={materialsStyles.okButtonText}>Ok</Text>
+            </Pressable>
+          </>
+        )}
+      </ScrollView>
+    </>
   )
 }
 
 const materialsStyles = StyleSheet.create({
+  header: {
+    paddingHorizontal: 17,
+    paddingTop: 30,
+    paddingBottom: 19,
+    borderBottomWidth: 4,
+    borderBottomColor: '#00000020'
+  },
+  headerText: {
+    textAlign: 'center',
+    fontSize: 18,
+    fontFamily: 'Montserrat'
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
     padding: 17
+  },
+  okButton: {
+    marginTop: 50,
+    alignSelf: 'center',
+    width: 200,
+    height: 66,
+    backgroundColor: '#009C6D',
+    borderRadius: 4,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  okButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontFamily: 'Roboto'
   }
 })
 
