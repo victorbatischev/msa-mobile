@@ -80,7 +80,8 @@ const materialItemStyles = StyleSheet.create({
 const Materials = ({
   materialsArr,
   setMaterialsArr,
-  setShowMaterialsComponent
+  finishOrderParams,
+  finishOrder
 }) => {
   return (
     <>
@@ -106,7 +107,12 @@ const Materials = ({
             })}
             <Pressable
               style={materialsStyles.okButton}
-              onPress={() => setShowMaterialsComponent(false)}
+              onPress={() =>
+                finishOrder(
+                  finishOrderParams.nextOperationId,
+                  finishOrderParams.relationId
+                )
+              }
             >
               <Text style={materialsStyles.okButtonText}>Ok</Text>
             </Pressable>

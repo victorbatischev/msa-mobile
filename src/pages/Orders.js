@@ -56,9 +56,10 @@ function Orders({ route }) {
   const [isStartConfirmation, setIsStartConfirmation] = useState(false)
   const [isFinishConfirmation, setIsFinishConfirmation] = useState(false)
   const [materialsArr, setMaterialsArr] = useState([])
-  const [showMaterialsComponent, setShowMaterialsComponent] = useState(true)
+  const [showMaterialsComponent, setShowMaterialsComponent] = useState(false)
   const [equipmentArr, setEquipmentArr] = useState([])
   const [selectedItems, setSelectedItems] = useState([])
+  const [finishOrderParams, setFinishOrderParams] = useState(null)
 
   const carousel = useRef()
 
@@ -510,18 +511,51 @@ function Orders({ route }) {
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
-        {/*===================================================================================================================================== */}
         {showMaterialsComponent ? (
           <Materials
             materialsArr={materialsArr}
             setMaterialsArr={setMaterialsArr}
-            setShowMaterialsComponent={setShowMaterialsComponent}
+            finishOrderParams={finishOrderParams}
+            finishOrder={finishOrder}
           />
         ) : (
-          <View style={{ ...styles.container, backgroundColor: '#000' }}>
+          <View
+            style={{
+              ...styles.container,
+              backgroundColor: '#fff',
+              justifyContent: 'flex-start'
+            }}
+          >
+            <View
+              style={{
+                width: '100%',
+                paddingHorizontal: 17,
+                paddingTop: 30,
+                paddingBottom: 40,
+                borderBottomWidth: 4,
+                borderBottomColor: '#00000020',
+                marginBottom: 60
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 18,
+                  fontFamily: 'Montserrat'
+                }}
+              >
+                Operation result
+              </Text>
+            </View>
             {activeOrder?.operation?.relation.map((item) => (
               <Pressable
-                onPress={() => finishOrder(item.so_id, item._id)}
+                onPress={() => {
+                  setShowMaterialsComponent(true)
+                  setFinishOrderParams({
+                    nextOperationId: item.so_id,
+                    relationId: item._id
+                  })
+                }}
                 key={item._id}
                 style={{
                   ...styles.center,
@@ -544,12 +578,11 @@ function Orders({ route }) {
                 />
               </Pressable>
             ))}
-            <View style={{ marginTop: 100 }}>
+            <View style={{ position: 'absolute', bottom: 30 }}>
               <Pressable
                 style={{ ...styles.center, ...styles.cancelContainer }}
                 onPress={() => {
                   setModalVisible(false)
-                  setShowMaterialsComponent(true)
                 }}
               >
                 <Image
