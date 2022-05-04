@@ -36,7 +36,6 @@ import arrowNotMain from '../assets/icons/arrowNotMain.jpg'
 import okButton from '../assets/images/ok.png'
 import closeButton from '../assets/images/close.png'
 import Materials from '../components/Materials'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Equipment from '../components/Equipment'
 
 function Orders({ route }) {
