@@ -125,6 +125,13 @@ function Orders({ route }) {
         }, 10000)
       })
       .catch((err) => console.error(err))
+    axios.put(
+      'equipment_busy',
+      selectedItems.map((item) => ({
+        _id: item,
+        occupied: true
+      }))
+    )
   }
 
   const finishOrder = (nextOperationId, relationId) => {
@@ -144,6 +151,13 @@ function Orders({ route }) {
         Alert.alert('MSA Mobile', 'Your operation has been completed.')
       })
       .catch((err) => console.error(err))
+    axios.put(
+      'equipment_busy',
+      selectedItems.map((item) => ({
+        _id: item,
+        occupied: false
+      }))
+    )
   }
 
   useEffect(() => {

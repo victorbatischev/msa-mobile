@@ -2,7 +2,6 @@ import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import { windowHeight } from '../../Constants'
 import OperationContainer from '../OperationContainer/OperationContainer'
-// import StartBlock from '../StartBlock'
 import StartBlock from '../StartBlock/StartBlock'
 
 const RightBlock = ({
