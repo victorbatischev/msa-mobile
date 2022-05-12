@@ -16,27 +16,25 @@ import { StatusBar } from 'expo-status-bar'
 import * as Updates from 'expo-updates'
 import { Stopwatch } from '../lib/react-native-stopwatch-timer'
 
-import Header from '../components/Header'
-import Order from '../components/Order'
-import MenuItem from '../components/MenuItem'
-import ActiveOrder from '../components/ActiveOrder'
-import BarCode from '../components/BarCode'
-import TechMaps from '../components/TechMaps'
+import Header from '../components/Header/Header'
+import Order from '../components/Order/Order'
+import MenuItem from '../components/MenuItem/MenuItem'
+import ActiveOrder from '../components/ActiveOrder/ActiveOrder'
+import BarCode from '../components/BarCode/BarCode'
+import TechMaps from '../components/TechMaps/TechMaps'
 import ActiveOrderHeader from '../components/Adaptive/ActiveOrderHeader'
 import RightBlock from '../components/Adaptive/RightBlock'
-import OrderCancelModal from '../components/OrderCancelModal'
-import MyMessages from '../components/MyMessages'
-import OperationContainer from '../components/OperationContainer'
-
+import OrderCancelModal from '../components/OrderCancelModal/OrderCancelModal'
+import Messages from '../components/Messages/Messages'
+import OperationContainer from '../components/OperationContainer/OperationContainer'
 import styles from '../styles/Styles'
 import { carouselItems, windowWidth, options } from '../Constants'
-
 import arrowMain from '../assets/icons/arrowMain.jpg'
 import arrowNotMain from '../assets/icons/arrowNotMain.jpg'
 import okButton from '../assets/images/ok.png'
 import closeButton from '../assets/images/close.png'
-import Materials from '../components/Materials'
-import Equipment from '../components/Equipment'
+import Materials from '../components/Materials/Materials'
+import Equipment from '../components/Equipment/Equipment'
 
 function Orders({ route }) {
   const [user, setUser] = useState(null)
@@ -181,11 +179,13 @@ function Orders({ route }) {
   }, [modalVisible])
 
   useEffect(() => {
-    axios
-      .get(`order_id_worker/${activeOrder?._id}/${user?.u_id}/`)
-      .then((res) =>
-        setMaterialsArr(res.data[0].operation.relation[0].function)
-      )
+    if (activeOrder) {
+      axios
+        .get(`order_id_worker/${activeOrder._id}/${user?.u_id}/`)
+        .then((res) =>
+          setMaterialsArr(res.data[0].operation.relation[0].function)
+        )
+    }
   }, [activeOrder?._id])
 
   const renderCarouselItem = ({ item, index }) => {
@@ -320,7 +320,7 @@ function Orders({ route }) {
             </View>
           )}
           {activeIndex === 0 && orders.length && !activeBarCode ? (
-            <MyMessages orderId={activeOrder?._id} userId={user.u_id} />
+            <Messages orderId={activeOrder?._id} userId={user.u_id} />
           ) : null}
           {activeIndex === 1 && orders.length && !activeBarCode ? (
             <>
