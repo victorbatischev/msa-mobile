@@ -14,8 +14,8 @@ const Order = ({
   idx,
   activeBarCode,
   setActiveBarCode,
-  icon,
-  setEquipmentArr
+  icon
+  //setEquipmentArr
 }) => {
   const [ImgTag, setImgTag] = useState('')
 
@@ -24,15 +24,19 @@ const Order = ({
     [item, ImgTag]
   )
 
+  // const equipmentRequest = (o_id) => {
+  //   axios.get(`equipment_o_id/${o_id}`).then((res) => {
+  //     setEquipmentArr(res.data)
+  //   })
+  // }
+
   useEffect(() => {
     imgCreate()
   }, [item])
 
-  useEffect(() => {
-    axios.get(`equipment_o_id/${item.operation.o_id}`).then((res) => {
-      setEquipmentArr(res.data)
-    })
-  }, [])
+  // useEffect(() => {
+  //   equipmentRequest(item.operation.o_id)
+  // }, [item.operation.o_id])
 
   const imgCreate = () => {
     if (item._id) {

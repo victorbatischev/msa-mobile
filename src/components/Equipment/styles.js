@@ -18,6 +18,12 @@ const styles = StyleSheet.create({
   headetText: {
     fontSize: 18,
     fontFamily: 'Montserrat'
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 30,
+    height: 30
   }
 })
 

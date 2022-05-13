@@ -212,6 +212,19 @@ function Orders({ route }) {
       />
     )
   }
+
+  const equipmentRequest = (o_id) => {
+    axios.get(`equipment_o_id/${o_id}`).then((res) => {
+      setEquipmentArr(res.data)
+    })
+  }
+
+  useEffect(() => {
+    if (activeOrder) {
+      equipmentRequest(activeOrder.description.o_id)
+    }
+  }, [activeOrder?.operation._id])
+
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
       <StatusBar style='light' translucent={false} />
@@ -235,7 +248,7 @@ function Orders({ route }) {
                       idx={idx}
                       activeBarCode={activeBarCode}
                       setActiveBarCode={setActiveBarCode}
-                      setEquipmentArr={setEquipmentArr}
+                      // setEquipmentArr={setEquipmentArr}
                     />
                   )
                 })
@@ -351,6 +364,8 @@ function Orders({ route }) {
                 <Equipment
                   equipmentArr={equipmentArr}
                   setSelectedItems={setSelectedItems}
+                  o_id={activeOrder.description.o_id}
+                  equipmentRequest={equipmentRequest}
                 />
               )}
             </>
