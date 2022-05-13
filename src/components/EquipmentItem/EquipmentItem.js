@@ -31,11 +31,18 @@ const EquipmentItem = ({ id, title, isBusy, setSelectedItems }) => {
 
   return (
     <Pressable style={styles.container} onPress={itemHandler}>
-      <View style={[styles.checkIcon, { opacity: isChecked ? 1 : 0 }]}>
-        <Image
-          source={require('../../assets/images/ok.png')}
-          style={styles.okButton}
-        />
+      <View
+        style={[
+          styles.checkIcon,
+          { backgroundColor: isChecked ? '#0080FF' : '#F2F2F2' }
+        ]}
+      >
+        {isChecked && (
+          <Image
+            source={require('../../assets/images/ok.png')}
+            style={styles.okButton}
+          />
+        )}
       </View>
       <Text style={styles.title}>{title}</Text>
       <View style={[styles.busy, { opacity: isBusy ? 1 : 0 }]}>

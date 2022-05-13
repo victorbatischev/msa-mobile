@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   checkIcon: {
     width: 30,
     height: 30,
-    backgroundColor: '#0080FF',
+    //backgroundColor: '#0080FF',
     alignItems: 'center',
     borderRadius: 4
   },
