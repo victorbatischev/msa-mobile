@@ -55,6 +55,7 @@ function Orders({ route }) {
   const [materialsArr, setMaterialsArr] = useState([])
   const [showMaterialsComponent, setShowMaterialsComponent] = useState(false)
   const [equipmentArr, setEquipmentArr] = useState([])
+  const [isEquipmentVisible, setIsEquipmentVisible] = useState(true)
   const [selectedItems, setSelectedItems] = useState([])
   const [finishOrderParams, setFinishOrderParams] = useState(null)
 
@@ -102,6 +103,7 @@ function Orders({ route }) {
   }
 
   const startOrder = () => {
+    setIsEquipmentVisible(false)
     axios
       .put('order_worker_start', {
         order_id: activeOrder?._id,
@@ -111,7 +113,7 @@ function Orders({ route }) {
       .then(() => {
         setIsStartConfirmation(false)
         setOrderStarted(true)
-        checkCancelOrder = setInterval(async () => {
+        const checkCancelOrder = setInterval(async () => {
           await axios
             .get(`order_worker_active/${user.u_id}`)
             .then(async (res) => {
@@ -352,7 +354,7 @@ function Orders({ route }) {
           {activeIndex === 1 && orders.length && !activeBarCode ? (
             <>
               {windowWidth > 480 && <ActiveOrderHeader item={orders[0]} />}
-              {equipmentArr.length === 0 ? (
+              {equipmentArr.length === 0 || !isEquipmentVisible ? (
                 <ActiveOrder
                   isPlaySound={isPlaySound}
                   setIsPlaySound={setIsPlaySound}
@@ -364,7 +366,7 @@ function Orders({ route }) {
                 <Equipment
                   equipmentArr={equipmentArr}
                   setSelectedItems={setSelectedItems}
-                  o_id={activeOrder.description.o_id}
+                  o_id={activeOrder?.description.o_id}
                   equipmentRequest={equipmentRequest}
                 />
               )}

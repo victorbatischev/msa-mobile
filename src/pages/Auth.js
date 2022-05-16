@@ -16,8 +16,8 @@ let customFonts = {
 }
 
 function Auth({ navigation }) {
-  const [login, setLogin] = useState('brown')
-  const [password, setPassword] = useState('102030')
+  const [login, setLogin] = useState('')
+  const [password, setPassword] = useState('')
   const [appIsReady, setAppIsReady] = useState(false)
   const [showError, setShowError] = useState(false)
 
