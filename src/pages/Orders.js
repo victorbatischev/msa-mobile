@@ -577,7 +577,7 @@ function Orders({ route }) {
                 Operation result
               </Text>
             </View>
-            {activeOrder?.operation?.relation.map((item) => (
+            {activeOrder?.operation.relation.map((item) => (
               <Pressable
                 onPress={() => {
                   setShowMaterialsComponent(true)

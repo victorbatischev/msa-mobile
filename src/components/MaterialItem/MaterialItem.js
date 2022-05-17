@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { View, Text, Pressable, TextInput } from 'react-native'
 import styles from './styles'
 
@@ -25,13 +25,13 @@ const MaterialItem = ({ materials, setMaterialsArr, index }) => {
   }
 
   return (
-    <View style={materialItemStyles.container}>
-      <Text style={materialItemStyles.title}>{materials.path}</Text>
-      <Pressable style={materialItemStyles.sign} onPress={changeCondition}>
+    <View style={styles.container}>
+      <Text style={styles.title}>{materials.path}</Text>
+      <Pressable style={styles.sign} onPress={changeCondition}>
         <Text>{materials.condition == 'minus' ? '-' : '+'}</Text>
       </Pressable>
       <TextInput
-        style={materialItemStyles.input}
+        style={styles.input}
         keyboardType='numeric'
         textAlign='center'
         value={materials.value.toString()}
