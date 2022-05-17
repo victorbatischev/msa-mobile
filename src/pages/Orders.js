@@ -194,15 +194,25 @@ function Orders({ route }) {
     if (modalVisible) setIsFinishConfirmation(false)
   }, [modalVisible])
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   if (activeOrder) {
+  //     axios
+  //       .get(`order_id_worker/${activeOrder._id}/${user?.u_id}/`)
+  //       .then((res) =>
+  //         setMaterialsArr(res.data[0].operation.relation[0].function)
+  //       )
+  //   }
+  // }, [activeOrder?._id])
+
+  const maretialsRequest = (index) => {
     if (activeOrder) {
       axios
         .get(`order_id_worker/${activeOrder._id}/${user?.u_id}/`)
         .then((res) =>
-          setMaterialsArr(res.data[0].operation.relation[0].function)
+          setMaterialsArr(res.data[0].operation.relation[index].function)
         )
     }
-  }, [activeOrder?._id])
+  }
 
   const renderCarouselItem = ({ item, index }) => {
     return (
@@ -577,14 +587,24 @@ function Orders({ route }) {
                 Operation result
               </Text>
             </View>
-            {activeOrder?.operation.relation.map((item) => (
+            {activeOrder?.operation.relation.map((item, index) => (
               <Pressable
                 onPress={() => {
-                  setShowMaterialsComponent(true)
                   setFinishOrderParams({
                     nextOperationId: item.so_id,
                     relationId: item._id
                   })
+                  if (
+                    activeOrder?.operation.relation[index].function.length > 0
+                  ) {
+                    maretialsRequest(index)
+                    setShowMaterialsComponent(true)
+                  } else {
+                    finishOrder(
+                      finishOrderParams.nextOperationId,
+                      finishOrderParams.relationId
+                    )
+                  }
                 }}
                 key={item._id}
                 style={{
