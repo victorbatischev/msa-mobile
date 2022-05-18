@@ -90,6 +90,14 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 14,
     width: '85%'
+  },
+  okButton: {
+    width: 204,
+    height: 70,
+    backgroundColor: '#0080FF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20
   }
 })
 

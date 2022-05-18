@@ -59,6 +59,8 @@ function Orders({ route }) {
   const [selectedItems, setSelectedItems] = useState([])
   const [finishOrderParams, setFinishOrderParams] = useState(null)
 
+  //Для Фоновой таски
+
   const carousel = useRef()
 
   const logOut = async () => {

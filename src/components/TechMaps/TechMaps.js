@@ -1,6 +1,14 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { View, Text, Image, Pressable, Modal, Dimensions } from 'react-native'
+import {
+  ActivityIndicator,
+  View,
+  Text,
+  Image,
+  Pressable,
+  Modal,
+  Dimensions
+} from 'react-native'
 import AppIntroSlider from 'react-native-app-intro-slider'
 import ImageZoom from 'react-native-image-pan-zoom'
 import { Video } from 'expo-av'
@@ -95,7 +103,7 @@ const TechMaps = ({ operationId }) => {
           activeDotStyle={{ backgroundColor: '#009C6D' }}
         />
       ) : (
-        <Text>loading...</Text>
+        <ActivityIndicator size='large' color='#000088' />
       )}
       <Modal visible={modalVisible} transparent={false}>
         <Pressable

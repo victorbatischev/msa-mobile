@@ -209,14 +209,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                   />
                 </View>
                 <Pressable
-                  style={{
-                    width: 204,
-                    height: 70,
-                    backgroundColor: '#0080FF',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginTop: 20
-                  }}
+                  style={componentStyles.okButton}
                   onPress={() => sendFormData()}
                 >
                   <Text style={{ color: '#fff', fontSize: 24 }}>OK!</Text>
@@ -233,15 +226,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
                       style={{ width: 20, height: 20, marginRight: 15 }}
                       source={require('../../assets/images/close.png')}
                     />
-                    <Text
-                      style={{
-                        fontFamily: 'Roboto',
-                        fontSize: 18,
-                        color: '#6C6F72'
-                      }}
-                    >
-                      Cancel
-                    </Text>
+                    <Text style={componentStyles.cancelText}>Cancel</Text>
                   </Pressable>
                 </View>
               </View>

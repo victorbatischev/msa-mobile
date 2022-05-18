@@ -1,5 +1,11 @@
 import React from 'react'
-import { View, Text, ScrollView, Pressable } from 'react-native'
+import {
+  ActivityIndicator,
+  View,
+  Text,
+  ScrollView,
+  Pressable
+} from 'react-native'
 import MaterialItem from '../MaterialItem/MaterialItem'
 import styles from './styles'
 
@@ -18,7 +24,7 @@ const Materials = ({
       </View>
       <ScrollView style={styles.container}>
         {materialsArr.length === 0 ? (
-          <Text>Loading... Please wait</Text>
+          <ActivityIndicator size='large' color='#000088' />
         ) : (
           <>
             {materialsArr.map((item, index) => {
