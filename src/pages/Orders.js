@@ -35,12 +35,51 @@ import okButton from '../assets/images/ok.png'
 import closeButton from '../assets/images/close.png'
 import Materials from '../components/Materials/Materials'
 import Equipment from '../components/Equipment/Equipment'
+import * as TaskManager from 'expo-task-manager'
+import * as BackgroundFetch from 'expo-background-fetch'
+import * as Notifications from 'expo-notifications'
+
+// Счетчик заказов
+
+let ordersCount = 0
+
+///////
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false
+  })
+})
+async function schedulePushNotification() {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: 'New order 📬',
+      body: 'You have a new order'
+    },
+    trigger: { seconds: 2 }
+  })
+}
+
+const BACKGROUND_FETCH_TASK = 'background-fetch'
+
+TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
+  const user = await JSON.parse(await AsyncStorage.getItem('user'))
+  axios.get(`order_worker/${user?.u_id}`).then((res) => {
+    if (res.data.length > ordersCount) {
+      schedulePushNotification()
+      ordersCount = res.data.length
+    }
+  })
+
+  return 2
+})
 
 function Orders({ route }) {
   const [user, setUser] = useState(null)
   const [orders, setOrders] = useState([])
 
-  const [ordersCount, setOrdersCount] = useState(0)
   const [isPlaySound, setIsPlaySound] = useState(false)
 
   const [activeOrder, setActiveOrder] = useState(null)
@@ -59,7 +98,37 @@ function Orders({ route }) {
   const [selectedItems, setSelectedItems] = useState([])
   const [finishOrderParams, setFinishOrderParams] = useState(null)
 
-  //Для Фоновой таски
+  //////////////////////Для BackgroundFetch
+
+  const [isRegistered, setIsRegistered] = useState(false)
+  const [status, setStatus] = useState(null)
+
+  useEffect(() => {
+    toggleFetchTask()
+  }, [])
+
+  const checkStatusAsync = async () => {
+    const status = await BackgroundFetch.getStatusAsync()
+    const isRegistered = await TaskManager.isTaskRegisteredAsync(
+      BACKGROUND_FETCH_TASK
+    )
+    setStatus(status)
+    setIsRegistered(isRegistered)
+  }
+
+  const toggleFetchTask = async () => {
+    await registerBackgroundFetchAsync()
+    checkStatusAsync()
+  }
+
+  async function registerBackgroundFetchAsync() {
+    return BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
+      minimumInterval: 1, // 1 minute
+      stopOnTerminate: false, // android only,
+      startOnBoot: true // android only
+    })
+  }
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   const carousel = useRef()
 
@@ -79,12 +148,10 @@ function Orders({ route }) {
   const getOrders = (user) => {
     axios.get(`order_worker/${user.u_id}`).then((res) => {
       setOrders(res.data)
-      setOrdersCount((prev) => {
-        if (res.data.length > prev) {
-          setIsPlaySound(true)
-        }
-        return res.data.length
-      })
+      if (res.data.length > ordersCount) {
+        setIsPlaySound(true)
+        ordersCount = res.data.length
+      }
       if (res.data.length) {
         getOrderInfo(res.data[0]._id, user.u_id)
         getPreviousOperation(user)
@@ -195,16 +262,6 @@ function Orders({ route }) {
   useEffect(() => {
     if (modalVisible) setIsFinishConfirmation(false)
   }, [modalVisible])
-
-  // useEffect(() => {
-  //   if (activeOrder) {
-  //     axios
-  //       .get(`order_id_worker/${activeOrder._id}/${user?.u_id}/`)
-  //       .then((res) =>
-  //         setMaterialsArr(res.data[0].operation.relation[0].function)
-  //       )
-  //   }
-  // }, [activeOrder?._id])
 
   const maretialsRequest = (index) => {
     if (activeOrder) {
@@ -373,6 +430,7 @@ function Orders({ route }) {
                   order={activeOrder}
                   orderStarted={orderStarted}
                   setActiveBarCode={setActiveBarCode}
+                  schedulePushNotification={schedulePushNotification}
                 />
               ) : (
                 <Equipment

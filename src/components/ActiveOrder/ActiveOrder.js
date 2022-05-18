@@ -6,14 +6,14 @@ import componentStyles from './styles'
 import styles from '../../styles/Styles'
 import { windowWidth, jsonTreeTheme, windowHeight } from '../../Constants'
 import { Audio } from 'expo-av'
-import * as Notifications from 'expo-notifications'
 
 const ActiveOrder = ({
   order,
   orderStarted,
   isPlaySound,
   setIsPlaySound,
-  setActiveBarCode
+  setActiveBarCode,
+  schedulePushNotification
 }) => {
   const [sound, setSound] = useState()
   async function playSound() {
@@ -22,22 +22,6 @@ const ActiveOrder = ({
     )
     setSound(sound)
     await sound.playAsync()
-  }
-  Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldPlaySound: true,
-      shouldSetBadge: false
-    })
-  })
-  async function schedulePushNotification() {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: 'New order 📬',
-        body: 'You have a new order'
-      },
-      trigger: { seconds: 2 }
-    })
   }
 
   useEffect(() => {
