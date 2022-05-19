@@ -82,7 +82,7 @@ function Auth({ navigation }) {
           .then(() => {
             setLogin('')
             setPassword('')
-            navigation.navigate('Orders', { userName: userData.data[0].name })
+            navigation.navigate('Main', { userName: userData.data[0].name })
           })
       })
       .catch((err) => {
