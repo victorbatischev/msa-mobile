@@ -1,10 +1,12 @@
 import React from 'react'
 import { View, Text } from 'react-native'
+import { useSelector } from 'react-redux'
 import { windowWidth } from '../../Constants'
 import styles from '../../styles/Styles'
 import componentStyles from './styles'
 
-const OperationContainer = ({ order }) => {
+const OperationContainer = () => {
+  const name = useSelector((state) => state.main.activeOrder?.description?.name)
   return (
     <View
       style={{
@@ -14,9 +16,7 @@ const OperationContainer = ({ order }) => {
       }}
     >
       <Text style={componentStyles.operationText}>Operation</Text>
-      <Text style={componentStyles.descriptionNameText}>
-        {order?.description?.name}
-      </Text>
+      <Text style={componentStyles.descriptionNameText}>{name}</Text>
     </View>
   )
 }

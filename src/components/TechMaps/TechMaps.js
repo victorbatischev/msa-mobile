@@ -14,8 +14,12 @@ import ImageZoom from 'react-native-image-pan-zoom'
 import { Video } from 'expo-av'
 import * as WebBrowser from 'expo-web-browser'
 import styles from './styles'
+import { useSelector } from 'react-redux'
 
-const TechMaps = ({ operationId }) => {
+const TechMaps = () => {
+  const operationId = useSelector(
+    (state) => state.main.activeOrder.description?.o_id
+  )
   const [mapsArr, setMapsArr] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
   const [item, setItem] = useState(null)

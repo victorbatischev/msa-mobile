@@ -3,6 +3,9 @@ import {
   SET_ACTIVE_INDEX,
   SET_ACTIVE_ORDER,
   SET_CONFIRMATION,
+  SET_EQUIPMENT_ARR,
+  SET_EQUIPMENT_VISIBLE,
+  SET_FINISH_ORDER_PARAMS,
   SET_MATERIALS_ARR,
   SET_MATERIALS_CONDITION,
   SET_MATERIALS_VALUE,
@@ -12,6 +15,8 @@ import {
   SET_ORDER_STARTED,
   SET_PLAY_SOUND,
   SET_PRIVIOUS_OPERATION,
+  SET_SELECTED_ITEMS_CHECKED,
+  SET_SELECTED_ITEMS_UNCHECKED,
   SET_SHOW_MATERIALS_COMPONENT,
   SET_USER
 } from './actionTypes'
@@ -120,6 +125,41 @@ export const setMaterialsValue = (data, materials, index) => {
 export const setShowMaterialsComponent = (data) => {
   return {
     type: SET_SHOW_MATERIALS_COMPONENT,
+    data
+  }
+}
+
+export const setEquipmentArr = (data) => {
+  return {
+    type: SET_EQUIPMENT_ARR,
+    data
+  }
+}
+
+export const setIsEquipmentVisible = (data) => {
+  return {
+    type: SET_EQUIPMENT_VISIBLE,
+    data
+  }
+}
+
+export const setSelectedItemsCheced = (id) => {
+  return {
+    type: SET_SELECTED_ITEMS_CHECKED,
+    id
+  }
+}
+
+export const setSelectedItemsUnCheced = (id) => {
+  return {
+    type: SET_SELECTED_ITEMS_UNCHECKED,
+    id
+  }
+}
+
+export const setFinishOrderParams = (data) => {
+  return {
+    type: SET_FINISH_ORDER_PARAMS,
     data
   }
 }

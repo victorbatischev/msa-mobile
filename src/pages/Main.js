@@ -35,7 +35,9 @@ import {
   setModalVisible,
   setOrderCancelModalVisible,
   setPreviousOperation,
-  setIsConfirmation
+  setIsConfirmation,
+  setEquipmentArr,
+  setIsEquipmentVisible
 } from '../redux/actionCreators'
 
 // Счетчик заказов
@@ -91,26 +93,11 @@ function Main({ route }) {
   const showMaterialsComponent = useSelector(
     (state) => state.main.showMaterialsComponent
   )
-
-  // const [user, setUser] = useState(null)
-  // const [orders, setOrders] = useState([])
-
-  // const [isPlaySound, setIsPlaySound] = useState(false)
-
-  // const [activeOrder, setActiveOrder] = useState(null)
-  // const [activeIndex, setActiveIndex] = useState(1)
-  // const [activeBarCode, setActiveBarCode] = useState(false)
-  // const [orderStarted, setOrderStarted] = useState(false)
-  // const [modalVisible, setModalVisible] = useState(false)
-  // const [orderCancelModalVisible, setOrderCancelModalVisible] = useState(false)
-  // const [previousOperation, setPreviousOperation] = useState([])
-  // const [isConfirmation, setIsConfirmation] = useState(false)
-  // const [materialsArr, setMaterialsArr] = useState([])
-  // const [showMaterialsComponent, setShowMaterialsComponent] = useState(false)
-  const [equipmentArr, setEquipmentArr] = useState([])
-  const [isEquipmentVisible, setIsEquipmentVisible] = useState(true)
-  const [selectedItems, setSelectedItems] = useState([])
-  const [finishOrderParams, setFinishOrderParams] = useState(null)
+  const equipmentArr = useSelector((state) => state.main.equipmentArr)
+  const isEquipmentVisible = useSelector(
+    (state) => state.main.isEquipmentVisible
+  )
+  const selectedItems = useSelector((state) => state.main.selectedItems)
 
   //////////////////////Для BackgroundFetch
 
@@ -184,7 +171,7 @@ function Main({ route }) {
   }
 
   const startOrder = () => {
-    setIsEquipmentVisible(false)
+    dispatch(setIsEquipmentVisible(false))
     axios
       .put('order_worker_start', {
         order_id: activeOrder?._id,
@@ -277,7 +264,7 @@ function Main({ route }) {
 
   const equipmentRequest = (o_id) => {
     axios.get(`equipment_o_id/${o_id}`).then((res) => {
-      setEquipmentArr(res.data)
+      dispatch(setEquipmentArr(res.data))
     })
   }
 
@@ -291,59 +278,40 @@ function Main({ route }) {
     <View style={{ flex: 1, alignItems: 'center' }}>
       <StatusBar style='light' translucent={false} />
       <Header logOut={logOut} userName={route.params.userName} />
-      {!activeBarCode && <Orders orders={orders} />}
+      {!activeBarCode && <Orders />}
       <View style={{ flexDirection: 'row', width: '100%', flex: 1 }}>
         <View style={{ flex: 3 }}>
           {!activeBarCode && <Carousel />}
           {activeIndex === 0 && orders.length && !activeBarCode ? (
-            <Messages orderId={activeOrder?._id} userId={user.u_id} />
+            <Messages />
           ) : null}
           {activeIndex === 1 && orders.length && !activeBarCode ? (
             <>
-              {windowWidth > 480 && <ActiveOrderHeader item={orders[0]} />}
+              {windowWidth > 480 && <ActiveOrderHeader />}
               {equipmentArr.length === 0 || !isEquipmentVisible ? (
                 <ActiveOrder
-                  order={activeOrder}
                   schedulePushNotification={schedulePushNotification}
                 />
               ) : (
-                <Equipment
-                  equipmentArr={equipmentArr}
-                  setSelectedItems={setSelectedItems}
-                  o_id={activeOrder?.description.o_id}
-                  equipmentRequest={equipmentRequest}
-                />
+                <Equipment equipmentRequest={equipmentRequest} />
               )}
             </>
           ) : null}
-          {activeIndex === 2 && !activeBarCode ? (
-            <TechMaps operationId={activeOrder?.description?.o_id} />
-          ) : null}
-          {activeBarCode && orders.length ? <BarCode orders={orders} /> : null}
+          {activeIndex === 2 && !activeBarCode ? <TechMaps /> : null}
+          {activeBarCode && orders.length ? <BarCode /> : null}
         </View>
-        {windowWidth > 480 && (
-          <RightBlock
-            order={activeOrder}
-            startOrder={startOrder}
-            selectedItems={selectedItems}
-            equipmentArr={equipmentArr}
-          />
-        )}
+        {windowWidth > 480 && <RightBlock startOrder={startOrder} />}
       </View>
       {windowWidth <= 480 && orders.length && !activeBarCode ? (
         <View style={{ width: '100%' }}>
-          <OperationContainer order={activeOrder} />
+          <OperationContainer />
           <View style={{ ...styles.center, height: 75 }}>
             <Timer />
-            <StartFinishButton
-              selectedItems={selectedItems}
-              equipmentArr={equipmentArr}
-              startOrder={startOrder}
-            />
+            <StartFinishButton startOrder={startOrder} />
           </View>
         </View>
       ) : null}
-      {orderCancelModalVisible && <OrderCancelModal item={orders[0]} />}
+      {orderCancelModalVisible && <OrderCancelModal />}
       <Modal
         animationType='slide'
         transparent={false}
@@ -351,17 +319,9 @@ function Main({ route }) {
         onRequestClose={() => dispatch(setModalVisible(false))}
       >
         {showMaterialsComponent ? (
-          <Materials
-            finishOrderParams={finishOrderParams}
-            finishOrder={finishOrder}
-          />
+          <Materials finishOrder={finishOrder} />
         ) : (
-          <OperationResult
-            activeOrder={activeOrder}
-            user={user}
-            setFinishOrderParams={setFinishOrderParams}
-            finishOrder={finishOrder}
-          />
+          <OperationResult finishOrder={finishOrder} />
         )}
       </Modal>
     </View>

@@ -5,10 +5,12 @@ import { setModalVisible, setIsConfirmation } from '../../redux/actionCreators'
 import styles from '../../styles/Styles'
 import componentStyles from './styles'
 
-const StartFinishButton = ({ selectedItems, equipmentArr, startOrder }) => {
+const StartFinishButton = ({ startOrder }) => {
   const dispatch = useDispatch()
   const orderStarted = useSelector((state) => state.main.orderStarted)
   const isConfirmation = useSelector((state) => state.main.isConfirmation)
+  const equipmentArr = useSelector((state) => state.main.equipmentArr)
+  const selectedItems = useSelector((state) => state.main.selectedItems)
   return (
     <View style={componentStyles.container}>
       {isConfirmation ? (

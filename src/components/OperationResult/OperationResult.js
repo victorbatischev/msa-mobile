@@ -3,25 +3,25 @@ import { View, Text, Pressable, Image } from 'react-native'
 import styles from '../../styles/Styles'
 import axios from 'axios'
 import componentStyles from './styles'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   setModalVisible,
   setMaterialsArr,
-  setShowMaterialsComponent
+  setShowMaterialsComponent,
+  setFinishOrderParams
 } from '../../redux/actionCreators'
 
-const OperationResult = ({
-  activeOrder,
-  user,
-  setFinishOrderParams,
-  finishOrder
-}) => {
+const OperationResult = ({ finishOrder }) => {
   const dispatch = useDispatch()
+
+  const activeOrder = useSelector((state) => state.main.activeOrder)
+
+  const userId = useSelector((state) => state.main.user.u_id)
 
   const maretialsRequest = (index) => {
     if (activeOrder) {
       axios
-        .get(`order_id_worker/${activeOrder._id}/${user?.u_id}/`)
+        .get(`order_id_worker/${activeOrder._id}/${userId}/`)
         .then((res) =>
           dispatch(
             setMaterialsArr(res.data[0].operation.relation[index].function)
@@ -44,10 +44,12 @@ const OperationResult = ({
       {activeOrder?.operation.relation.map((item, index) => (
         <Pressable
           onPress={() => {
-            setFinishOrderParams({
-              nextOperationId: item.so_id,
-              relationId: item._id
-            })
+            dispatch(
+              setFinishOrderParams({
+                nextOperationId: item.so_id,
+                relationId: item._id
+              })
+            )
             if (activeOrder?.operation.relation[index].function.length > 0) {
               maretialsRequest(index)
               dispatch(setShowMaterialsComponent(true))

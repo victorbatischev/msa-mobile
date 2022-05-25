@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, Image, Pressable } from 'react-native'
+import { useDispatch } from 'react-redux'
+import {
+  setSelectedItemsCheced,
+  setSelectedItemsUnCheced
+} from '../../redux/actionCreators'
 import styles from './styles'
 
 const EquipmentItem = ({ id, title, isBusy, setSelectedItems }) => {
+  const dispatch = useDispatch()
+
   const [isChecked, setIsChecked] = useState(false)
 
   useEffect(() => {
@@ -17,15 +24,17 @@ const EquipmentItem = ({ id, title, isBusy, setSelectedItems }) => {
 
   const setArr = () => {
     if (isChecked) {
-      setSelectedItems((prev) => {
-        let copy = Object.assign([], prev)
-        copy.push(id)
-        return copy
-      })
+      // setSelectedItems((prev) => {
+      //   let copy = Object.assign([], prev)
+      //   copy.push(id)
+      //   return copy
+      // })
+      dispatch(setSelectedItemsCheced(id))
     } else {
-      setSelectedItems((prev) => {
-        return prev.filter((value) => value !== id)
-      })
+      // setSelectedItems((prev) => {
+      //   return prev.filter((value) => value !== id)
+      // })
+      dispatch(setSelectedItemsUnCheced(id))
     }
   }
 

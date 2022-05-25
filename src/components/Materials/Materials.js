@@ -10,8 +10,9 @@ import { useSelector } from 'react-redux'
 import MaterialItem from '../MaterialItem/MaterialItem'
 import styles from './styles'
 
-const Materials = ({ finishOrderParams, finishOrder }) => {
+const Materials = ({ finishOrder }) => {
   const materialsArr = useSelector((state) => state.main.materialsArr)
+  const finishOrderParams = useSelector((state) => state.main.finishOrderParams)
   return (
     <>
       <View style={styles.header}>

@@ -1,11 +1,15 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { View, Text, ScrollView } from 'react-native'
+import { useSelector } from 'react-redux'
 import MessageItem from '../MessageItem/MessageItem'
 import NewMessagesItem from '../NewMessageItem/NewMessageItem'
 import styles from './styles'
 
-const Messages = ({ orderId, userId }) => {
+const Messages = () => {
+  const orderId = useSelector((state) => state.main.activeOrder._id)
+  const userId = useSelector((state) => state.main.user.u_id)
+
   const [messages, setMessages] = useState([])
   useEffect(() => {
     const getMessage = setInterval(() => {

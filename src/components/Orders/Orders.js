@@ -4,8 +4,10 @@ import Order from '../Order/Order'
 import { windowWidth } from '../../Constants'
 import styles from '../../styles/Styles'
 import componentStyles from './styles'
+import { useSelector } from 'react-redux'
 
-const Orders = ({ orders }) => {
+const Orders = () => {
+  const orders = useSelector((state) => state.main.orders)
   return (
     <View style={{ ...styles.shadow, height: 80 }}>
       {windowWidth <= 480 ? (

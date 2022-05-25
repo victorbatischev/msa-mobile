@@ -6,9 +6,10 @@ import { setActiveBarCode } from '../../redux/actionCreators'
 
 import styles from '../../styles/Styles'
 
-const ActiveOrderHeader = ({ item }) => {
+const ActiveOrderHeader = () => {
   const dispatch = useDispatch()
   const activeBarCode = useSelector((state) => state.main.activeBarCode)
+  const item = useSelector((state) => state.main.orders[0])
 
   // const print = () => {
   //   console.log('print')

@@ -9,10 +9,11 @@ import { Audio } from 'expo-av'
 import { useDispatch, useSelector } from 'react-redux'
 import { setIsPlaySound, setActiveBarCode } from '../../redux/actionCreators'
 
-const ActiveOrder = ({ order, schedulePushNotification }) => {
+const ActiveOrder = ({ schedulePushNotification }) => {
   const dispatch = useDispatch()
   const isPlaySound = useSelector((state) => state.main.isPlaySound)
   const orderStarted = useSelector((state) => state.main.orderStarted)
+  const order = useSelector((state) => state.main.activeOrder?.description.o_id)
 
   const [sound, setSound] = useState()
   async function playSound() {

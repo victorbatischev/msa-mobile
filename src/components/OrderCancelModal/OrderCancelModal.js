@@ -1,11 +1,12 @@
 import React from 'react'
 import { View, Text, Modal, Pressable, ActivityIndicator } from 'react-native'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setOrderCancelModalVisible } from '../../redux/actionCreators'
 import styles from './styles'
 
-const OrderCancelModal = ({ item }) => {
+const OrderCancelModal = () => {
   const dispatch = useDispatch()
+  const item = useSelector((state) => state.main.orders[0])
   return (
     <Modal visible={true} animationType='slide' transparent={true}>
       <View style={styles.container}>

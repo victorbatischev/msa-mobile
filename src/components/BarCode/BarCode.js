@@ -2,14 +2,14 @@ import React, { useState, useEffect, useSyncExternalStore } from 'react'
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 import componentStyles from './styles'
-import { setActiveBarCode } from '../../redux/actionCreators'
-
 import styles from '../../styles/Styles'
 import { useDispatch, useSelector } from 'react-redux'
+import { setActiveBarCode } from '../../redux/actionCreators'
 
-const BarCode = ({ orders }) => {
+const BarCode = () => {
   const dispatch = useDispatch()
   const activeBarCode = useSelector((state) => state.main.activeBarCode)
+  const orders = useSelector((state) => state.main.orders)
 
   const [hasPermission, setHasPermission] = useState(null)
   const [scanned, setScanned] = useState(false)

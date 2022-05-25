@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react'
 import { ScrollView, View, Text, Image, Pressable } from 'react-native'
+import { useSelector } from 'react-redux'
 import EquipmentItem from '../EquipmentItem/EquipmentItem'
 import styles from './styles'
 
-const Equipment = ({
-  equipmentArr,
-  setSelectedItems,
-  o_id,
-  equipmentRequest
-}) => {
+const Equipment = ({ equipmentRequest }) => {
+  const equipmentArr = useSelector((state) => state.main.equipmentArr)
+  const o_id = useSelector((state) => state.main.activeOrder)
   const buttonHandler = () => {
     equipmentRequest(o_id)
   }
@@ -28,7 +26,6 @@ const Equipment = ({
               key={item._id}
               title={item.name}
               isBusy={item.occupied}
-              setSelectedItems={setSelectedItems}
               id={item._id}
             />
           )
