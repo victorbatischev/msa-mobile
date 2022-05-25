@@ -2,10 +2,17 @@ import {
   SET_ACTIVE_BARCODE,
   SET_ACTIVE_INDEX,
   SET_ACTIVE_ORDER,
+  SET_CONFIRMATION,
+  SET_MATERIALS_ARR,
+  SET_MATERIALS_CONDITION,
+  SET_MATERIALS_VALUE,
   SET_MODAL_VISIBLE,
   SET_ORDERS,
+  SET_ORDER_CANCEL_MODAL_VISIBLE,
   SET_ORDER_STARTED,
   SET_PLAY_SOUND,
+  SET_PRIVIOUS_OPERATION,
+  SET_SHOW_MATERIALS_COMPONENT,
   SET_USER
 } from '../actionTypes'
 
@@ -17,7 +24,12 @@ const initialState = {
   activeIndex: 1,
   activeBarCode: false,
   orderStarted: false,
-  modalVisible: false
+  modalVisible: false,
+  orderCancelModalVisible: false,
+  previousOperation: [],
+  isConfirmation: false,
+  materialsArr: [],
+  showMaterialsComponent: false
 }
 
 export default mainReduser = (state = initialState, action) => {
@@ -38,6 +50,30 @@ export default mainReduser = (state = initialState, action) => {
       return { ...state, orderStarted: action.data }
     case SET_MODAL_VISIBLE:
       return { ...state, modalVisible: action.data }
+    case SET_ORDER_CANCEL_MODAL_VISIBLE:
+      return { ...state, orderCancelModalVisible: action.data }
+    case SET_PRIVIOUS_OPERATION:
+      return { ...state, previousOperation: action.data }
+    case SET_CONFIRMATION:
+      return { ...state, isConfirmation: action.data }
+    case SET_MATERIALS_ARR:
+      return { ...state, materialsArr: action.data }
+    case SET_MATERIALS_CONDITION:
+      let copyWithCondition = Object.assign([], state.materialsArr)
+      copyWithCondition[action.index] = {
+        ...action.materials,
+        condition: action.materials.condition == 'minus' ? 'plus' : 'minus'
+      }
+      return { ...state, materialsArr: copyWithCondition }
+    case SET_MATERIALS_VALUE:
+      let copyWithValue = Object.assign([], state.materialsArr)
+      copyWithValue[action.index] = {
+        ...action.materials,
+        value: action.data
+      }
+      return { ...state, materialsArr: copyWithValue }
+    case SET_SHOW_MATERIALS_COMPONENT:
+      return { ...state, showMaterialsComponent: action.data }
     default:
       return state
   }

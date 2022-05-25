@@ -12,33 +12,27 @@ import store from './src/redux/store'
 
 const Stack = createNativeStackNavigator()
 
-function App() {
-  return (
-    <PaperProvider theme={theme}>
-      <NavigationContainer>
-        <Stack.Navigator
-          headerMode={'screen'}
-          screenOptions={() => ({
-            headerShown: false,
-            cardStyle: { backgroundColor: 'transparent' },
-            cardOverlayEnabled: false,
-            animationEnabled: true
-          })}
-          mode='modal'
-          initialRouteName='Auth'
-        >
-          <Stack.Screen name='Auth' component={Auth} />
-          <Stack.Screen name='Main' component={Main} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
-  )
-}
-function Application() {
+export default function App() {
   return (
     <Provider store={store}>
-      <App />
+      <PaperProvider theme={theme}>
+        <NavigationContainer>
+          <Stack.Navigator
+            headerMode={'screen'}
+            screenOptions={() => ({
+              headerShown: false,
+              cardStyle: { backgroundColor: 'transparent' },
+              cardOverlayEnabled: false,
+              animationEnabled: true
+            })}
+            mode='modal'
+            initialRouteName='Auth'
+          >
+            <Stack.Screen name='Auth' component={Auth} />
+            <Stack.Screen name='Main' component={Main} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
     </Provider>
   )
 }
-export default Application

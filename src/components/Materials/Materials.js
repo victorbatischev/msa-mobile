@@ -6,15 +6,12 @@ import {
   ScrollView,
   Pressable
 } from 'react-native'
+import { useSelector } from 'react-redux'
 import MaterialItem from '../MaterialItem/MaterialItem'
 import styles from './styles'
 
-const Materials = ({
-  materialsArr,
-  setMaterialsArr,
-  finishOrderParams,
-  finishOrder
-}) => {
+const Materials = ({ finishOrderParams, finishOrder }) => {
+  const materialsArr = useSelector((state) => state.main.materialsArr)
   return (
     <>
       <View style={styles.header}>
@@ -32,7 +29,6 @@ const Materials = ({
                 <MaterialItem
                   key={item._id}
                   materials={materialsArr[index]}
-                  setMaterialsArr={setMaterialsArr}
                   index={index}
                 />
               )

@@ -4,14 +4,16 @@ import styles from '../../styles/Styles'
 import axios from 'axios'
 import componentStyles from './styles'
 import { useDispatch } from 'react-redux'
-import { setModalVisible } from '../../redux/actionCreators'
+import {
+  setModalVisible,
+  setMaterialsArr,
+  setShowMaterialsComponent
+} from '../../redux/actionCreators'
 
 const OperationResult = ({
-  setShowMaterialsComponent,
   activeOrder,
   user,
   setFinishOrderParams,
-  setMaterialsArr,
   finishOrder
 }) => {
   const dispatch = useDispatch()
@@ -21,7 +23,9 @@ const OperationResult = ({
       axios
         .get(`order_id_worker/${activeOrder._id}/${user?.u_id}/`)
         .then((res) =>
-          setMaterialsArr(res.data[0].operation.relation[index].function)
+          dispatch(
+            setMaterialsArr(res.data[0].operation.relation[index].function)
+          )
         )
     }
   }
@@ -46,7 +50,7 @@ const OperationResult = ({
             })
             if (activeOrder?.operation.relation[index].function.length > 0) {
               maretialsRequest(index)
-              setShowMaterialsComponent(true)
+              dispatch(setShowMaterialsComponent(true))
             } else {
               finishOrder(
                 finishOrderParams.nextOperationId,

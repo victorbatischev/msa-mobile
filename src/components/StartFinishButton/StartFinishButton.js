@@ -1,19 +1,14 @@
 import React from 'react'
 import { View, Pressable, Image, Text } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { setModalVisible } from '../../redux/actionCreators'
+import { setModalVisible, setIsConfirmation } from '../../redux/actionCreators'
 import styles from '../../styles/Styles'
 import componentStyles from './styles'
 
-const StartFinishButton = ({
-  isConfirmation,
-  setIsConfirmation,
-  selectedItems,
-  equipmentArr,
-  startOrder
-}) => {
+const StartFinishButton = ({ selectedItems, equipmentArr, startOrder }) => {
   const dispatch = useDispatch()
   const orderStarted = useSelector((state) => state.main.orderStarted)
+  const isConfirmation = useSelector((state) => state.main.isConfirmation)
   return (
     <View style={componentStyles.container}>
       {isConfirmation ? (
@@ -39,7 +34,7 @@ const StartFinishButton = ({
               componentStyles.buttonContainer,
               { backgroundColor: '#2D2D2D' }
             ]}
-            onPress={() => setIsConfirmation(false)}
+            onPress={() => dispatch(setIsConfirmation(false))}
           >
             <Image
               source={require('../../assets/images/close.png')}
@@ -59,9 +54,9 @@ const StartFinishButton = ({
           }}
           onPress={() => {
             orderStarted
-              ? setIsConfirmation(true)
+              ? dispatch(setIsConfirmation(true))
               : (equipmentArr.length === 0 || selectedItems.length > 0) &&
-                setIsConfirmation(true)
+                dispatch(setIsConfirmation(true))
           }}
         >
           <Text style={componentStyles.tytleText}>

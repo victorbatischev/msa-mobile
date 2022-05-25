@@ -32,7 +32,10 @@ import {
   setIsPlaySound,
   setActiveOrder,
   setOrderStarted,
-  setModalVisible
+  setModalVisible,
+  setOrderCancelModalVisible,
+  setPreviousOperation,
+  setIsConfirmation
 } from '../redux/actionCreators'
 
 // Счетчик заказов
@@ -77,11 +80,17 @@ function Main({ route }) {
 
   const user = useSelector((state) => state.main.user)
   const orders = useSelector((state) => state.main.orders)
-  const isPlaySound = useSelector((state) => state.main.isPlaySound)
   const activeOrder = useSelector((state) => state.main.activeOrder)
   const activeIndex = useSelector((state) => state.main.activeIndex)
   const activeBarCode = useSelector((state) => state.main.activeBarCode)
   const modalVisible = useSelector((state) => state.main.modalVisible)
+  const orderCancelModalVisible = useSelector((state) => {
+    state.main.orderCancelModalVisible
+  })
+  const materialsArr = useSelector((state) => state.main.materialsArr)
+  const showMaterialsComponent = useSelector(
+    (state) => state.main.showMaterialsComponent
+  )
 
   // const [user, setUser] = useState(null)
   // const [orders, setOrders] = useState([])
@@ -93,11 +102,11 @@ function Main({ route }) {
   // const [activeBarCode, setActiveBarCode] = useState(false)
   // const [orderStarted, setOrderStarted] = useState(false)
   // const [modalVisible, setModalVisible] = useState(false)
-  const [orderCancelModalVisible, setOrderCancelModalVisible] = useState(false)
-  const [previousOperation, setPreviousOperation] = useState([])
-  const [isConfirmation, setIsConfirmation] = useState(false)
-  const [materialsArr, setMaterialsArr] = useState([])
-  const [showMaterialsComponent, setShowMaterialsComponent] = useState(false)
+  // const [orderCancelModalVisible, setOrderCancelModalVisible] = useState(false)
+  // const [previousOperation, setPreviousOperation] = useState([])
+  // const [isConfirmation, setIsConfirmation] = useState(false)
+  // const [materialsArr, setMaterialsArr] = useState([])
+  // const [showMaterialsComponent, setShowMaterialsComponent] = useState(false)
   const [equipmentArr, setEquipmentArr] = useState([])
   const [isEquipmentVisible, setIsEquipmentVisible] = useState(true)
   const [selectedItems, setSelectedItems] = useState([])
@@ -164,7 +173,7 @@ function Main({ route }) {
 
   const getPreviousOperation = (user) => {
     axios.get(`order_prev_operation/${user.u_id}`).then((res) => {
-      setPreviousOperation(res.data)
+      dispatch(setPreviousOperation(res.data))
     })
   }
 
@@ -183,7 +192,7 @@ function Main({ route }) {
         operation_id: activeOrder?.operation?._id
       })
       .then(() => {
-        setIsConfirmation(false)
+        dispatch(setIsConfirmation(false))
         dispatch(setOrderStarted(true))
         const checkCancelOrder = setInterval(async () => {
           await axios
@@ -192,7 +201,7 @@ function Main({ route }) {
               if (res.data.length) {
                 clearInterval(checkCancelOrder)
                 // Alert.alert('MSA Mobile', 'Your order has been cancelled.')
-                setOrderCancelModalVisible(true)
+                dispatch(setOrderCancelModalVisible(true))
                 dispatch(setOrderStarted(false))
               }
             })
@@ -263,18 +272,8 @@ function Main({ route }) {
   }, [])
 
   useEffect(() => {
-    if (modalVisible) setIsConfirmation(false)
+    if (modalVisible) dispatch(setIsConfirmation(false))
   }, [modalVisible])
-
-  const maretialsRequest = (index) => {
-    if (activeOrder) {
-      axios
-        .get(`order_id_worker/${activeOrder._id}/${user?.u_id}/`)
-        .then((res) =>
-          setMaterialsArr(res.data[0].operation.relation[index].function)
-        )
-    }
-  }
 
   const equipmentRequest = (o_id) => {
     axios.get(`equipment_o_id/${o_id}`).then((res) => {
@@ -326,9 +325,6 @@ function Main({ route }) {
           <RightBlock
             order={activeOrder}
             startOrder={startOrder}
-            previousOperation={previousOperation}
-            isConfirmation={isConfirmation}
-            setIsConfirmation={setIsConfirmation}
             selectedItems={selectedItems}
             equipmentArr={equipmentArr}
           />
@@ -340,8 +336,6 @@ function Main({ route }) {
           <View style={{ ...styles.center, height: 75 }}>
             <Timer />
             <StartFinishButton
-              isConfirmation={isConfirmation}
-              setIsConfirmation={setIsConfirmation}
               selectedItems={selectedItems}
               equipmentArr={equipmentArr}
               startOrder={startOrder}
@@ -349,12 +343,7 @@ function Main({ route }) {
           </View>
         </View>
       ) : null}
-      {orderCancelModalVisible && (
-        <OrderCancelModal
-          item={orders[0]}
-          setOrderCancelModalVisible={setOrderCancelModalVisible}
-        />
-      )}
+      {orderCancelModalVisible && <OrderCancelModal item={orders[0]} />}
       <Modal
         animationType='slide'
         transparent={false}
@@ -363,18 +352,14 @@ function Main({ route }) {
       >
         {showMaterialsComponent ? (
           <Materials
-            materialsArr={materialsArr}
-            setMaterialsArr={setMaterialsArr}
             finishOrderParams={finishOrderParams}
             finishOrder={finishOrder}
           />
         ) : (
           <OperationResult
-            setShowMaterialsComponent={setShowMaterialsComponent}
             activeOrder={activeOrder}
             user={user}
             setFinishOrderParams={setFinishOrderParams}
-            setMaterialsArr={setMaterialsArr}
             finishOrder={finishOrder}
           />
         )}

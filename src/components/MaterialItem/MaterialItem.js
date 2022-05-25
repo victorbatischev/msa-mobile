@@ -1,27 +1,19 @@
 import React from 'react'
 import { View, Text, Pressable, TextInput } from 'react-native'
+import { useDispatch } from 'react-redux'
+import {
+  setMaterialsCondition,
+  setMaterialsValue
+} from '../../redux/actionCreators'
 import styles from './styles'
 
 const MaterialItem = ({ materials, setMaterialsArr, index }) => {
+  const dispatch = useDispatch()
   const changeCondition = () => {
-    setMaterialsArr((prev) => {
-      let copy = Object.assign([], prev)
-      copy[index] = {
-        ...materials,
-        condition: materials.condition == 'minus' ? 'plus' : 'minus'
-      }
-      return copy
-    })
+    dispatch(setMaterialsCondition(materials, index))
   }
   const changeValue = (inputValue) => {
-    setMaterialsArr((prev) => {
-      let copy = Object.assign([], prev)
-      copy[index] = {
-        ...materials,
-        value: inputValue
-      }
-      return copy
-    })
+    dispatch(setMaterialsValue(inputValue, materials, index))
   }
 
   return (

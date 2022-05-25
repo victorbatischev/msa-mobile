@@ -1,20 +1,15 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
+import { useSelector } from 'react-redux'
 import { windowHeight } from '../../Constants'
 import OperationContainer from '../OperationContainer/OperationContainer'
 import StartBlock from '../StartBlock/StartBlock'
 import StartFinishButton from '../StartFinishButton/StartFinishButton'
 import Timer from '../Timer/Timer'
 
-const RightBlock = ({
-  order,
-  startOrder,
-  previousOperation,
-  isConfirmation,
-  setIsConfirmation,
-  selectedItems,
-  equipmentArr
-}) => {
+const RightBlock = ({ order, startOrder, selectedItems, equipmentArr }) => {
+  const previousOperation = useSelector((state) => state.main.previousOperation)
+  const isConfirmation = useSelector((state) => state.main.isConfirmation)
   return (
     <View style={styles.container}>
       <View>
@@ -44,7 +39,6 @@ const RightBlock = ({
         <Timer />
         <StartFinishButton
           isConfirmation={isConfirmation}
-          setIsConfirmation={setIsConfirmation}
           selectedItems={selectedItems}
           equipmentArr={equipmentArr}
           startOrder={startOrder}

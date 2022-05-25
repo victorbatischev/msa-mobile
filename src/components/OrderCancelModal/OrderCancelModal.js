@@ -1,8 +1,11 @@
 import React from 'react'
 import { View, Text, Modal, Pressable, ActivityIndicator } from 'react-native'
+import { useDispatch } from 'react-redux'
+import { setOrderCancelModalVisible } from '../../redux/actionCreators'
 import styles from './styles'
 
-const OrderCancelModal = ({ item, setOrderCancelModalVisible }) => {
+const OrderCancelModal = ({ item }) => {
+  const dispatch = useDispatch()
   return (
     <Modal visible={true} animationType='slide' transparent={true}>
       <View style={styles.container}>
@@ -19,7 +22,7 @@ const OrderCancelModal = ({ item, setOrderCancelModalVisible }) => {
 
           <Pressable
             style={styles.button}
-            onPress={() => setOrderCancelModalVisible(false)}
+            onPress={() => dispatch(setOrderCancelModalVisible(false))}
           >
             <Text style={styles.buttonText}>OK!</Text>
           </Pressable>
