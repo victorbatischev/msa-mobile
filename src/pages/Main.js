@@ -31,7 +31,8 @@ import {
   setUser,
   setIsPlaySound,
   setActiveOrder,
-  setOrderStarted
+  setOrderStarted,
+  setModalVisible
 } from '../redux/actionCreators'
 
 // Счетчик заказов
@@ -80,6 +81,7 @@ function Main({ route }) {
   const activeOrder = useSelector((state) => state.main.activeOrder)
   const activeIndex = useSelector((state) => state.main.activeIndex)
   const activeBarCode = useSelector((state) => state.main.activeBarCode)
+  const modalVisible = useSelector((state) => state.main.modalVisible)
 
   // const [user, setUser] = useState(null)
   // const [orders, setOrders] = useState([])
@@ -90,7 +92,7 @@ function Main({ route }) {
   // const [activeIndex, setActiveIndex] = useState(1)
   // const [activeBarCode, setActiveBarCode] = useState(false)
   // const [orderStarted, setOrderStarted] = useState(false)
-  const [modalVisible, setModalVisible] = useState(false)
+  // const [modalVisible, setModalVisible] = useState(false)
   const [orderCancelModalVisible, setOrderCancelModalVisible] = useState(false)
   const [previousOperation, setPreviousOperation] = useState([])
   const [isConfirmation, setIsConfirmation] = useState(false)
@@ -218,7 +220,7 @@ function Main({ route }) {
       })
       .then(() => {
         dispatch(setOrderStarted(false))
-        setModalVisible(false)
+        dispatch(setModalVisible(false))
         // обновляем список заказов после завершения активной операции
         Alert.alert('MSA Mobile', 'Your operation has been completed.')
       })
@@ -324,7 +326,6 @@ function Main({ route }) {
           <RightBlock
             order={activeOrder}
             startOrder={startOrder}
-            setModalVisible={setModalVisible}
             previousOperation={previousOperation}
             isConfirmation={isConfirmation}
             setIsConfirmation={setIsConfirmation}
@@ -344,7 +345,6 @@ function Main({ route }) {
               selectedItems={selectedItems}
               equipmentArr={equipmentArr}
               startOrder={startOrder}
-              setModalVisible={setModalVisible}
             />
           </View>
         </View>
@@ -359,7 +359,7 @@ function Main({ route }) {
         animationType='slide'
         transparent={false}
         visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
+        onRequestClose={() => dispatch(setModalVisible(false))}
       >
         {showMaterialsComponent ? (
           <Materials
@@ -373,7 +373,6 @@ function Main({ route }) {
             setShowMaterialsComponent={setShowMaterialsComponent}
             activeOrder={activeOrder}
             user={user}
-            setModalVisible={setModalVisible}
             setFinishOrderParams={setFinishOrderParams}
             setMaterialsArr={setMaterialsArr}
             finishOrder={finishOrder}

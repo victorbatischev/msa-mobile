@@ -3,16 +3,19 @@ import { View, Text, Pressable, Image } from 'react-native'
 import styles from '../../styles/Styles'
 import axios from 'axios'
 import componentStyles from './styles'
+import { useDispatch } from 'react-redux'
+import { setModalVisible } from '../../redux/actionCreators'
 
 const OperationResult = ({
   setShowMaterialsComponent,
   activeOrder,
   user,
-  setModalVisible,
   setFinishOrderParams,
   setMaterialsArr,
   finishOrder
 }) => {
+  const dispatch = useDispatch()
+
   const maretialsRequest = (index) => {
     if (activeOrder) {
       axios
@@ -69,7 +72,7 @@ const OperationResult = ({
         <Pressable
           style={{ ...styles.center, ...styles.cancelContainer }}
           onPress={() => {
-            setModalVisible(false)
+            dispatch(setModalVisible(false))
           }}
         >
           <Image

@@ -8,9 +8,7 @@ import Timer from '../Timer/Timer'
 
 const RightBlock = ({
   order,
-  orderStarted,
   startOrder,
-  setModalVisible,
   previousOperation,
   isConfirmation,
   setIsConfirmation,
@@ -50,7 +48,6 @@ const RightBlock = ({
           selectedItems={selectedItems}
           equipmentArr={equipmentArr}
           startOrder={startOrder}
-          setModalVisible={setModalVisible}
         />
       </View>
     </View>

@@ -2,8 +2,9 @@ import {
   SET_ACTIVE_BARCODE,
   SET_ACTIVE_INDEX,
   SET_ACTIVE_ORDER,
+  SET_MODAL_VISIBLE,
   SET_ORDERS,
-  SET_ORDER_STAETED,
+  SET_ORDER_STARTED,
   SET_PLAY_SOUND,
   SET_USER
 } from './actionTypes'
@@ -54,5 +55,12 @@ export const setOrderStarted = (isOrderStarded) => {
   return {
     type: SET_ORDER_STARTED,
     data: isOrderStarded
+  }
+}
+
+export const setModalVisible = (isVisible) => {
+  return {
+    type: SET_MODAL_VISIBLE,
+    data: isVisible
   }
 }

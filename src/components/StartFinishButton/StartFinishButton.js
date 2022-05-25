@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Pressable, Image, Text } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setModalVisible } from '../../redux/actionCreators'
 import styles from '../../styles/Styles'
 import componentStyles from './styles'
 
@@ -9,9 +10,9 @@ const StartFinishButton = ({
   setIsConfirmation,
   selectedItems,
   equipmentArr,
-  startOrder,
-  setModalVisible
+  startOrder
 }) => {
+  const dispatch = useDispatch()
   const orderStarted = useSelector((state) => state.main.orderStarted)
   return (
     <View style={componentStyles.container}>
@@ -23,7 +24,9 @@ const StartFinishButton = ({
               { backgroundColor: orderStarted ? '#029C6E' : '#0080FF' }
             ]}
             onPress={
-              orderStarted ? () => setModalVisible(true) : () => startOrder()
+              orderStarted
+                ? () => dispatch(setModalVisible(true))
+                : () => startOrder()
             }
           >
             <Image
