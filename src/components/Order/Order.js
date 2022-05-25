@@ -8,15 +8,18 @@ import styles from '../../styles/Styles'
 import qrcode from '../../lib/createImgTagQr/qrcode'
 import { htmlPrint } from '../../Constants'
 import componentStyles from './styles'
+import { useDispatch, useSelector } from 'react-redux'
+import { setActiveBarCode } from '../../redux/actionCreators'
 
 const Order = ({
   item,
   idx,
-  activeBarCode,
-  setActiveBarCode,
   icon
   //setEquipmentArr
 }) => {
+  const dispatch = useDispatch()
+  const activeBarCode = useSelector((state) => state.main.activeBarCode)
+
   const [ImgTag, setImgTag] = useState('')
 
   const html = useMemo(
@@ -66,7 +69,7 @@ const Order = ({
     >
       <Pressable
         onPress={() => {
-          setActiveBarCode(!activeBarCode)
+          dispatch(setActiveBarCode(!activeBarCode))
         }}
       >
         {windowWidth <= 480 ? (

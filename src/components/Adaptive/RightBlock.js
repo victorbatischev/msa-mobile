@@ -43,9 +43,8 @@ const RightBlock = ({
         </View>
       </View>
       <View>
-        <Timer orderStarted={orderStarted} />
+        <Timer />
         <StartFinishButton
-          orderStarted={orderStarted}
           isConfirmation={isConfirmation}
           setIsConfirmation={setIsConfirmation}
           selectedItems={selectedItems}

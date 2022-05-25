@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useSyncExternalStore } from 'react'
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 import componentStyles from './styles'
+import { setActiveBarCode } from '../../redux/actionCreators'
 
 import styles from '../../styles/Styles'
+import { useDispatch, useSelector } from 'react-redux'
 
-const BarCode = ({ activeBarCode, setActiveBarCode, orders }) => {
+const BarCode = ({ orders }) => {
+  const dispatch = useDispatch()
+  const activeBarCode = useSelector((state) => state.main.activeBarCode)
+
   const [hasPermission, setHasPermission] = useState(null)
   const [scanned, setScanned] = useState(false)
   const [barCode, setBarcode] = useState(null)
@@ -45,7 +50,7 @@ const BarCode = ({ activeBarCode, setActiveBarCode, orders }) => {
       />
       <Pressable
         style={componentStyles.closeButton}
-        onPress={() => setActiveBarCode(false)}
+        onPress={() => dispatch(setActiveBarCode(false))}
       >
         <View
           style={[

@@ -5,7 +5,7 @@ import { windowWidth } from '../../Constants'
 import styles from '../../styles/Styles'
 import componentStyles from './styles'
 
-const Orders = ({ orders, activeBarCode, setActiveBarCode }) => {
+const Orders = ({ orders }) => {
   return (
     <View style={{ ...styles.shadow, height: 80 }}>
       {windowWidth <= 480 ? (
@@ -23,8 +23,6 @@ const Orders = ({ orders, activeBarCode, setActiveBarCode }) => {
                   item={item}
                   key={idx}
                   idx={idx}
-                  activeBarCode={activeBarCode}
-                  setActiveBarCode={setActiveBarCode}
                   // setEquipmentArr={setEquipmentArr}
                 />
               )
@@ -55,8 +53,6 @@ const Orders = ({ orders, activeBarCode, setActiveBarCode }) => {
                   item={item}
                   key={idx}
                   idx={idx}
-                  activeBarCode={activeBarCode}
-                  setActiveBarCode={setActiveBarCode}
                   icon={
                     idx === 0
                       ? require('../../assets/icons/arrowMain.jpg')

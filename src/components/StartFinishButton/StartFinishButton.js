@@ -1,10 +1,10 @@
 import React from 'react'
 import { View, Pressable, Image, Text } from 'react-native'
+import { useSelector } from 'react-redux'
 import styles from '../../styles/Styles'
 import componentStyles from './styles'
 
 const StartFinishButton = ({
-  orderStarted,
   isConfirmation,
   setIsConfirmation,
   selectedItems,
@@ -12,6 +12,7 @@ const StartFinishButton = ({
   startOrder,
   setModalVisible
 }) => {
+  const orderStarted = useSelector((state) => state.main.orderStarted)
   return (
     <View style={componentStyles.container}>
       {isConfirmation ? (

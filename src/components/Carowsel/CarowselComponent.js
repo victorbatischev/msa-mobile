@@ -4,19 +4,15 @@ import { carouselItems, windowWidth } from '../../Constants'
 import Carousel from 'react-native-snap-carousel'
 import MenuItem from '../MenuItem/MenuItem'
 import styles from './styles'
+import { useDispatch } from 'react-redux'
+import { setActiveIndex } from '../../redux/actionCreators'
 
-const CarouselComponent = ({ activeIndex, setActiveIndex }) => {
+const CarouselComponent = () => {
+  const dispatch = useDispatch()
   const carousel = useRef()
 
   const renderCarouselItem = ({ item, index }) => {
-    return (
-      <MenuItem
-        item={item}
-        index={index}
-        activeIndex={activeIndex}
-        carousel={carousel.current}
-      />
-    )
+    return <MenuItem item={item} index={index} carousel={carousel.current} />
   }
 
   return (
@@ -33,7 +29,7 @@ const CarouselComponent = ({ activeIndex, setActiveIndex }) => {
         sliderHeight={60}
         itemHeight={60}
         renderItem={renderCarouselItem}
-        onSnapToItem={(index) => setActiveIndex(index)}
+        onSnapToItem={(index) => dispatch(setActiveIndex(index))}
       />
     </View>
   )

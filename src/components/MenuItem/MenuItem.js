@@ -1,9 +1,11 @@
 import React from 'react'
 import { Text, Pressable } from 'react-native'
+import { useSelector } from 'react-redux'
 
 import styles from '../../styles/Styles'
 
-const MenuItem = ({ item, index, activeIndex, carousel }) => {
+const MenuItem = ({ item, index, carousel }) => {
+  const activeIndex = useSelector((state) => state.main.activeIndex)
   return (
     <Pressable
       style={{

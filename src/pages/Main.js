@@ -25,7 +25,14 @@ import * as Notifications from 'expo-notifications'
 import Timer from '../components/Timer/Timer'
 import StartFinishButton from '../components/StartFinishButton/StartFinishButton'
 import OperationResult from '../components/OperationResult/OperationResult'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import {
+  setOrders,
+  setUser,
+  setIsPlaySound,
+  setActiveOrder,
+  setOrderStarted
+} from '../redux/actionCreators'
 
 // Счетчик заказов
 
@@ -65,15 +72,24 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
 })
 
 function Main({ route }) {
-  const [user, setUser] = useState(null)
-  const [orders, setOrders] = useState([])
+  const dispatch = useDispatch()
 
-  const [isPlaySound, setIsPlaySound] = useState(false)
+  const user = useSelector((state) => state.main.user)
+  const orders = useSelector((state) => state.main.orders)
+  const isPlaySound = useSelector((state) => state.main.isPlaySound)
+  const activeOrder = useSelector((state) => state.main.activeOrder)
+  const activeIndex = useSelector((state) => state.main.activeIndex)
+  const activeBarCode = useSelector((state) => state.main.activeBarCode)
 
-  const [activeOrder, setActiveOrder] = useState(null)
-  const [activeIndex, setActiveIndex] = useState(1)
-  const [activeBarCode, setActiveBarCode] = useState(false)
-  const [orderStarted, setOrderStarted] = useState(false)
+  // const [user, setUser] = useState(null)
+  // const [orders, setOrders] = useState([])
+
+  // const [isPlaySound, setIsPlaySound] = useState(false)
+
+  // const [activeOrder, setActiveOrder] = useState(null)
+  // const [activeIndex, setActiveIndex] = useState(1)
+  // const [activeBarCode, setActiveBarCode] = useState(false)
+  // const [orderStarted, setOrderStarted] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [orderCancelModalVisible, setOrderCancelModalVisible] = useState(false)
   const [previousOperation, setPreviousOperation] = useState([])
@@ -89,8 +105,6 @@ function Main({ route }) {
 
   const [isRegistered, setIsRegistered] = useState(false)
   const [status, setStatus] = useState(null)
-
-  const myapp = useSelector((state) => state.app.app)
 
   useEffect(() => {
     toggleFetchTask()
@@ -134,9 +148,9 @@ function Main({ route }) {
 
   const getOrders = (user) => {
     axios.get(`order_worker/${user.u_id}`).then((res) => {
-      setOrders(res.data)
+      dispatch(setOrders(res.data))
       if (res.data.length > ordersCount) {
-        setIsPlaySound(true)
+        dispatch(setIsPlaySound(true))
         ordersCount = res.data.length
       }
       if (res.data.length) {
@@ -154,7 +168,7 @@ function Main({ route }) {
 
   const getOrderInfo = (activeOrderId, userId) => {
     axios.get(`order_id_worker/${activeOrderId}/${userId}`).then((res) => {
-      setActiveOrder(res.data[0])
+      dispatch(setActiveOrder(res.data[0]))
     })
   }
 
@@ -168,7 +182,7 @@ function Main({ route }) {
       })
       .then(() => {
         setIsConfirmation(false)
-        setOrderStarted(true)
+        dispatch(setOrderStarted(true))
         const checkCancelOrder = setInterval(async () => {
           await axios
             .get(`order_worker_active/${user.u_id}`)
@@ -177,7 +191,7 @@ function Main({ route }) {
                 clearInterval(checkCancelOrder)
                 // Alert.alert('MSA Mobile', 'Your order has been cancelled.')
                 setOrderCancelModalVisible(true)
-                setOrderStarted(false)
+                dispatch(setOrderStarted(false))
               }
             })
         }, 10000)
@@ -203,7 +217,7 @@ function Main({ route }) {
         function: materialsArr
       })
       .then(() => {
-        setOrderStarted(false)
+        dispatch(setOrderStarted(false))
         setModalVisible(false)
         // обновляем список заказов после завершения активной операции
         Alert.alert('MSA Mobile', 'Your operation has been completed.')
@@ -221,7 +235,7 @@ function Main({ route }) {
   useEffect(() => {
     async function getData() {
       const tempUser = JSON.parse(await AsyncStorage.getItem('user'))
-      setUser(tempUser)
+      dispatch(setUser(tempUser))
 
       setInterval(() => {
         getOrders(tempUser)
@@ -276,40 +290,19 @@ function Main({ route }) {
     <View style={{ flex: 1, alignItems: 'center' }}>
       <StatusBar style='light' translucent={false} />
       <Header logOut={logOut} userName={route.params.userName} />
-      {!activeBarCode && (
-        <Orders
-          orders={orders}
-          activeBarCode={activeBarCode}
-          setActiveBarCode={setActiveBarCode}
-        />
-      )}
+      {!activeBarCode && <Orders orders={orders} />}
       <View style={{ flexDirection: 'row', width: '100%', flex: 1 }}>
         <View style={{ flex: 3 }}>
-          {!activeBarCode && (
-            <Carousel
-              activeIndex={activeIndex}
-              setActiveIndex={setActiveIndex}
-            />
-          )}
+          {!activeBarCode && <Carousel />}
           {activeIndex === 0 && orders.length && !activeBarCode ? (
             <Messages orderId={activeOrder?._id} userId={user.u_id} />
           ) : null}
           {activeIndex === 1 && orders.length && !activeBarCode ? (
             <>
-              {windowWidth > 480 && (
-                <ActiveOrderHeader
-                  item={orders[0]}
-                  activeBarCode={activeBarCode}
-                  setActiveBarCode={setActiveBarCode}
-                />
-              )}
+              {windowWidth > 480 && <ActiveOrderHeader item={orders[0]} />}
               {equipmentArr.length === 0 || !isEquipmentVisible ? (
                 <ActiveOrder
-                  isPlaySound={isPlaySound}
-                  setIsPlaySound={setIsPlaySound}
                   order={activeOrder}
-                  orderStarted={orderStarted}
-                  setActiveBarCode={setActiveBarCode}
                   schedulePushNotification={schedulePushNotification}
                 />
               ) : (
@@ -325,21 +318,12 @@ function Main({ route }) {
           {activeIndex === 2 && !activeBarCode ? (
             <TechMaps operationId={activeOrder?.description?.o_id} />
           ) : null}
-          {activeBarCode && orders.length ? (
-            <BarCode
-              activeBarCode={activeBarCode}
-              setActiveBarCode={setActiveBarCode}
-              orders={orders}
-            />
-          ) : null}
+          {activeBarCode && orders.length ? <BarCode orders={orders} /> : null}
         </View>
         {windowWidth > 480 && (
           <RightBlock
             order={activeOrder}
-            orderStarted={orderStarted}
-            setOrderStarted={setOrderStarted}
             startOrder={startOrder}
-            modalVisible={modalVisible}
             setModalVisible={setModalVisible}
             previousOperation={previousOperation}
             isConfirmation={isConfirmation}
@@ -353,9 +337,8 @@ function Main({ route }) {
         <View style={{ width: '100%' }}>
           <OperationContainer order={activeOrder} />
           <View style={{ ...styles.center, height: 75 }}>
-            <Timer orderStarted={orderStarted} />
+            <Timer />
             <StartFinishButton
-              orderStarted={orderStarted}
               isConfirmation={isConfirmation}
               setIsConfirmation={setIsConfirmation}
               selectedItems={selectedItems}

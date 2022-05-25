@@ -6,15 +6,14 @@ import componentStyles from './styles'
 import styles from '../../styles/Styles'
 import { windowWidth, jsonTreeTheme, windowHeight } from '../../Constants'
 import { Audio } from 'expo-av'
+import { useDispatch, useSelector } from 'react-redux'
+import { setIsPlaySound, setActiveBarCode } from '../../redux/actionCreators'
 
-const ActiveOrder = ({
-  order,
-  orderStarted,
-  isPlaySound,
-  setIsPlaySound,
-  setActiveBarCode,
-  schedulePushNotification
-}) => {
+const ActiveOrder = ({ order, schedulePushNotification }) => {
+  const dispatch = useDispatch()
+  const isPlaySound = useSelector((state) => state.main.isPlaySound)
+  const orderStarted = useSelector((state) => state.main.orderStarted)
+
   const [sound, setSound] = useState()
   async function playSound() {
     const { sound } = await Audio.Sound.createAsync(
@@ -28,7 +27,7 @@ const ActiveOrder = ({
     if (isPlaySound) {
       ;(async () => {
         await playSound()
-        setIsPlaySound(false)
+        dispatch(setIsPlaySound(false))
         await schedulePushNotification()
       })()
     }
@@ -88,7 +87,7 @@ const ActiveOrder = ({
             <>
               <Pressable
                 onPress={() => {
-                  setActiveBarCode(true)
+                  dispatch(setActiveBarCode(true))
                 }}
               >
                 <Image
