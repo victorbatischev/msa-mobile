@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Alert, Modal } from 'react-native'
+import { View, Alert, Modal, Text } from 'react-native'
 import Carousel from '../components/Carowsel/CarowselComponent'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
@@ -25,6 +25,7 @@ import * as Notifications from 'expo-notifications'
 import Timer from '../components/Timer/Timer'
 import StartFinishButton from '../components/StartFinishButton/StartFinishButton'
 import OperationResult from '../components/OperationResult/OperationResult'
+import { useSelector } from 'react-redux'
 
 // Счетчик заказов
 
@@ -88,6 +89,8 @@ function Main({ route }) {
 
   const [isRegistered, setIsRegistered] = useState(false)
   const [status, setStatus] = useState(null)
+
+  const myapp = useSelector((state) => state.app.app)
 
   useEffect(() => {
     toggleFetchTask()
@@ -293,7 +296,13 @@ function Main({ route }) {
           ) : null}
           {activeIndex === 1 && orders.length && !activeBarCode ? (
             <>
-              {windowWidth > 480 && <ActiveOrderHeader item={orders[0]} />}
+              {windowWidth > 480 && (
+                <ActiveOrderHeader
+                  item={orders[0]}
+                  activeBarCode={activeBarCode}
+                  setActiveBarCode={setActiveBarCode}
+                />
+              )}
               {equipmentArr.length === 0 || !isEquipmentVisible ? (
                 <ActiveOrder
                   isPlaySound={isPlaySound}
@@ -325,17 +334,19 @@ function Main({ route }) {
           ) : null}
         </View>
         {windowWidth > 480 && (
-          <View style={{ flex: 1 }}>
-            <RightBlock
-              order={activeOrder}
-              orderStarted={orderStarted}
-              setOrderStarted={setOrderStarted}
-              startOrder={startOrder}
-              modalVisible={modalVisible}
-              setModalVisible={setModalVisible}
-              previousOperation={previousOperation}
-            />
-          </View>
+          <RightBlock
+            order={activeOrder}
+            orderStarted={orderStarted}
+            setOrderStarted={setOrderStarted}
+            startOrder={startOrder}
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            previousOperation={previousOperation}
+            isConfirmation={isConfirmation}
+            setIsConfirmation={setIsConfirmation}
+            selectedItems={selectedItems}
+            equipmentArr={equipmentArr}
+          />
         )}
       </View>
       {windowWidth <= 480 && orders.length && !activeBarCode ? (

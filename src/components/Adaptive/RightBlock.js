@@ -3,13 +3,19 @@ import { StyleSheet, View, Text } from 'react-native'
 import { windowHeight } from '../../Constants'
 import OperationContainer from '../OperationContainer/OperationContainer'
 import StartBlock from '../StartBlock/StartBlock'
+import StartFinishButton from '../StartFinishButton/StartFinishButton'
+import Timer from '../Timer/Timer'
 
 const RightBlock = ({
   order,
   orderStarted,
   startOrder,
   setModalVisible,
-  previousOperation
+  previousOperation,
+  isConfirmation,
+  setIsConfirmation,
+  selectedItems,
+  equipmentArr
 }) => {
   return (
     <View style={styles.container}>
@@ -36,19 +42,27 @@ const RightBlock = ({
           </View>
         </View>
       </View>
-      <StartBlock
-        orderStarted={orderStarted}
-        startOrder={startOrder}
-        setModalVisible={setModalVisible}
-      />
+      <View>
+        <Timer orderStarted={orderStarted} />
+        <StartFinishButton
+          orderStarted={orderStarted}
+          isConfirmation={isConfirmation}
+          setIsConfirmation={setIsConfirmation}
+          selectedItems={selectedItems}
+          equipmentArr={equipmentArr}
+          startOrder={startOrder}
+          setModalVisible={setModalVisible}
+        />
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#000000',
-    height: windowHeight - 145,
+    backgroundColor: '#000',
+    height: '100%',
+    width: '25%',
     justifyContent: 'space-between'
   },
   previousOperation: {

@@ -7,7 +7,7 @@ import { options } from '../../Constants'
 
 const Timer = ({ orderStarted }) => {
   return (
-    <View style={{ ...styles.container, backgroundColor: '#000' }}>
+    <View style={componentStyles.container}>
       <Text style={componentStyles.tytleText}>Work time on the order</Text>
       <Stopwatch reset={!orderStarted} start={orderStarted} options={options} />
     </View>

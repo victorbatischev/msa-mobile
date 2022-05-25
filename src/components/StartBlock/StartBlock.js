@@ -2,26 +2,22 @@ import React from 'react'
 import { View, Text, Pressable } from 'react-native'
 import { options, windowWidth } from '../../Constants'
 import StopWatch from '../../lib/react-native-stopwatch-timer/lib/stopwatch'
+import StartFinishButton from '../StartFinishButton/StartFinishButton'
 import styles from '../../styles/Styles'
 import componentStyles from './styles'
 
-const StartBlock = ({ orderStarted, startOrder, setModalVisible }) => {
+const StartBlock = ({
+  orderStarted,
+  startOrder,
+  setModalVisible,
+  isConfirmation,
+  setIsConfirmation,
+  selectedItems,
+  equipmentArr
+}) => {
   return (
-    <View
-      style={{
-        ...styles.center,
-        height: windowWidth <= 480 ? 70 : '50%',
-        flexDirection: windowWidth > 480 ? 'column' : 'row',
-        paddingBottom: 15
-      }}
-    >
-      <View
-        style={{
-          ...styles.container,
-          backgroundColor: '#000',
-          marginBottom: 10
-        }}
-      >
+    <View>
+      <View>
         <Text style={componentStyles.workTimeonThOrderText}>
           Work time on the order
         </Text>
@@ -31,7 +27,7 @@ const StartBlock = ({ orderStarted, startOrder, setModalVisible }) => {
           options={options}
         />
       </View>
-      {orderStarted ? (
+      {/* {orderStarted ? (
         <Pressable
           style={{
             ...styles.container,
@@ -48,7 +44,16 @@ const StartBlock = ({ orderStarted, startOrder, setModalVisible }) => {
         >
           <Text style={componentStyles.startFinishText}>START</Text>
         </Pressable>
-      )}
+      )} */}
+      <StartFinishButton
+        orderStarted={orderStarted}
+        isConfirmation={isConfirmation}
+        setIsConfirmation={setIsConfirmation}
+        selectedItems={selectedItems}
+        equipmentArr={equipmentArr}
+        startOrder={startOrder}
+        setModalVisible={setModalVisible}
+      />
     </View>
   )
 }

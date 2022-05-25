@@ -7,6 +7,8 @@ import Auth from './src/pages/Auth'
 import Main from './src/pages/Main'
 
 import { theme } from './src/Constants'
+import { Provider } from 'react-redux'
+import store from './src/redux/store'
 
 const Stack = createNativeStackNavigator()
 
@@ -32,5 +34,11 @@ function App() {
     </PaperProvider>
   )
 }
-
-export default App
+function Application() {
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  )
+}
+export default Application

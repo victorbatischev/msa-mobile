@@ -1,15 +1,17 @@
 import { StyleSheet } from 'react-native'
+import { windowWidth } from '../../Constants'
 
 const styles = StyleSheet.create({
   container: {
-    width: 160
+    width: windowWidth <= 480 ? '50%' : '100%',
+    height: windowWidth <= 480 ? 80 : 128
   },
   okCloseButtonsContainer: {
     flexDirection: 'row',
     flex: 1
   },
   buttonContainer: {
-    width: 80,
+    width: '50%',
     alignItems: 'center',
     justifyContent: 'center'
   },

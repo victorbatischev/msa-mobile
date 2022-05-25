@@ -57,7 +57,11 @@ const Orders = ({ orders, activeBarCode, setActiveBarCode }) => {
                   idx={idx}
                   activeBarCode={activeBarCode}
                   setActiveBarCode={setActiveBarCode}
-                  icon={idx === 0 ? arrowMain : arrowNotMain}
+                  icon={
+                    idx === 0
+                      ? require('../../assets/icons/arrowMain.jpg')
+                      : require('../../assets/icons/arrowNotMain.jpg')
+                  }
                 />
               )
             })
