@@ -9,6 +9,7 @@ import {
   SET_EQUIPMENT_VISIBLE,
   SET_FINISH_ORDER_PARAMS,
   SET_HAS_PERMISSION,
+  SET_IMG_TAG,
   SET_IS_CHECKED,
   SET_IS_CHECKED_ARR,
   SET_IS_MODAL_WORK_SHIFT_VISIBLE,
@@ -21,6 +22,7 @@ import {
   SET_MESSAGES,
   SET_MODAL_VISIBLE,
   SET_MODAL_VISIBLE_TECH_MAPS,
+  SET_NEW_MESSAGE,
   SET_ORDERS,
   SET_ORDER_CANCEL_MODAL_VISIBLE,
   SET_ORDER_STARTED,
@@ -278,5 +280,23 @@ export const setIsChecked = (index) => {
   return {
     type: SET_IS_CHECKED,
     index
+  }
+}
+
+// For newMessageItemReduser ///////////////////////////////////////////////////////////////////////
+
+export const setNewMessage = (data) => {
+  return {
+    type: SET_NEW_MESSAGE,
+    data
+  }
+}
+
+// For orderReduser ///////////////////////////////////////////////////////////////////////
+
+export const setImgTag = (ImgTag) => {
+  return {
+    type: SET_IMG_TAG,
+    data: ImgTag
   }
 }

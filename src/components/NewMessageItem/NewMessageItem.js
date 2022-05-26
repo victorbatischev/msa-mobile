@@ -1,11 +1,14 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React from 'react'
 import { View, Pressable, TextInput, Image, Keyboard } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import { setNewMessage } from '../../redux/actionCreators'
 import sendButton from '../../assets/images/send.png'
 import styles from './styles'
 
 const NewMessagesItem = ({ orderId, userId }) => {
-  const [newMessage, setNewMessage] = useState('')
+  const dispatch = useDispatch()
+  const newMessage = useSelector((state) => state.NewMessagesItem.newMessage)
 
   const buttonHendler = () => {
     Keyboard.dismiss()
@@ -15,7 +18,7 @@ const NewMessagesItem = ({ orderId, userId }) => {
         u_id: userId,
         message: newMessage
       })
-      .then(() => setNewMessage(''))
+      .then(() => dispatch(setNewMessage('')))
   }
 
   return (
@@ -24,7 +27,7 @@ const NewMessagesItem = ({ orderId, userId }) => {
         style={styles.input}
         placeholder='New message'
         value={newMessage}
-        onChangeText={(text) => setNewMessage(text)}
+        onChangeText={(text) => dispatch(setNewMessage(text))}
       />
       <Pressable style={styles.sendButton} onPress={buttonHendler}>
         <Image source={sendButton} style={styles.sendButtonImage} />

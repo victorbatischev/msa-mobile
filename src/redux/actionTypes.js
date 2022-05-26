@@ -51,3 +51,11 @@ export const SET_BOUNDS = 'SET_BOUNDS'
 
 export const SET_IS_CHECKED_ARR = 'SET_IS_CHECKED_ARR'
 export const SET_IS_CHECKED = 'SET_IS_CHECKED'
+
+// For newMessageItemReduser ///////////////////////////////////////////////////////////////////////
+
+export const SET_NEW_MESSAGE = 'SET_NEW_MESSAGE'
+
+// For orderReduser ///////////////////////////////////////////////////////////////////////
+
+export const SET_IMG_TAG = 'SET_IMG_TAG'

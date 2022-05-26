@@ -6,6 +6,8 @@ import mainReduser from './redusers/mainReduser'
 import messagesReduser from './redusers/messagesReduser'
 import techMapsReduser from './redusers/techMapsReduser'
 import equipmentItemRduser from './redusers/equipmentItemRduser'
+import newMessageItemReduser from './redusers/newMessageItemReduser'
+import orderReduser from './redusers/orderReduser'
 
 export default rootReduser = combineReducers({
   main: mainReduser,
@@ -14,5 +16,7 @@ export default rootReduser = combineReducers({
   activeOrder: activeOrderReduser,
   TechMaps: techMapsReduser,
   barCode: barCodeReduser,
-  equipmentItem: equipmentItemRduser
+  equipmentItem: equipmentItemRduser,
+  newMessageItem: newMessageItemReduser,
+  order: orderReduser
 })

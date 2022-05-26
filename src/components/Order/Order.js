@@ -9,7 +9,7 @@ import qrcode from '../../lib/createImgTagQr/qrcode'
 import { htmlPrint } from '../../Constants'
 import componentStyles from './styles'
 import { useDispatch, useSelector } from 'react-redux'
-import { setActiveBarCode } from '../../redux/actionCreators'
+import { setActiveBarCode, setImgTag } from '../../redux/actionCreators'
 
 const Order = ({
   item,
@@ -19,8 +19,7 @@ const Order = ({
 }) => {
   const dispatch = useDispatch()
   const activeBarCode = useSelector((state) => state.main.activeBarCode)
-
-  const [ImgTag, setImgTag] = useState('')
+  const ImgTag = useSelector((state) => state.order.ImgTag)
 
   const html = useMemo(
     () => htmlPrint(item._id, item.name, ImgTag),
@@ -47,7 +46,7 @@ const Order = ({
       qr.addData(item._id)
       qr.make()
       const res = qr.createImgTag()
-      setImgTag(res)
+      dispatch(setImgTag(res))
     }
   }
 

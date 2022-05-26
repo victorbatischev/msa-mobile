@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, ScrollView } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { setMessages } from '../../redux/actionCreators'
