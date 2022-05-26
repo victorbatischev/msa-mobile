@@ -6,8 +6,12 @@ import componentStyles from './styles'
 import axios from 'axios'
 import CompleteWorkShift from '../CompleteWorkShift/CompleteWorkShift'
 import * as Application from 'expo-application'
+import { setIsUserMenuModal } from '../../redux/actionCreators'
+import { useDispatch } from 'react-redux'
 
-const UsersMenuModal = ({ setModalVisible, logOut }) => {
+const UsersMenuModal = ({ logOut }) => {
+  const dispatch = useDispatch()
+
   const [isModalNewOrder, setIsModalNewOrder] = useState(false)
   const [isModalGetDetails, setIsModalGetDetails] = useState(false)
   const [isCompleteWorkShiftVisible, setIsCompleteWorkShiftVisible] =
@@ -59,7 +63,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
           name: tempDetail.order.composition['Worker']
         }
       })
-      .then(() => setModalVisible(false))
+      .then(() => dispatch(setIsUserMenuModal(false)))
   }
 
   const sendFormData = () => {
@@ -109,7 +113,7 @@ const UsersMenuModal = ({ setModalVisible, logOut }) => {
               ...styles.center,
               ...styles.cancelContainer
             }}
-            onPress={() => setModalVisible(false)}
+            onPress={() => dispatch(setIsUserMenuModal(false))}
           >
             <Image
               style={componentStyles.closeIcon}

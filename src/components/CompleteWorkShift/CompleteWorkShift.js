@@ -3,8 +3,11 @@ import { View, Text, Modal, Pressable, Image } from 'react-native'
 import done from '../../assets/images/ok.png'
 import cancel from '../../assets/images/no.png'
 import styles from './styles'
+import { useDispatch } from 'react-redux'
+import { setIsModalWorkShiftVisible } from '../../redux/actionCreators'
 
-const CompleteWorkShift = ({ logOut, setIsModalVisible }) => {
+const CompleteWorkShift = ({ logOut }) => {
+  const dispatch = useDispatch()
   return (
     <Modal animationType='slide' transparent={true} visible={true}>
       <View style={styles.container}>
@@ -21,7 +24,7 @@ const CompleteWorkShift = ({ logOut, setIsModalVisible }) => {
           </Pressable>
           <Pressable
             style={[styles.button, styles.redButton]}
-            onPress={() => setIsModalVisible(false)}
+            onPress={() => dispatch(setIsModalWorkShiftVisible(false))}
           >
             <Image source={cancel} style={noButton} />
             <Text style={styles.buttonText}>No</Text>

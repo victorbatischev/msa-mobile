@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Pressable, Image } from 'react-native'
+import { View, Text, Pressable } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
 import { useDispatch, useSelector } from 'react-redux'
 import { setActiveBarCode } from '../../redux/actionCreators'

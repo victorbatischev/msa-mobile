@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import {
   ActivityIndicator,
   View,
@@ -12,20 +12,26 @@ import {
 import AppIntroSlider from 'react-native-app-intro-slider'
 import ImageZoom from 'react-native-image-pan-zoom'
 import { Video } from 'expo-av'
-import * as WebBrowser from 'expo-web-browser'
 import styles from './styles'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  setMapsArr,
+  setModalVisibleTechMaps,
+  setItem
+} from '../../redux/actionCreators'
 
 const TechMaps = () => {
+  const dispatch = useDispatch()
   const operationId = useSelector(
     (state) => state.main.activeOrder.description?.o_id
   )
-  const [mapsArr, setMapsArr] = useState(null)
-  const [modalVisible, setModalVisible] = useState(false)
-  const [item, setItem] = useState(null)
+  const mapsArr = useSelector((state) => state.TechMaps.mapsArr)
+  const modalVisible = useSelector((state) => state.TechMaps.modalVisible)
+  const item = useSelector((state) => state.TechMaps.item)
+
   useEffect(() => {
     axios.get(`order_worker_techmap/${operationId}`).then((response) => {
-      setMapsArr(response.data[0].technical_maps)
+      dispatch(setMapsArr(response.data[0].technical_maps))
     })
   }, [])
   const renderItem = ({ item }) => {
@@ -35,8 +41,8 @@ const TechMaps = () => {
         {/* {item.file_name.split('.').pop() == 'jpg' && ( */}
         <Pressable
           onPress={() => {
-            setItem(item)
-            setModalVisible(true)
+            dispatch(setItem(item))
+            dispatch(setModalVisibleTechMaps(true))
           }}
         >
           <Image
@@ -112,7 +118,7 @@ const TechMaps = () => {
         <Pressable
           style={styles.closeModalButton}
           onPress={() => {
-            setModalVisible(false)
+            dispatch(setModalVisibleTechMaps(false))
           }}
         >
           <View

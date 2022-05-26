@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, Image, ScrollView, Pressable } from 'react-native'
 import JSONTree from 'react-native-json-tree'
 import componentStyles from './styles'
@@ -7,20 +7,24 @@ import styles from '../../styles/Styles'
 import { windowWidth, jsonTreeTheme, windowHeight } from '../../Constants'
 import { Audio } from 'expo-av'
 import { useDispatch, useSelector } from 'react-redux'
-import { setIsPlaySound, setActiveBarCode } from '../../redux/actionCreators'
+import {
+  setIsPlaySound,
+  setActiveBarCode,
+  setSound
+} from '../../redux/actionCreators'
 
 const ActiveOrder = ({ schedulePushNotification }) => {
   const dispatch = useDispatch()
   const isPlaySound = useSelector((state) => state.main.isPlaySound)
   const orderStarted = useSelector((state) => state.main.orderStarted)
   const order = useSelector((state) => state.main.activeOrder?.description.o_id)
+  const sound = useSelector((state) => state.activeOrder?.sound)
 
-  const [sound, setSound] = useState()
   async function playSound() {
     const { sound } = await Audio.Sound.createAsync(
       require('../../assets/sounds/sound.mp3')
     )
-    setSound(sound)
+    dispatch(setSound(sound))
     await sound.playAsync()
   }
 

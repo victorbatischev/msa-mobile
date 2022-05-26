@@ -1,3 +1,5 @@
+// For mainReduser /////////////////////////////////////
+
 export const SET_USER = 'SET_USER'
 export const SET_ORDERS = 'SET_ORDERS'
 export const SET_PLAY_SOUND = 'SET_PLAY_SOUND'
@@ -18,3 +20,22 @@ export const SET_EQUIPMENT_VISIBLE = 'SET_EQUIPMENT_VISIBLE'
 export const SET_SELECTED_ITEMS_CHECKED = 'SET_SELECTED_ITEMS_CHECKED'
 export const SET_SELECTED_ITEMS_UNCHECKED = 'SET_SELECTED_ITEMS_UNCHECKED'
 export const SET_FINISH_ORDER_PARAMS = 'SET_FINISH_ORDER_PARAMS'
+
+// For headerReduser ///////////////////////////////////////
+
+export const SET_IS_MODAL_WORK_SHIFT_VISIBLE = 'SET_IS_MODAL_WORK_SHIFT_VISIBLE'
+export const SET_IS_USER_MENU_MODAL = 'SET_IS_USER_MENU_MODAL'
+
+// For messagesReduser ///////////////////////////////////////
+
+export const SET_MESSAGES = 'SET_MESSAGES'
+
+// For activeOrderReduser ///////////////////////////////////////
+
+export const SET_SOUND = 'SET_SOUND'
+
+// For techMapsReduser ///////////////////////////////////////
+
+export const SET_MAPS_ARR = 'SET_MAPS_ARR'
+export const SET_MODAL_VISIBLE_TECH_MAPS = 'SET_MODAL_VISIBLE_TECH_MAPS'
+export const SET_ITEM = 'SET_ITEM'

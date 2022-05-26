@@ -6,10 +6,16 @@ import {
   SET_EQUIPMENT_ARR,
   SET_EQUIPMENT_VISIBLE,
   SET_FINISH_ORDER_PARAMS,
+  SET_IS_MODAL_WORK_SHIFT_VISIBLE,
+  SET_IS_USER_MENU_MODAL,
+  SET_ITEM,
+  SET_MAPS_ARR,
   SET_MATERIALS_ARR,
   SET_MATERIALS_CONDITION,
   SET_MATERIALS_VALUE,
+  SET_MESSAGES,
   SET_MODAL_VISIBLE,
+  SET_MODAL_VISIBLE_TECH_MAPS,
   SET_ORDERS,
   SET_ORDER_CANCEL_MODAL_VISIBLE,
   SET_ORDER_STARTED,
@@ -18,8 +24,11 @@ import {
   SET_SELECTED_ITEMS_CHECKED,
   SET_SELECTED_ITEMS_UNCHECKED,
   SET_SHOW_MATERIALS_COMPONENT,
+  SET_SOUND,
   SET_USER
 } from './actionTypes'
+
+// For mainReduser ///////////////////////////////////////////////////////////////////////
 
 export const setUser = (tempUser) => {
   return {
@@ -161,5 +170,62 @@ export const setFinishOrderParams = (data) => {
   return {
     type: SET_FINISH_ORDER_PARAMS,
     data
+  }
+}
+
+// For headerReduser ///////////////////////////////////////////////////////////////////////
+
+export const setIsModalWorkShiftVisible = (isVisible) => {
+  return {
+    type: SET_IS_MODAL_WORK_SHIFT_VISIBLE,
+    data: isVisible
+  }
+}
+
+export const setIsUserMenuModal = (isModal) => {
+  return {
+    type: SET_IS_USER_MENU_MODAL,
+    data: isModal
+  }
+}
+
+// For messagesReduser ///////////////////////////////////////////////////////////////////////
+
+export const setMessages = (messages) => {
+  return {
+    type: SET_MESSAGES,
+    data: messages
+  }
+}
+
+// For activeOrderReduser ///////////////////////////////////////////////////////////////////////
+
+export const setSound = (sound) => {
+  return {
+    type: SET_SOUND,
+    data: sound
+  }
+}
+
+// For techMapsReduser ///////////////////////////////////////////////////////////////////////
+
+export const setMapsArr = (maps) => {
+  return {
+    type: SET_MAPS_ARR,
+    data: maps
+  }
+}
+
+export const setModalVisibleTechMaps = (isVisible) => {
+  return {
+    type: SET_MODAL_VISIBLE_TECH_MAPS,
+    data: isVisible
+  }
+}
+
+export const setItem = (item) => {
+  return {
+    type: SET_ITEM,
+    data: item
   }
 }
