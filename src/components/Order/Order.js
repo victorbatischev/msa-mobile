@@ -11,12 +11,7 @@ import componentStyles from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { setActiveBarCode, setImgTag } from '../../redux/actionCreators'
 
-const Order = ({
-  item,
-  idx,
-  icon
-  //setEquipmentArr
-}) => {
+const Order = ({ item, idx, icon }) => {
   const dispatch = useDispatch()
   const activeBarCode = useSelector((state) => state.main.activeBarCode)
   const ImgTag = useSelector((state) => state.order.ImgTag)
