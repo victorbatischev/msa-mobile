@@ -8,6 +8,8 @@ import techMapsReduser from './redusers/techMapsReduser'
 import equipmentItemRduser from './redusers/equipmentItemRduser'
 import newMessageItemReduser from './redusers/newMessageItemReduser'
 import orderReduser from './redusers/orderReduser'
+import usersMenuModalReduser from './redusers/usersMenuModalReduser'
+import authReduser from './redusers/authReduser'
 
 export default rootReduser = combineReducers({
   main: mainReduser,
@@ -18,5 +20,7 @@ export default rootReduser = combineReducers({
   barCode: barCodeReduser,
   equipmentItem: equipmentItemRduser,
   newMessageItem: newMessageItemReduser,
-  order: orderReduser
+  order: orderReduser,
+  usersMenuModal: usersMenuModalReduser,
+  auth: authReduser
 })

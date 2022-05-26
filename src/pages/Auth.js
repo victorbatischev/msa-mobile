@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react'
+import React, { useEffect, useCallback, useRef } from 'react'
 import { View, Text, Pressable, Image, Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Animatable from 'react-native-animatable'
@@ -9,6 +9,13 @@ import * as Updates from 'expo-updates'
 import axios from 'axios'
 
 import styles from '../styles/Styles'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  setLogin,
+  setPassword,
+  setAppIsReady,
+  setShowError
+} from '../redux/actionCreators'
 
 let customFonts = {
   Roboto: require('../assets/fonts/Roboto-Regular.ttf'),
@@ -16,10 +23,11 @@ let customFonts = {
 }
 
 function Auth({ navigation }) {
-  const [login, setLogin] = useState('brown')
-  const [password, setPassword] = useState('102030')
-  const [appIsReady, setAppIsReady] = useState(false)
-  const [showError, setShowError] = useState(false)
+  const dispatch = useDispatch()
+  const login = useSelector((state) => state.auth.login)
+  const password = useSelector((state) => state.auth.password)
+  const appIsReady = useSelector((state) => state.auth.appIsReady)
+  const showError = useSelector((state) => state.auth.showError)
 
   const passwordTextInput = useRef()
 
@@ -53,7 +61,7 @@ function Auth({ navigation }) {
       } catch (e) {
         console.warn(e)
       } finally {
-        setAppIsReady(true)
+        dispatch(setAppIsReady(true))
       }
     }
 
@@ -77,17 +85,20 @@ function Auth({ navigation }) {
         await AsyncStorage.setItem('role', res.data.role)
         await AsyncStorage.setItem('user', JSON.stringify(res.data.user))
         const userData = await axios.get(`worker_name/${res.data.user.u_id}`)
+        console.log(
+          '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+        )
         axios
           .put('worker_in', { _id: res.data.user.u_id, at_work: true })
           .then(() => {
-            setLogin('')
-            setPassword('')
+            dispatch(setLogin(''))
+            dispatch(setPassword(''))
             navigation.navigate('Main', { userName: userData.data[0].name })
           })
       })
       .catch((err) => {
         console.warn(err)
-        setShowError(true)
+        dispatch(setShowError(true))
       })
   }
 
@@ -101,7 +112,7 @@ function Auth({ navigation }) {
         <TextInput
           label='Login'
           value={login}
-          onChangeText={(text) => setLogin(text)}
+          onChangeText={(text) => dispatch(setLogin(text))}
           style={styles.authInput}
           underlineColor={'#B1B1B1'}
           error={false}
@@ -113,7 +124,7 @@ function Auth({ navigation }) {
         <TextInput
           label='Password'
           value={password}
-          onChangeText={(text) => setPassword(text)}
+          onChangeText={(text) => dispatch(setPassword(text))}
           style={styles.authInput}
           underlineColor={'#B1B1B1'}
           error={false}
@@ -129,7 +140,9 @@ function Auth({ navigation }) {
         <Animatable.View
           style={styles.authError}
           animation='wobble'
-          onAnimationEnd={() => setTimeout(() => setShowError(false), 3000)}
+          onAnimationEnd={() =>
+            setTimeout(() => dispatch(setShowError(false)), 3000)
+          }
         >
           <Text style={{ fontSize: 18, fontFamily: 'Roboto', color: '#fff' }}>
             The login or password is incorrect.

@@ -1,14 +1,15 @@
 import React from 'react'
 import { View, Text, Pressable, TextInput } from 'react-native'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   setMaterialsCondition,
   setMaterialsValue
 } from '../../redux/actionCreators'
 import styles from './styles'
 
-const MaterialItem = ({ materials, setMaterialsArr, index }) => {
+const MaterialItem = ({ index }) => {
   const dispatch = useDispatch()
+  const materials = useSelector((state) => state.main.materialsArr[index])
   const changeCondition = () => {
     dispatch(setMaterialsCondition(materials, index))
   }

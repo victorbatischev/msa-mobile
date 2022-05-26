@@ -59,3 +59,20 @@ export const SET_NEW_MESSAGE = 'SET_NEW_MESSAGE'
 // For orderReduser ///////////////////////////////////////////////////////////////////////
 
 export const SET_IMG_TAG = 'SET_IMG_TAG'
+
+// For userMenuModalReduser ///////////////////////////////////////////////////////////////////////
+
+export const SET_IS_MODAL_NEW_ORDER = 'SET_IS_MODAL_NEW_ORDER'
+export const SET_IS_MODAL_GET_DETAILS = 'SET_IS_MODAL_GET_DETAILS'
+export const SET_IS_COMPLETE_WORK_SHIFT_VISIBLE =
+  'SET_IS_COMPLETE_WORK_SHIFT_VISIBLE'
+export const SET_USER_MENU_ORDERS = 'SET_USER_MENU_ORDERS'
+export const SET_TEMP_DETAIL = 'SET_TEMP_DETAIL'
+export const SET_CREATED_ORDER_ID = 'SET_CREATED_ORDER_ID'
+
+// For authReduser ///////////////////////////////////////////////////////////////////////
+
+export const SET_LOGIN = 'SET_LOGIN'
+export const SET_PASSWORD = 'SET_PASSWORD'
+export const SET_APP_IS_READY = 'SET_APP_IS_READY'
+export const SET_SHOW_ERROR = 'SET_SHOW_ERROR'

@@ -26,13 +26,7 @@ const Materials = ({ finishOrder }) => {
         ) : (
           <>
             {materialsArr.map((item, index) => {
-              return (
-                <MaterialItem
-                  key={item._id}
-                  materials={materialsArr[index]}
-                  index={index}
-                />
-              )
+              return <MaterialItem key={item._id} index={index} />
             })}
             <Pressable
               style={styles.okButton}

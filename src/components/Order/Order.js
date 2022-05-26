@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { View, Text, Pressable, Image } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
 import { windowWidth } from '../../Constants'
@@ -21,19 +21,9 @@ const Order = ({ item, idx, icon }) => {
     [item, ImgTag]
   )
 
-  // const equipmentRequest = (o_id) => {
-  //   axios.get(`equipment_o_id/${o_id}`).then((res) => {
-  //     setEquipmentArr(res.data)
-  //   })
-  // }
-
   useEffect(() => {
     imgCreate()
   }, [item])
-
-  // useEffect(() => {
-  //   equipmentRequest(item.operation.o_id)
-  // }, [item.operation.o_id])
 
   const imgCreate = () => {
     if (item._id) {

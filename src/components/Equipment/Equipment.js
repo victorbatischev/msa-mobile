@@ -1,6 +1,6 @@
 import React from 'react'
 import { ScrollView, View, Text, Image, Pressable } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import EquipmentItem from '../EquipmentItem/EquipmentItem'
 import styles from './styles'
 

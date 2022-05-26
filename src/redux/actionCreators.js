@@ -2,9 +2,11 @@ import {
   SET_ACTIVE_BARCODE,
   SET_ACTIVE_INDEX,
   SET_ACTIVE_ORDER,
+  SET_APP_IS_READY,
   SET_BARCODE,
   SET_BOUNDS,
   SET_CONFIRMATION,
+  SET_CREATED_ORDER_ID,
   SET_EQUIPMENT_ARR,
   SET_EQUIPMENT_VISIBLE,
   SET_FINISH_ORDER_PARAMS,
@@ -12,9 +14,13 @@ import {
   SET_IMG_TAG,
   SET_IS_CHECKED,
   SET_IS_CHECKED_ARR,
+  SET_IS_COMPLETE_WORK_SHIFT_VISIBLE,
+  SET_IS_MODAL_GET_DETAILS,
+  SET_IS_MODAL_NEW_ORDER,
   SET_IS_MODAL_WORK_SHIFT_VISIBLE,
   SET_IS_USER_MENU_MODAL,
   SET_ITEM,
+  SET_LOGIN,
   SET_MAPS_ARR,
   SET_MATERIALS_ARR,
   SET_MATERIALS_CONDITION,
@@ -26,14 +32,18 @@ import {
   SET_ORDERS,
   SET_ORDER_CANCEL_MODAL_VISIBLE,
   SET_ORDER_STARTED,
+  SET_PASSWORD,
   SET_PLAY_SOUND,
   SET_PRIVIOUS_OPERATION,
   SET_SCANNED,
   SET_SELECTED_ITEMS_CHECKED,
   SET_SELECTED_ITEMS_UNCHECKED,
+  SET_SHOW_ERROR,
   SET_SHOW_MATERIALS_COMPONENT,
   SET_SOUND,
-  SET_USER
+  SET_TEMP_DETAIL,
+  SET_USER,
+  SET_USER_MENU_ORDERS
 } from './actionTypes'
 
 // For mainReduser ///////////////////////////////////////////////////////////////////////
@@ -298,5 +308,80 @@ export const setImgTag = (ImgTag) => {
   return {
     type: SET_IMG_TAG,
     data: ImgTag
+  }
+}
+
+// For userMenuModalReduser ///////////////////////////////////////////////////////////////////////
+
+export const setIsModalNewOrder = (data) => {
+  return {
+    type: SET_IS_MODAL_NEW_ORDER,
+    data
+  }
+}
+
+export const setIsModalGetDetails = (data) => {
+  return {
+    type: SET_IS_MODAL_GET_DETAILS,
+    data
+  }
+}
+
+export const setIsCompleteWorkShiftVisible = (data) => {
+  return {
+    type: SET_IS_COMPLETE_WORK_SHIFT_VISIBLE,
+    data
+  }
+}
+
+export const setUserMenuOrders = (data) => {
+  return {
+    type: SET_USER_MENU_ORDERS,
+    data
+  }
+}
+
+export const setTempDetail = (data, key) => {
+  return {
+    type: SET_TEMP_DETAIL,
+    data,
+    key
+  }
+}
+
+export const setCreatedOrderId = (data) => {
+  return {
+    type: SET_CREATED_ORDER_ID,
+    data
+  }
+}
+
+// For authReduser ///////////////////////////////////////////////////////////////////////
+
+export const setLogin = (data) => {
+  return {
+    type: SET_LOGIN,
+    data
+  }
+}
+
+export const setPassword = (data) => {
+  return {
+    type: SET_PASSWORD,
+    data
+  }
+}
+
+export const setAppIsReady = (data) => {
+  return {
+    type: SET_APP_IS_READY,
+    data
+  }
+}
+
+export const setShowError = (data) => {
+  return {
+    type: SET_SHOW_ERROR,
+    data
   }
 }

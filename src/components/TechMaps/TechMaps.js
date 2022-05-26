@@ -38,7 +38,6 @@ const TechMaps = () => {
     return (
       <View style={styles.container}>
         <Text style={styles.mapName}>{item.name}</Text>
-        {/* {item.file_name.split('.').pop() == 'jpg' && ( */}
         <Pressable
           onPress={() => {
             dispatch(setItem(item))
@@ -51,34 +50,6 @@ const TechMaps = () => {
             resizeMode={'contain'}
           />
         </Pressable>
-        {/* )} */}
-        {/* {item.file_name.split('.').pop() == 'pdf' && (
-          <Pressable
-            onPress={async () => {
-              await WebBrowser.openBrowserAsync(item.file_url)
-            }}
-          >
-            <Image
-              source={require('../../assets/icons/pdf.png')}
-              style={{ height: '93%', alignSelf: 'center' }}
-              resizeMode={'contain'}
-            />
-          </Pressable>
-        )}
-        {item.file_name.split('.').pop() == 'm4v' && (
-          <Pressable
-            onPress={() => {
-              setItem(item)
-              setModalVisible(true)
-            }}
-          >
-            <Image
-              source={require('../../assets/icons/video.png')}
-              style={{ height: '93%', alignSelf: 'center' }}
-              resizeMode={'contain'}
-            />
-          </Pressable>
-        )} */}
       </View>
     )
   }

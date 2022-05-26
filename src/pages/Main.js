@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { View, Alert, Modal, Text } from 'react-native'
 import Carousel from '../components/Carowsel/CarowselComponent'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -99,27 +99,13 @@ function Main({ route }) {
   )
   const selectedItems = useSelector((state) => state.main.selectedItems)
 
-  //////////////////////Для BackgroundFetch
-
-  const [isRegistered, setIsRegistered] = useState(false)
-  const [status, setStatus] = useState(null)
-
+  //////////////////////For BackgroundFetch/////////////////////////////////////////////////////////
   useEffect(() => {
     toggleFetchTask()
   }, [])
 
-  const checkStatusAsync = async () => {
-    const status = await BackgroundFetch.getStatusAsync()
-    const isRegistered = await TaskManager.isTaskRegisteredAsync(
-      BACKGROUND_FETCH_TASK
-    )
-    setStatus(status)
-    setIsRegistered(isRegistered)
-  }
-
   const toggleFetchTask = async () => {
     await registerBackgroundFetchAsync()
-    checkStatusAsync()
   }
 
   async function registerBackgroundFetchAsync() {

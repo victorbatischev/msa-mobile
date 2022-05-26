@@ -8,7 +8,7 @@ import styles from './styles'
 
 const NewMessagesItem = ({ orderId, userId }) => {
   const dispatch = useDispatch()
-  const newMessage = useSelector((state) => state.NewMessagesItem.newMessage)
+  const newMessage = useSelector((state) => state.NewMessagesItem?.newMessage)
 
   const buttonHendler = () => {
     Keyboard.dismiss()
