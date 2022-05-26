@@ -1,6 +1,6 @@
 import React from 'react'
 import { ScrollView, View, Text, Image, Pressable } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import EquipmentItem from '../EquipmentItem/EquipmentItem'
 import styles from './styles'
 
@@ -21,14 +21,7 @@ const Equipment = ({ equipmentRequest }) => {
       </View>
       <ScrollView>
         {equipmentArr.map((item, index) => {
-          return (
-            <EquipmentItem
-              key={item._id}
-              title={item.name}
-              isBusy={item.occupied}
-              id={item._id}
-            />
-          )
+          return <EquipmentItem key={item._id} index={index} />
         })}
       </ScrollView>
     </View>

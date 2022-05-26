@@ -39,3 +39,15 @@ export const SET_SOUND = 'SET_SOUND'
 export const SET_MAPS_ARR = 'SET_MAPS_ARR'
 export const SET_MODAL_VISIBLE_TECH_MAPS = 'SET_MODAL_VISIBLE_TECH_MAPS'
 export const SET_ITEM = 'SET_ITEM'
+
+// For barCodeReduser ///////////////////////////////////////
+
+export const SET_HAS_PERMISSION = 'SET_HAS_PERMISSION'
+export const SET_SCANNED = 'SET_SCANNED'
+export const SET_BARCODE = 'SET_BARCODE'
+export const SET_BOUNDS = 'SET_BOUNDS'
+
+// For equipmentItemReduser ///////////////////////////////////////
+
+export const SET_IS_CHECKED_ARR = 'SET_IS_CHECKED_ARR'
+export const SET_IS_CHECKED = 'SET_IS_CHECKED'

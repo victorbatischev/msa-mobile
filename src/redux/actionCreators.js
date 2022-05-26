@@ -2,10 +2,15 @@ import {
   SET_ACTIVE_BARCODE,
   SET_ACTIVE_INDEX,
   SET_ACTIVE_ORDER,
+  SET_BARCODE,
+  SET_BOUNDS,
   SET_CONFIRMATION,
   SET_EQUIPMENT_ARR,
   SET_EQUIPMENT_VISIBLE,
   SET_FINISH_ORDER_PARAMS,
+  SET_HAS_PERMISSION,
+  SET_IS_CHECKED,
+  SET_IS_CHECKED_ARR,
   SET_IS_MODAL_WORK_SHIFT_VISIBLE,
   SET_IS_USER_MENU_MODAL,
   SET_ITEM,
@@ -21,6 +26,7 @@ import {
   SET_ORDER_STARTED,
   SET_PLAY_SOUND,
   SET_PRIVIOUS_OPERATION,
+  SET_SCANNED,
   SET_SELECTED_ITEMS_CHECKED,
   SET_SELECTED_ITEMS_UNCHECKED,
   SET_SHOW_MATERIALS_COMPONENT,
@@ -227,5 +233,50 @@ export const setItem = (item) => {
   return {
     type: SET_ITEM,
     data: item
+  }
+}
+
+// For barCodeReduser ///////////////////////////////////////////////////////////////////////
+
+export const setHasPermission = (data) => {
+  return {
+    type: SET_HAS_PERMISSION,
+    data
+  }
+}
+
+export const setScanned = (isScanned) => {
+  return {
+    type: SET_SCANNED,
+    data: isScanned
+  }
+}
+
+export const setBarcode = (data) => {
+  return {
+    type: SET_BARCODE,
+    data
+  }
+}
+
+export const setBounds = (bounds) => {
+  return {
+    type: SET_BOUNDS,
+    data: bounds
+  }
+}
+
+// For equipmentItemReduser ///////////////////////////////////////////////////////////////////////
+
+export const setIsCheckedArr = () => {
+  return {
+    type: SET_IS_CHECKED_ARR
+  }
+}
+
+export const setIsChecked = (index) => {
+  return {
+    type: SET_IS_CHECKED,
+    index
   }
 }

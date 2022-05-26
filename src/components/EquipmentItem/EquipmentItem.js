@@ -1,39 +1,38 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, Image, Pressable } from 'react-native'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   setSelectedItemsCheced,
-  setSelectedItemsUnCheced
+  setSelectedItemsUnCheced,
+  setIsChecked,
+  setIsCheckedArr
 } from '../../redux/actionCreators'
 import styles from './styles'
 
-const EquipmentItem = ({ id, title, isBusy, setSelectedItems }) => {
+const EquipmentItem = ({ index }) => {
   const dispatch = useDispatch()
 
-  const [isChecked, setIsChecked] = useState(false)
+  const isChecked = useSelector((state) => state.equipmentItem.isChecked)
+  const isBusy = useSelector((state) => state.main.equipmentArr[index].occupied)
+  const title = useSelector((state) => state.main.equipmentArr[index].name)
+  const id = useSelector((state) => state.main.equipmentArr[index].id)
 
   useEffect(() => {
+    dispatch(setIsCheckedArr())
     setArr()
-  }, [isChecked])
+  }, [isChecked[index]])
 
   const itemHandler = () => {
+    console.log(title)
     if (!isBusy) {
-      setIsChecked(!isChecked)
+      dispatch(setIsChecked(index))
     }
   }
 
   const setArr = () => {
-    if (isChecked) {
-      // setSelectedItems((prev) => {
-      //   let copy = Object.assign([], prev)
-      //   copy.push(id)
-      //   return copy
-      // })
+    if (isChecked[index]) {
       dispatch(setSelectedItemsCheced(id))
     } else {
-      // setSelectedItems((prev) => {
-      //   return prev.filter((value) => value !== id)
-      // })
       dispatch(setSelectedItemsUnCheced(id))
     }
   }
@@ -43,10 +42,10 @@ const EquipmentItem = ({ id, title, isBusy, setSelectedItems }) => {
       <View
         style={[
           styles.checkIcon,
-          { backgroundColor: isChecked ? '#0080FF' : '#F2F2F2' }
+          { backgroundColor: isChecked[index] ? '#0080FF' : '#F2F2F2' }
         ]}
       >
-        {isChecked && (
+        {isChecked[index] && (
           <Image
             source={require('../../assets/images/ok.png')}
             style={styles.okButton}

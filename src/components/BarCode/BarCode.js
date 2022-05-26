@@ -1,37 +1,44 @@
-import React, { useState, useEffect, useSyncExternalStore } from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 import componentStyles from './styles'
 import styles from '../../styles/Styles'
 import { useDispatch, useSelector } from 'react-redux'
-import { setActiveBarCode } from '../../redux/actionCreators'
+import {
+  setActiveBarCode,
+  setHasPermission,
+  setScanned,
+  setBounds,
+  setBarcode
+} from '../../redux/actionCreators'
 
 const BarCode = () => {
   const dispatch = useDispatch()
   const activeBarCode = useSelector((state) => state.main.activeBarCode)
   const orders = useSelector((state) => state.main.orders)
-
-  const [hasPermission, setHasPermission] = useState(null)
-  const [scanned, setScanned] = useState(false)
-  const [barCode, setBarcode] = useState(null)
-  const [bounds, setBounds] = useState(null)
+  const hasPermission = useSelector((state) => state.barCode.hasPermission)
+  const scanned = useSelector((state) => state.barCode.scanned)
+  const barCode = useSelector((state) => state.barCode.barCode)
+  const bounds = useSelector((state) => state.barCode.bounds)
 
   useEffect(() => {
     ;(async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync()
-      setHasPermission(status === 'granted')
+      dispatch(setHasPermission(status === 'granted'))
     })()
   }, [])
 
   const handleBarCodeScanned = ({ data, bounds }) => {
-    setBounds({
-      x: bounds.origin.x,
-      y: bounds.origin.y,
-      width: bounds.size.width,
-      height: bounds.size.height
-    })
-    setScanned(true)
-    setBarcode(data)
+    dispatch(
+      setBounds({
+        x: bounds.origin.x,
+        y: bounds.origin.y,
+        width: bounds.size.width,
+        height: bounds.size.height
+      })
+    )
+    dispatch(setScanned(true))
+    dispatch(setBarcode(data))
   }
 
   if (hasPermission === null) {
