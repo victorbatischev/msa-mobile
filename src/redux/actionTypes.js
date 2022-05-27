@@ -76,3 +76,6 @@ export const SET_LOGIN = 'SET_LOGIN'
 export const SET_PASSWORD = 'SET_PASSWORD'
 export const SET_APP_IS_READY = 'SET_APP_IS_READY'
 export const SET_SHOW_ERROR = 'SET_SHOW_ERROR'
+
+// For startFinishButton /////////////////////////////////////////////////
+export const SET_IS_EQUIPMENT_EMPTY = 'SET_IS_EQUIPMENT_EMPTY'

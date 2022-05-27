@@ -17,7 +17,7 @@ const ActiveOrder = ({ schedulePushNotification }) => {
   const dispatch = useDispatch()
   const isPlaySound = useSelector((state) => state.main.isPlaySound)
   const orderStarted = useSelector((state) => state.main.orderStarted)
-  const order = useSelector((state) => state.main.activeOrder?.description.o_id)
+  const order = useSelector((state) => state.main.activeOrder)
   const sound = useSelector((state) => state.activeOrder?.sound)
 
   async function playSound() {

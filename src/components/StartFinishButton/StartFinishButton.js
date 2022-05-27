@@ -1,7 +1,11 @@
 import React from 'react'
-import { View, Pressable, Image, Text } from 'react-native'
+import { View, Pressable, Image, Text, Alert } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { setModalVisible, setIsConfirmation } from '../../redux/actionCreators'
+import {
+  setModalVisible,
+  setIsConfirmation,
+  setIsEquipmentEmpty
+} from '../../redux/actionCreators'
 import styles from '../../styles/Styles'
 import componentStyles from './styles'
 
@@ -9,8 +13,10 @@ const StartFinishButton = ({ startOrder }) => {
   const dispatch = useDispatch()
   const orderStarted = useSelector((state) => state.main.orderStarted)
   const isConfirmation = useSelector((state) => state.main.isConfirmation)
-  const equipmentArr = useSelector((state) => state.main.equipmentArr)
   const selectedItems = useSelector((state) => state.main.selectedItems)
+  const isEquiomentEmpty = useSelector(
+    (state) => state.startFinishButton.isEquiomentEmpty
+  )
   return (
     <View style={componentStyles.container}>
       {isConfirmation ? (
@@ -50,15 +56,16 @@ const StartFinishButton = ({ startOrder }) => {
             ...styles.container,
             backgroundColor: orderStarted
               ? '#009C6D'
-              : selectedItems.length > 0 || equipmentArr.length === 0
+              : selectedItems.length > 0 || isEquiomentEmpty
               ? '#0080FF'
               : 'gray'
           }}
           onPress={() => {
             orderStarted
               ? dispatch(setIsConfirmation(true))
-              : (equipmentArr.length === 0 || selectedItems.length > 0) &&
-                dispatch(setIsConfirmation(true))
+              : isEquiomentEmpty || selectedItems.length > 0
+              ? dispatch(setIsConfirmation(true))
+              : Alert.alert('Choose equipment!')
           }}
         >
           <Text style={componentStyles.tytleText}>

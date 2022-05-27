@@ -10,6 +10,7 @@ import newMessageItemReduser from './redusers/newMessageItemReduser'
 import orderReduser from './redusers/orderReduser'
 import usersMenuModalReduser from './redusers/usersMenuModalReduser'
 import authReduser from './redusers/authReduser'
+import startFinishButtonReduser from './redusers/startFinishButtonReduser'
 
 export default rootReduser = combineReducers({
   main: mainReduser,
@@ -22,5 +23,6 @@ export default rootReduser = combineReducers({
   newMessageItem: newMessageItemReduser,
   order: orderReduser,
   usersMenuModal: usersMenuModalReduser,
-  auth: authReduser
+  auth: authReduser,
+  startFinishButton: startFinishButtonReduser
 })

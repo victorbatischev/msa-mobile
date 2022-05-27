@@ -19,11 +19,13 @@ const EquipmentItem = ({ index }) => {
 
   useEffect(() => {
     dispatch(setIsCheckedArr())
+  }, [])
+
+  useEffect(() => {
     setArr()
   }, [isChecked[index]])
 
   const itemHandler = () => {
-    console.log(title)
     if (!isBusy) {
       dispatch(setIsChecked(index))
     }

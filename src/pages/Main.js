@@ -37,7 +37,8 @@ import {
   setPreviousOperation,
   setIsConfirmation,
   setEquipmentArr,
-  setIsEquipmentVisible
+  setIsEquipmentVisible,
+  setIsEquipmentEmpty
 } from '../redux/actionCreators'
 
 // Счетчик заказов
@@ -251,6 +252,7 @@ function Main({ route }) {
   const equipmentRequest = (o_id) => {
     axios.get(`equipment_o_id/${o_id}`).then((res) => {
       dispatch(setEquipmentArr(res.data))
+      res.data.length === 0 && dispatch(setIsEquipmentEmpty(true))
     })
   }
 

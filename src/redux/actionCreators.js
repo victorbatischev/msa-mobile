@@ -15,6 +15,7 @@ import {
   SET_IS_CHECKED,
   SET_IS_CHECKED_ARR,
   SET_IS_COMPLETE_WORK_SHIFT_VISIBLE,
+  SET_IS_EQUIPMENT_EMPTY,
   SET_IS_MODAL_GET_DETAILS,
   SET_IS_MODAL_NEW_ORDER,
   SET_IS_MODAL_WORK_SHIFT_VISIBLE,
@@ -382,6 +383,15 @@ export const setAppIsReady = (data) => {
 export const setShowError = (data) => {
   return {
     type: SET_SHOW_ERROR,
+    data
+  }
+}
+
+// For startFinishButton /////////////////////////////////////////////////
+
+export const setIsEquipmentEmpty = (data) => {
+  return {
+    type: SET_IS_EQUIPMENT_EMPTY,
     data
   }
 }
