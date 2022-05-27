@@ -85,9 +85,6 @@ function Auth({ navigation }) {
         await AsyncStorage.setItem('role', res.data.role)
         await AsyncStorage.setItem('user', JSON.stringify(res.data.user))
         const userData = await axios.get(`worker_name/${res.data.user.u_id}`)
-        console.log(
-          '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-        )
         axios
           .put('worker_in', { _id: res.data.user.u_id, at_work: true })
           .then(() => {

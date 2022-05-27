@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 import AppIntroSlider from 'react-native-app-intro-slider'
 import ImageZoom from 'react-native-image-pan-zoom'
-import { Video } from 'expo-av'
+// import { Video } from 'expo-av'
 import styles from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -23,7 +23,7 @@ import {
 const TechMaps = () => {
   const dispatch = useDispatch()
   const operationId = useSelector(
-    (state) => state.main.activeOrder.description?.o_id
+    (state) => state.main.activeOrder?.description?.o_id
   )
   const mapsArr = useSelector((state) => state.TechMaps.mapsArr)
   const modalVisible = useSelector((state) => state.TechMaps.modalVisible)
@@ -122,7 +122,7 @@ const TechMaps = () => {
           />
         </ImageZoom>
         {/* )} */}
-        {item?.file_name.split('.').pop() == 'pdf' && <Text>PDF</Text>}
+        {/* {item?.file_name.split('.').pop() == 'pdf' && <Text>PDF</Text>}
         {item?.file_name.split('.').pop() == 'm4v' && (
           <Video
             style={{ height: '80%' }}
@@ -131,7 +131,7 @@ const TechMaps = () => {
             useNativeControls={true}
             shouldPlay={true}
           />
-        )}
+        )} */}
       </Modal>
     </View>
   )
