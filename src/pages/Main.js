@@ -25,7 +25,6 @@ import * as Notifications from 'expo-notifications'
 import Timer from '../components/Timer/Timer'
 import StartFinishButton from '../components/StartFinishButton/StartFinishButton'
 import OperationResult from '../components/OperationResult/OperationResult'
-import { useSelector } from 'react-redux'
 
 // Счетчик заказов
 
@@ -89,8 +88,6 @@ function Main({ route }) {
 
   const [isRegistered, setIsRegistered] = useState(false)
   const [status, setStatus] = useState(null)
-
-  const myapp = useSelector((state) => state.app.app)
 
   useEffect(() => {
     toggleFetchTask()

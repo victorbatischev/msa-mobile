@@ -29,21 +29,21 @@ const TechMaps = ({ operationId }) => {
     return (
       <View style={styles.container}>
         <Text style={styles.mapName}>{item.name}</Text>
-        {item.file_name.split('.').pop() == 'jpg' && (
-          <Pressable
-            onPress={() => {
-              setItem(item)
-              setModalVisible(true)
-            }}
-          >
-            <Image
-              source={{ uri: item.file_url }}
-              style={{ height: '93%' }}
-              resizeMode={'contain'}
-            />
-          </Pressable>
-        )}
-        {item.file_name.split('.').pop() == 'pdf' && (
+        {/* {item.file_name.split('.').pop() == 'jpg' && ( */}
+        <Pressable
+          onPress={() => {
+            setItem(item)
+            setModalVisible(true)
+          }}
+        >
+          <Image
+            source={{ uri: item.file_url }}
+            style={{ height: '93%' }}
+            resizeMode={'contain'}
+          />
+        </Pressable>
+        {/* )} */}
+        {/* {item.file_name.split('.').pop() == 'pdf' && (
           <Pressable
             onPress={async () => {
               await WebBrowser.openBrowserAsync(item.file_url)
@@ -69,7 +69,7 @@ const TechMaps = ({ operationId }) => {
               resizeMode={'contain'}
             />
           </Pressable>
-        )}
+        )} */}
       </View>
     )
   }
@@ -125,24 +125,24 @@ const TechMaps = ({ operationId }) => {
             ]}
           />
         </Pressable>
-        {item?.file_name.split('.').pop() == 'jpg' && (
-          <ImageZoom
-            cropWidth={Dimensions.get('window').width}
-            cropHeight={Dimensions.get('window').height}
-            imageWidth={Dimensions.get('window').width}
-            imageHeight={Dimensions.get('window').width / 1.43}
-          >
-            <Image
-              source={{ uri: item?.file_url }}
-              style={{
-                height: Dimensions.get('window').width / 1.43,
-                width: Dimensions.get('window').width
-              }}
-              resizeMode={'contain'}
-            />
-          </ImageZoom>
-        )}
-        {item?.file_name.split('.').pop() == 'pdf' && <Text>PDF</Text>}
+        {/* {item?.file_name.split('.').pop() == 'jpg' && ( */}
+        <ImageZoom
+          cropWidth={Dimensions.get('window').width}
+          cropHeight={Dimensions.get('window').height}
+          imageWidth={Dimensions.get('window').width}
+          imageHeight={Dimensions.get('window').width / 1.43}
+        >
+          <Image
+            source={{ uri: item?.file_url }}
+            style={{
+              height: Dimensions.get('window').width / 1.43,
+              width: Dimensions.get('window').width
+            }}
+            resizeMode={'contain'}
+          />
+        </ImageZoom>
+        {/* )} */}
+        {/* {item?.file_name.split('.').pop() == 'pdf' && <Text>PDF</Text>}
         {item?.file_name.split('.').pop() == 'm4v' && (
           <Video
             style={{ height: '80%' }}
@@ -151,7 +151,7 @@ const TechMaps = ({ operationId }) => {
             useNativeControls={true}
             shouldPlay={true}
           />
-        )}
+        )} */}
       </Modal>
     </View>
   )
