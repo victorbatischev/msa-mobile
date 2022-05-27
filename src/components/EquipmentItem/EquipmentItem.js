@@ -15,7 +15,7 @@ const EquipmentItem = ({ index }) => {
   const isChecked = useSelector((state) => state.equipmentItem.isChecked)
   const isBusy = useSelector((state) => state.main.equipmentArr[index].occupied)
   const title = useSelector((state) => state.main.equipmentArr[index].name)
-  const id = useSelector((state) => state.main.equipmentArr[index].id)
+  const id = useSelector((state) => state.main.equipmentArr[index]._id)
 
   useEffect(() => {
     dispatch(setIsCheckedArr())
