@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { View, Alert, Modal, Text } from 'react-native'
-import Carousel from '../components/Carowsel/CarowselComponent'
+import Carousel from '../components/Carousel/CarouselComponent'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { StatusBar } from 'expo-status-bar'

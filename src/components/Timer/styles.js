@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#000'
   },
-  tytleText: {
+  titleText: {
     fontFamily: 'Roboto',
     fontSize: 12,
     color: '#888'

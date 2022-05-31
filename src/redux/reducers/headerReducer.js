@@ -8,7 +8,7 @@ const initialState = {
   isUserMenuModal: false
 }
 
-export default headerReduser = (state = initialState, action) => {
+export default headerReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_IS_MODAL_WORK_SHIFT_VISIBLE:
       return { ...state, isModalWorkShiftVisible: action.data }

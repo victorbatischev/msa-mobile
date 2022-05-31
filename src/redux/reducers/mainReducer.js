@@ -41,7 +41,7 @@ const initialState = {
   finishOrderParams: null
 }
 
-export default mainReduser = (state = initialState, action) => {
+export default mainReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_USER:
       return { ...state, user: action.data }

@@ -34,6 +34,7 @@ const TechMaps = () => {
       dispatch(setMapsArr(response.data[0].technical_maps))
     })
   }, [])
+
   const renderItem = ({ item }) => {
     return (
       <View style={styles.container}>

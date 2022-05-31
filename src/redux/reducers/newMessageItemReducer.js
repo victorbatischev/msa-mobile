@@ -4,7 +4,7 @@ const initialState = {
   newMessage: ''
 }
 
-export default newMessageItemReduser = (state = initialState, action) => {
+export default newMessageItemReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_NEW_MESSAGE:
       return { ...state, newMessage: action.data }

@@ -4,7 +4,7 @@ const initialState = {
   messages: []
 }
 
-export default messagesReduser = (state = initialState, action) => {
+export default messagesReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_MESSAGES:
       return { ...state, messages: action.data }

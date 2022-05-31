@@ -4,7 +4,7 @@ const initialState = {
   isChecked: []
 }
 
-export default equipmentItemRduser = (state = initialState, action) => {
+export default equipmentItemReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_IS_CHECKED_ARR:
       let arr = state.isChecked

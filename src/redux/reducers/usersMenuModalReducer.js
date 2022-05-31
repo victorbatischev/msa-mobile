@@ -16,7 +16,7 @@ const initialState = {
   createdOrderId: null
 }
 
-export default usersMenuModalReduser = (state = initialState, action) => {
+export default usersMenuModalReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_IS_MODAL_NEW_ORDER:
       return { ...state, isModalNewOrder: action.data }

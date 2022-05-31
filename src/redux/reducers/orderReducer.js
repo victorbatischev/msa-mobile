@@ -4,7 +4,7 @@ const initialState = {
   ImgTag: ''
 }
 
-export default orderReduser = (state = initialState, action) => {
+export default orderReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_IMG_TAG:
       return { ...state, ImgTag: action.data }

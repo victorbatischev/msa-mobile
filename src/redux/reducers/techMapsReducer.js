@@ -10,7 +10,7 @@ const initialState = {
   item: null
 }
 
-export default techMapsReduser = (state = initialState, action) => {
+export default techMapsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_MAPS_ARR:
       return { ...state, mapsArr: action.data }
