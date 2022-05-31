@@ -1,11 +1,7 @@
 import React from 'react'
 import { View, Pressable, Image, Text, Alert } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  setModalVisible,
-  setIsConfirmation,
-  setIsEquipmentEmpty
-} from '../../redux/actionCreators'
+import { setModalVisible, setIsConfirmation } from '../../redux/actionCreators'
 import styles from '../../styles/Styles'
 import componentStyles from './styles'
 
