@@ -16,19 +16,19 @@ const RightBlock = ({ startOrder }) => {
       <View>
         <OperationContainer />
         <View style={styles.previousOperation}>
-          <Text style={styles.previusOperationTitle}>Previous operation</Text>
-          <Text style={styles.previusOperationText}>
+          <Text style={styles.previousOperationTitle}>Previous operation</Text>
+          <Text style={styles.previousOperationText}>
             {previousOperation.length > 0
               ? previousOperation.length[0].name_prev_operation
               : 'No previous operations'}
           </Text>
         </View>
         <View style={styles.resultPreviousOperation}>
-          <Text style={{ ...styles.previusOperationTitle, paddingLeft: 10 }}>
+          <Text style={{ ...styles.previousOperationTitle, paddingLeft: 10 }}>
             Result of previous operation
           </Text>
-          <View style={styles.previusOperationTextContainer}>
-            <Text style={styles.previusOperationText}>
+          <View style={styles.previousOperationTextContainer}>
+            <Text style={styles.previousOperationText}>
               {previousOperation.length > 0
                 ? previousOperation.length[0].result_prev_operation
                 : 'No previous operations'}
@@ -59,14 +59,14 @@ const styles = StyleSheet.create({
   previousOperation: {
     paddingHorizontal: 10
   },
-  previusOperationTitle: {
+  previousOperationTitle: {
     color: '#8F8F8F'
   },
-  previusOperationText: {
+  previousOperationText: {
     color: '#FFFFFF',
     fontSize: 14
   },
-  previusOperationTextContainer: {
+  previousOperationTextContainer: {
     width: '88%',
     height: 55,
     backgroundColor: '#CF3B23',

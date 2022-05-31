@@ -12,7 +12,7 @@ const initialState = {
   showError: false
 }
 
-export default authReduser = (state = initialState, action) => {
+export default authReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_LOGIN:
       return { ...state, login: action.data }

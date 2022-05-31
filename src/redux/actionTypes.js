@@ -1,4 +1,4 @@
-// For mainReduser /////////////////////////////////////
+// For mainReducer
 
 export const SET_USER = 'SET_USER'
 export const SET_ORDERS = 'SET_ORDERS'
@@ -21,46 +21,46 @@ export const SET_SELECTED_ITEMS_CHECKED = 'SET_SELECTED_ITEMS_CHECKED'
 export const SET_SELECTED_ITEMS_UNCHECKED = 'SET_SELECTED_ITEMS_UNCHECKED'
 export const SET_FINISH_ORDER_PARAMS = 'SET_FINISH_ORDER_PARAMS'
 
-// For headerReduser ///////////////////////////////////////
+// For headerReducer
 
 export const SET_IS_MODAL_WORK_SHIFT_VISIBLE = 'SET_IS_MODAL_WORK_SHIFT_VISIBLE'
 export const SET_IS_USER_MENU_MODAL = 'SET_IS_USER_MENU_MODAL'
 
-// For messagesReduser ///////////////////////////////////////
+// For messagesReducer
 
 export const SET_MESSAGES = 'SET_MESSAGES'
 
-// For activeOrderReduser ///////////////////////////////////////
+// For activeOrderReducer
 
 export const SET_SOUND = 'SET_SOUND'
 
-// For techMapsReduser ///////////////////////////////////////
+// For techMapsReducer
 
 export const SET_MAPS_ARR = 'SET_MAPS_ARR'
 export const SET_MODAL_VISIBLE_TECH_MAPS = 'SET_MODAL_VISIBLE_TECH_MAPS'
 export const SET_ITEM = 'SET_ITEM'
 
-// For barCodeReduser ///////////////////////////////////////
+// For barCodeReducer
 
 export const SET_HAS_PERMISSION = 'SET_HAS_PERMISSION'
 export const SET_SCANNED = 'SET_SCANNED'
 export const SET_BARCODE = 'SET_BARCODE'
 export const SET_BOUNDS = 'SET_BOUNDS'
 
-// For equipmentItemReduser ///////////////////////////////////////
+// For equipmentItemReducer
 
 export const SET_IS_CHECKED_ARR = 'SET_IS_CHECKED_ARR'
 export const SET_IS_CHECKED = 'SET_IS_CHECKED'
 
-// For newMessageItemReduser ///////////////////////////////////////////////////////////////////////
+// For newMessageItemReducer
 
 export const SET_NEW_MESSAGE = 'SET_NEW_MESSAGE'
 
-// For orderReduser ///////////////////////////////////////////////////////////////////////
+// For orderReducer
 
 export const SET_IMG_TAG = 'SET_IMG_TAG'
 
-// For userMenuModalReduser ///////////////////////////////////////////////////////////////////////
+// For userMenuModalReducer
 
 export const SET_IS_MODAL_NEW_ORDER = 'SET_IS_MODAL_NEW_ORDER'
 export const SET_IS_MODAL_GET_DETAILS = 'SET_IS_MODAL_GET_DETAILS'
@@ -70,12 +70,13 @@ export const SET_USER_MENU_ORDERS = 'SET_USER_MENU_ORDERS'
 export const SET_TEMP_DETAIL = 'SET_TEMP_DETAIL'
 export const SET_CREATED_ORDER_ID = 'SET_CREATED_ORDER_ID'
 
-// For authReduser ///////////////////////////////////////////////////////////////////////
+// For authReducer
 
 export const SET_LOGIN = 'SET_LOGIN'
 export const SET_PASSWORD = 'SET_PASSWORD'
 export const SET_APP_IS_READY = 'SET_APP_IS_READY'
 export const SET_SHOW_ERROR = 'SET_SHOW_ERROR'
 
-// For startFinishButton /////////////////////////////////////////////////
+// For startFinishButton
+
 export const SET_IS_EQUIPMENT_EMPTY = 'SET_IS_EQUIPMENT_EMPTY'

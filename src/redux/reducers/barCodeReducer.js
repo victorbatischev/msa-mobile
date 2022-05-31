@@ -12,7 +12,7 @@ const initialState = {
   bounds: null
 }
 
-export default barCodeReduser = (state = initialState, action) => {
+export default barCodeReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_HAS_PERMISSION:
       return { ...state, hasPermission: action.data }

@@ -47,7 +47,7 @@ import {
   SET_USER_MENU_ORDERS
 } from './actionTypes'
 
-// For mainReduser ///////////////////////////////////////////////////////////////////////
+// For mainReducer
 
 export const setUser = (tempUser) => {
   return {
@@ -192,7 +192,7 @@ export const setFinishOrderParams = (data) => {
   }
 }
 
-// For headerReduser ///////////////////////////////////////////////////////////////////////
+// For headerReducer
 
 export const setIsModalWorkShiftVisible = (isVisible) => {
   return {
@@ -208,7 +208,7 @@ export const setIsUserMenuModal = (isModal) => {
   }
 }
 
-// For messagesReduser ///////////////////////////////////////////////////////////////////////
+// For messagesReducer
 
 export const setMessages = (messages) => {
   return {
@@ -217,7 +217,7 @@ export const setMessages = (messages) => {
   }
 }
 
-// For activeOrderReduser ///////////////////////////////////////////////////////////////////////
+// For activeOrderReducer
 
 export const setSound = (sound) => {
   return {
@@ -226,7 +226,7 @@ export const setSound = (sound) => {
   }
 }
 
-// For techMapsReduser ///////////////////////////////////////////////////////////////////////
+// For techMapsReducer
 
 export const setMapsArr = (maps) => {
   return {
@@ -249,7 +249,7 @@ export const setItem = (item) => {
   }
 }
 
-// For barCodeReduser ///////////////////////////////////////////////////////////////////////
+// For barCodeReducer
 
 export const setHasPermission = (data) => {
   return {
@@ -279,7 +279,7 @@ export const setBounds = (bounds) => {
   }
 }
 
-// For equipmentItemReduser ///////////////////////////////////////////////////////////////////////
+// For equipmentItemReducer
 
 export const setIsCheckedArr = () => {
   return {
@@ -294,7 +294,7 @@ export const setIsChecked = (index) => {
   }
 }
 
-// For newMessageItemReduser ///////////////////////////////////////////////////////////////////////
+// For newMessageItemReducer
 
 export const setNewMessage = (data) => {
   return {
@@ -303,7 +303,7 @@ export const setNewMessage = (data) => {
   }
 }
 
-// For orderReduser ///////////////////////////////////////////////////////////////////////
+// For orderReducer
 
 export const setImgTag = (ImgTag) => {
   return {
@@ -312,7 +312,7 @@ export const setImgTag = (ImgTag) => {
   }
 }
 
-// For userMenuModalReduser ///////////////////////////////////////////////////////////////////////
+// For userMenuModalReducer
 
 export const setIsModalNewOrder = (data) => {
   return {
@@ -357,7 +357,7 @@ export const setCreatedOrderId = (data) => {
   }
 }
 
-// For authReduser ///////////////////////////////////////////////////////////////////////
+// For authReducer
 
 export const setLogin = (data) => {
   return {
@@ -387,7 +387,7 @@ export const setShowError = (data) => {
   }
 }
 
-// For startFinishButton /////////////////////////////////////////////////
+// For startFinishButton
 
 export const setIsEquipmentEmpty = (data) => {
   return {

@@ -1,7 +1,5 @@
 import { StyleSheet } from 'react-native'
 
-import { windowWidth } from '../Constants'
-
 const styles = StyleSheet.create({
   center: {
     flexDirection: 'row',

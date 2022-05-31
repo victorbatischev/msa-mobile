@@ -23,6 +23,7 @@ const Messages = () => {
       clearInterval(getMessage)
     }
   }, [])
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scroll}>
