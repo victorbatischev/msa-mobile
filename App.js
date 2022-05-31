@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Provider as PaperProvider } from 'react-native-paper'
 
 import Auth from './src/pages/Auth'
-import Orders from './src/pages/Orders'
+import Main from './src/pages/Main'
 
 import { theme } from './src/Constants'
 
@@ -26,7 +26,7 @@ function App() {
           initialRouteName='Auth'
         >
           <Stack.Screen name='Auth' component={Auth} />
-          <Stack.Screen name='Orders' component={Orders} />
+          <Stack.Screen name='Main' component={Main} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

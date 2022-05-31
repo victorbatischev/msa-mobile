@@ -3,7 +3,8 @@ import { DefaultTheme } from 'react-native-paper'
 import { Dimensions } from 'react-native'
 import axios from 'axios'
 
-const url = 'https://demomsa.com/api/'
+const url = 'https://demomsa.com/api/' // dev
+//const url = 'https://customer.demomsa.com/api' // prod
 
 axios.defaults.baseURL = url
 
@@ -74,4 +75,25 @@ export const options = {
     fontSize: 30,
     color: '#fff'
   }
+}
+
+export const htmlPrint = (id, name, ImgTag) => {
+  return `
+  <html>
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    </head>
+    <body>
+      <div style="font-size: 50px; font-family: Helvetica Neue; text-align: center;">
+        <p style="margin: 0 0 20px; font-weight: bold";>Order's id</p>
+        <p style="margin: 0px">${id}</p>
+        <p style="margin: 40px 0 20px; font-weight: bold"">Order's name</p>
+        <p style="margin: 0px">${name}</p>
+        <div style="width: 500px; height: 500px; margin: 0 auto;">
+         ${ImgTag}
+        </div>
+      </div>
+    </body>
+  </html>
+  `
 }

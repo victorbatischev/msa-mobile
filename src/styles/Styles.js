@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   cameraContainer: {
-    height: '142%'
+    height: '114%'
   },
   authInput: {
     width: '100%',
@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     height: 80,
-    width: windowWidth,
-    padding: 10
+    width: 260,
+    padding: 8
   },
   printButton: {
     width: 76,
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     width: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 10
+    borderRadius: 20
   },
   versionText: {
     position: 'absolute',

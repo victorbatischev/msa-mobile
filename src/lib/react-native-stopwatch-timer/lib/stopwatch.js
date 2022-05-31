@@ -32,7 +32,6 @@ class StopWatch extends Component {
     const width = props.msecs ? 220 : 150
     this.defaultStyles = {
       container: {
-        backgroundColor: '#000',
         padding: 5,
         borderRadius: 5,
         width: width
