@@ -45,8 +45,6 @@ import {
 
 let ordersCount = 0
 
-///////
-
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -100,7 +98,8 @@ function Main({ route }) {
   )
   const selectedItems = useSelector((state) => state.main.selectedItems)
 
-  //////////////////////For BackgroundFetch/////////////////////////////////////////////////////////
+  // For BackgroundFetch
+
   useEffect(() => {
     toggleFetchTask()
   }, [])
@@ -116,7 +115,6 @@ function Main({ route }) {
       startOnBoot: true // android only
     })
   }
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   const logOut = async () => {
     axios
