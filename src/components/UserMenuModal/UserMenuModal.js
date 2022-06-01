@@ -194,27 +194,28 @@ const UsersMenuModal = ({ logOut }) => {
                   <Text style={componentStyles.orderNameText}>
                     {tempDetail?.order?.name}
                   </Text>
-                  {Object.entries(tempDetail.order.composition).map(
-                    ([key, value]) =>
-                      key !== 'Worker' &&
-                      key !== 'Worker id' && (
-                        <View
-                          style={componentStyles.whatToDeliverContainer}
-                          key={key}
-                        >
-                          <Text style={componentStyles.whatToDeliverText}>
-                            {key}
-                          </Text>
-                          <TextInput
-                            style={componentStyles.input}
-                            value={value}
-                            onChangeText={(text) => {
-                              textInputHandler(text, key)
-                            }}
-                          />
-                        </View>
-                      )
-                  )}
+                  {tempDetail.order &&
+                    Object.entries(tempDetail.order.composition).map(
+                      ([key, value]) =>
+                        key !== 'Worker' &&
+                        key !== 'Worker id' && (
+                          <View
+                            style={componentStyles.whatToDeliverContainer}
+                            key={key}
+                          >
+                            <Text style={componentStyles.whatToDeliverText}>
+                              {key}
+                            </Text>
+                            <TextInput
+                              style={componentStyles.input}
+                              value={value}
+                              onChangeText={(text) => {
+                                textInputHandler(text, key)
+                              }}
+                            />
+                          </View>
+                        )
+                    )}
 
                   {/* <View style={componentStyles.whatToDeliverContainer}>
                   <Text style={componentStyles.whatToDeliverText}>
