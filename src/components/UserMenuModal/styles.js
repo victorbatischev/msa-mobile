@@ -9,6 +9,9 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 45
   },
+  scrollViewStyle: {
+    backgroundColor: '#000'
+  },
   menuItemBlock: {
     width: '100%',
     alignItems: 'center'

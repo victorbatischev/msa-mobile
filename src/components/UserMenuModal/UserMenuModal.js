@@ -1,5 +1,13 @@
 import React, { useEffect } from 'react'
-import { View, Text, Modal, Pressable, Image, TextInput } from 'react-native'
+import {
+  View,
+  Text,
+  Modal,
+  Pressable,
+  Image,
+  TextInput,
+  ScrollView
+} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import styles from '../../styles/Styles'
 import componentStyles from './styles'
@@ -180,12 +188,35 @@ const UsersMenuModal = ({ logOut }) => {
             transparent={false}
             visible={isModalGetDetails}
           >
-            <View style={componentStyles.container}>
-              <View style={componentStyles.orderContainer}>
-                <Text style={componentStyles.orderNameText}>
-                  {tempDetail?.order?.name}
-                </Text>
-                <View style={componentStyles.whatToDeliverContainer}>
+            <ScrollView style={componentStyles.scrollViewStyle}>
+              <View style={componentStyles.container}>
+                <View style={componentStyles.orderContainer}>
+                  <Text style={componentStyles.orderNameText}>
+                    {tempDetail?.order?.name}
+                  </Text>
+                  {Object.entries(tempDetail.order.composition).map(
+                    ([key, value]) =>
+                      key !== 'Worker' &&
+                      key !== 'Worker id' && (
+                        <View
+                          style={componentStyles.whatToDeliverContainer}
+                          key={key}
+                        >
+                          <Text style={componentStyles.whatToDeliverText}>
+                            {key}
+                          </Text>
+                          <TextInput
+                            style={componentStyles.input}
+                            value={value}
+                            onChangeText={(text) => {
+                              textInputHandler(text, key)
+                            }}
+                          />
+                        </View>
+                      )
+                  )}
+
+                  {/* <View style={componentStyles.whatToDeliverContainer}>
                   <Text style={componentStyles.whatToDeliverText}>
                     What to deliver?
                   </Text>
@@ -196,8 +227,8 @@ const UsersMenuModal = ({ logOut }) => {
                       textInputHandler(text, 'What to deliver?')
                     }}
                   />
-                </View>
-                <View style={componentStyles.detailIdContainer}>
+                </View> */}
+                  {/* <View style={componentStyles.detailIdContainer}>
                   <Text style={componentStyles.detailIdText}>Detail id</Text>
                   <TextInput
                     style={componentStyles.input}
@@ -206,8 +237,8 @@ const UsersMenuModal = ({ logOut }) => {
                       textInputHandler(text, 'Detail id')
                     }}
                   />
-                </View>
-                <View style={componentStyles.workplaceContainer}>
+                </View> */}
+                  {/* <View style={componentStyles.workplaceContainer}>
                   <Text style={componentStyles.workplaceText}>Workplace</Text>
                   <TextInput
                     style={componentStyles.input}
@@ -216,30 +247,31 @@ const UsersMenuModal = ({ logOut }) => {
                       textInputHandler(text, 'Workplace')
                     }}
                   />
-                </View>
-                <Pressable
-                  style={componentStyles.okButton}
-                  onPress={() => sendFormData()}
-                >
-                  <Text style={{ color: '#fff', fontSize: 24 }}>OK!</Text>
-                </Pressable>
-                <View style={{ marginTop: 20 }}>
+                </View> */}
                   <Pressable
-                    style={{
-                      ...styles.center,
-                      ...styles.cancelContainer
-                    }}
-                    onPress={() => dispatch(setIsModalGetDetails(false))}
+                    style={componentStyles.okButton}
+                    onPress={() => sendFormData()}
                   >
-                    <Image
-                      style={{ width: 20, height: 20, marginRight: 15 }}
-                      source={require('../../assets/images/close.png')}
-                    />
-                    <Text style={componentStyles.cancelText}>Cancel</Text>
+                    <Text style={{ color: '#fff', fontSize: 24 }}>OK!</Text>
                   </Pressable>
+                  <View style={{ marginTop: 20 }}>
+                    <Pressable
+                      style={{
+                        ...styles.center,
+                        ...styles.cancelContainer
+                      }}
+                      onPress={() => dispatch(setIsModalGetDetails(false))}
+                    >
+                      <Image
+                        style={{ width: 20, height: 20, marginRight: 15 }}
+                        source={require('../../assets/images/close.png')}
+                      />
+                      <Text style={componentStyles.cancelText}>Cancel</Text>
+                    </Pressable>
+                  </View>
                 </View>
               </View>
-            </View>
+            </ScrollView>
           </Modal>
         </Modal>
         {isCompleteWorkShiftVisible && <CompleteWorkShift logOut={logOut} />}
