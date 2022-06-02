@@ -195,27 +195,25 @@ const UsersMenuModal = ({ logOut }) => {
                     {tempDetail?.order?.name}
                   </Text>
                   {tempDetail.order &&
-                    Object.entries(tempDetail.order.composition).map(
-                      ([key, value]) =>
-                        key !== 'Worker' &&
-                        key !== 'Worker id' && (
-                          <View
-                            style={componentStyles.whatToDeliverContainer}
-                            key={key}
-                          >
-                            <Text style={componentStyles.whatToDeliverText}>
-                              {key}
-                            </Text>
-                            <TextInput
-                              style={componentStyles.input}
-                              value={value}
-                              onChangeText={(text) => {
-                                textInputHandler(text, key)
-                              }}
-                            />
-                          </View>
-                        )
-                    )}
+                    Object.entries(tempDetail.order.composition)
+                      .sort()
+                      .map(([key, value]) => (
+                        <View
+                          style={componentStyles.whatToDeliverContainer}
+                          key={key}
+                        >
+                          <Text style={componentStyles.whatToDeliverText}>
+                            {key}
+                          </Text>
+                          <TextInput
+                            style={componentStyles.input}
+                            value={value}
+                            onChangeText={(text) => {
+                              textInputHandler(text, key)
+                            }}
+                          />
+                        </View>
+                      ))}
 
                   {/* <View style={componentStyles.whatToDeliverContainer}>
                   <Text style={componentStyles.whatToDeliverText}>
