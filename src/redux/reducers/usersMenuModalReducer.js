@@ -8,8 +8,6 @@ import {
 } from '../actionTypes'
 
 const initialState = {
-  isModalNewOrder: false,
-  isModalGetDetails: false,
   isCompleteWorkShiftVisible: false,
   orders: [],
   tempDetail: [],
@@ -18,10 +16,6 @@ const initialState = {
 
 export default usersMenuModalReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_IS_MODAL_NEW_ORDER:
-      return { ...state, isModalNewOrder: action.data }
-    case SET_IS_MODAL_GET_DETAILS:
-      return { ...state, isModalGetDetails: action.data }
     case SET_IS_COMPLETE_WORK_SHIFT_VISIBLE:
       return { ...state, isCompleteWorkShiftVisible: action.data }
     case SET_USER_MENU_ORDERS:

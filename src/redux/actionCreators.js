@@ -16,8 +16,6 @@ import {
   SET_IS_CHECKED_ARR,
   SET_IS_COMPLETE_WORK_SHIFT_VISIBLE,
   SET_IS_EQUIPMENT_EMPTY,
-  SET_IS_MODAL_GET_DETAILS,
-  SET_IS_MODAL_NEW_ORDER,
   SET_IS_MODAL_WORK_SHIFT_VISIBLE,
   SET_IS_USER_MENU_MODAL,
   SET_ITEM,
@@ -313,20 +311,6 @@ export const setImgTag = (ImgTag) => {
 }
 
 // For userMenuModalReducer
-
-export const setIsModalNewOrder = (data) => {
-  return {
-    type: SET_IS_MODAL_NEW_ORDER,
-    data
-  }
-}
-
-export const setIsModalGetDetails = (data) => {
-  return {
-    type: SET_IS_MODAL_GET_DETAILS,
-    data
-  }
-}
 
 export const setIsCompleteWorkShiftVisible = (data) => {
   return {

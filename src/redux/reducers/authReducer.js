@@ -6,7 +6,7 @@ import {
 } from '../actionTypes'
 
 const initialState = {
-  login: 'brown',
+  login: 'panova',
   password: '102030',
   appIsReady: false,
   showError: false

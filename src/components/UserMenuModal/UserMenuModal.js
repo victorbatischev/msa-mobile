@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   View,
   Text,
@@ -16,8 +16,6 @@ import CompleteWorkShift from '../CompleteWorkShift/CompleteWorkShift'
 import * as Application from 'expo-application'
 import {
   setIsUserMenuModal,
-  setIsModalNewOrder,
-  setIsModalGetDetails,
   setIsCompleteWorkShiftVisible,
   setUserMenuOrders,
   setTempDetail,
@@ -26,13 +24,10 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 
 const UsersMenuModal = ({ logOut }) => {
+  const [isModalNewOrder, setIsModalNewOrder] = useState(false)
+  const [isModalGetDetails, setIsModalGetDetails] = useState(false)
+
   const dispatch = useDispatch()
-  const isModalNewOrder = useSelector(
-    (state) => state.usersMenuModal.isModalNewOrder
-  )
-  const isModalGetDetails = useSelector(
-    (state) => state.usersMenuModal.isModalGetDetails
-  )
   const isCompleteWorkShiftVisible = useSelector(
     (state) => state.usersMenuModal.isCompleteWorkShiftVisible
   )
@@ -55,13 +50,13 @@ const UsersMenuModal = ({ logOut }) => {
     item.order.composition['Worker'] = user.name
     item.order.composition['Worker id'] = user.u_id
     dispatch(setTempDetail(item))
-    dispatch(setIsModalGetDetails(true))
+    setIsModalGetDetails(true)
   }
 
   const getNewOrder = async () => {
     axios.get('deskbook_info/61f5b6541f1d04747fffe837').then((res) => {
       dispatch(setUserMenuOrders(Object.values(res.data[0].value)))
-      dispatch(setIsModalNewOrder(true))
+      setIsModalNewOrder(true)
     })
   }
 
@@ -99,7 +94,7 @@ const UsersMenuModal = ({ logOut }) => {
         console.log(err)
       })
       .finally(() => {
-        dispatch(setIsModalGetDetails(false))
+        setIsModalGetDetails(false)
       })
   }
 
@@ -174,7 +169,7 @@ const UsersMenuModal = ({ logOut }) => {
                 ...styles.center,
                 ...styles.cancelContainer
               }}
-              onPress={() => dispatch(setIsModalNewOrder(false))}
+              onPress={() => setIsModalNewOrder(false)}
             >
               <Image
                 style={componentStyles.closeIcon}
@@ -259,7 +254,7 @@ const UsersMenuModal = ({ logOut }) => {
                         ...styles.center,
                         ...styles.cancelContainer
                       }}
-                      onPress={() => dispatch(setIsModalGetDetails(false))}
+                      onPress={() => setIsModalGetDetails(false)}
                     >
                       <Image
                         style={{ width: 20, height: 20, marginRight: 15 }}
