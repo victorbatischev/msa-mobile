@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Provider as PaperProvider } from 'react-native-paper'
@@ -9,10 +9,15 @@ import Main from './src/pages/Main'
 import { theme } from './src/Constants'
 import { Provider } from 'react-redux'
 import store from './src/redux/store'
+import * as ScreenOrientation from 'expo-screen-orientation'
+import { windowWidth } from './src/Constants'
 
 const Stack = createNativeStackNavigator()
 
 export default function App() {
+  useEffect(() => {
+    windowWidth > 480 && ScreenOrientation.unlockAsync()
+  }, [windowWidth])
   return (
     <Provider store={store}>
       <PaperProvider theme={theme}>
