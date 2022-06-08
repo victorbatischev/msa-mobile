@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useRef } from 'react'
+import React, { useEffect, useCallback, useRef, useState } from 'react'
 import { View, Text, Pressable, Image, Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Animatable from 'react-native-animatable'
@@ -16,6 +16,7 @@ import {
   setAppIsReady,
   setShowError
 } from '../redux/actionCreators'
+import { transform } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes'
 
 let customFonts = {
   Roboto: require('../assets/fonts/Roboto-Regular.ttf'),
@@ -28,6 +29,8 @@ function Auth({ navigation }) {
   const password = useSelector((state) => state.auth.password)
   const appIsReady = useSelector((state) => state.auth.appIsReady)
   const showError = useSelector((state) => state.auth.showError)
+
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   const passwordTextInput = useRef()
 
@@ -118,16 +121,29 @@ function Auth({ navigation }) {
           onSubmitEditing={() => passwordTextInput.current.focus()}
           blurOnSubmit={false}
         />
-        <TextInput
-          label='Password'
-          value={password}
-          onChangeText={(text) => dispatch(setPassword(text))}
-          style={styles.authInput}
-          underlineColor={'#B1B1B1'}
-          error={false}
-          secureTextEntry={true}
-          ref={passwordTextInput}
-        />
+        <View style={{ width: '100%' }}>
+          <TextInput
+            label='Password'
+            value={password}
+            onChangeText={(text) => dispatch(setPassword(text))}
+            style={styles.authInput}
+            underlineColor={'#B1B1B1'}
+            error={false}
+            secureTextEntry={!isPasswordVisible}
+            ref={passwordTextInput}
+          />
+          <Pressable
+            style={{
+              position: 'absolute',
+              right: 0,
+              top: '50%',
+              transform: [{ translateY: -5 }]
+            }}
+            onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+          >
+            <Image source={require('../assets/icons/passwordVisible.png')} />
+          </Pressable>
+        </View>
         <Pressable onPress={() => tryAuth()} style={styles.authButton}>
           <Text style={styles.authText}>Sign in</Text>
         </Pressable>
