@@ -51,26 +51,28 @@ const Order = ({ item, idx, icon }) => {
         borderRightColor: '#00000029'
       }}
     >
-      <Pressable
-        onPress={() => {
-          dispatch(setActiveBarCode(!activeBarCode))
-        }}
-      >
-        {windowWidth <= 480 ? (
-          <QRCode value={item._id} size={40} logoMargin={2} />
-        ) : (
-          <Image source={icon} style={componentStyles.iconStyle}></Image>
-        )}
-      </Pressable>
-      <View>
-        <Text style={componentStyles.itemIdText}>{item._id}</Text>
-        <Text
-          style={componentStyles.itemNameText}
-          numberOfLines={1}
-          ellipsizeMode={'middle'}
+      <View style={componentStyles.qrItemName}>
+        <Pressable
+          onPress={() => {
+            dispatch(setActiveBarCode(!activeBarCode))
+          }}
         >
-          {item.name}
-        </Text>
+          {windowWidth <= 480 ? (
+            <QRCode value={item._id} size={40} logoMargin={2} />
+          ) : (
+            <Image source={icon} style={componentStyles.iconStyle}></Image>
+          )}
+        </Pressable>
+        <View style={componentStyles.itemIdName}>
+          <Text style={componentStyles.itemIdText}>{item._id}</Text>
+          <Text
+            style={componentStyles.itemNameText}
+            numberOfLines={1}
+            ellipsizeMode={'middle'}
+          >
+            {item.name}
+          </Text>
+        </View>
       </View>
       {windowWidth <= 480 && (
         <Pressable onPress={() => print()}>

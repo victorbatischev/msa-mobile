@@ -1,8 +1,14 @@
 import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
+  qrItemName: {
+    flexDirection: 'row'
+  },
   iconStyle: {
     marginRight: 10
+  },
+  itemIdName: {
+    marginLeft: 10
   },
   itemIdText: {
     fontFamily: 'Roboto',
