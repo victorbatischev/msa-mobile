@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, Image } from 'react-native'
-import avatar from '../../assets/images/avatar_server.png'
+import avatar from '../../assets/images/avatar_local.png'
 import styles from './styles'
 
 const MessageItem = ({ isYourMessage, userName, operation, date, message }) => {
