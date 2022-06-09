@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
+import { View, Text, Image, StyleSheet, Pressable, Alert } from 'react-native'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 import componentStyles from './styles'
 import styles from '../../styles/Styles'
@@ -46,7 +46,28 @@ const BarCode = () => {
   }
 
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>
+    return (
+      <View>
+        <Text>No access to camera</Text>
+        <Pressable
+          style={componentStyles.closeButton}
+          onPress={() => dispatch(setActiveBarCode(false))}
+        >
+          <View
+            style={[
+              componentStyles.closeButonLine,
+              componentStyles.closeButonUpLine
+            ]}
+          />
+          <View
+            style={[
+              componentStyles.closeButonLine,
+              componentStyles.closeButonDownLine
+            ]}
+          />
+        </Pressable>
+      </View>
+    )
   }
 
   return (
