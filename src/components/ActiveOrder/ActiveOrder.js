@@ -52,13 +52,13 @@ const ActiveOrder = ({ schedulePushNotification }) => {
         style={{
           ...styles.container,
           width: '100%',
-          height: windowHeight - 190
+          height: windowHeight - 360
         }}
       >
         <View
           style={{
             ...styles.container,
-            justifyContent: 'flex-start',
+            justifyContent: 'center',
             backgroundColor: '#fff'
           }}
         >
@@ -91,6 +91,7 @@ const ActiveOrder = ({ schedulePushNotification }) => {
           ) : (
             <>
               <Pressable
+                style={{}}
                 onPress={() => {
                   dispatch(setActiveBarCode(true))
                 }}
