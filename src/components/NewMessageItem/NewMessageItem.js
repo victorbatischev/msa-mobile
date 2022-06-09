@@ -8,7 +8,7 @@ import styles from './styles'
 
 const NewMessagesItem = ({ orderId, userId }) => {
   const dispatch = useDispatch()
-  const newMessage = useSelector((state) => state.NewMessagesItem?.newMessage)
+  const newMessage = useSelector((state) => state.newMessageItem.newMessage)
 
   const buttonHendler = () => {
     Keyboard.dismiss()
@@ -29,7 +29,10 @@ const NewMessagesItem = ({ orderId, userId }) => {
         value={newMessage}
         onChangeText={(text) => dispatch(setNewMessage(text))}
       />
-      <Pressable style={styles.sendButton} onPress={buttonHendler}>
+      <Pressable
+        style={styles.sendButton}
+        onPress={() => newMessage && buttonHendler()} // отправка сообщения только если тело сообщения не пустое
+      >
         <Image source={sendButton} style={styles.sendButtonImage} />
       </Pressable>
     </View>
