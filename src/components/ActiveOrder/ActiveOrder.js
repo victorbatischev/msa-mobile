@@ -52,7 +52,7 @@ const ActiveOrder = ({ schedulePushNotification }) => {
         style={{
           ...styles.container,
           width: '100%',
-          height: windowHeight - 360
+          height: windowHeight - 340
         }}
       >
         <View
