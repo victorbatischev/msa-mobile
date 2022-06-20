@@ -200,10 +200,15 @@ function Main({ route }) {
         function: materialsArr
       })
       .then(() => {
-        dispatch(setOrderStarted(false))
-        dispatch(setModalVisible(false))
-        // обновляем список заказов после завершения активной операции
-        Alert.alert('MSA Mobile', 'Your operation has been completed.')
+        Alert.alert('MSA Mobile', 'Your operation has been completed.', [
+          {
+            text: 'Ok',
+            onPress: () => {
+              dispatch(setModalVisible(false))
+              dispatch(setOrderStarted(false))
+            }
+          }
+        ])
       })
       .catch((err) => console.error(err))
     axios.put(
