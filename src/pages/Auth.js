@@ -37,6 +37,8 @@ function Auth({ navigation }) {
   useEffect(() => {
     async function prepare() {
       try {
+        await SplashScreen.preventAutoHideAsync()
+        await Font.loadAsync(customFonts)
         const update = await Updates.checkForUpdateAsync()
         if (update.isAvailable) {
           Alert.alert(
@@ -54,15 +56,9 @@ function Auth({ navigation }) {
             { cancelable: false }
           )
         }
-      } catch (e) {
-        console.log(e)
-      }
-      try {
-        await SplashScreen.preventAutoHideAsync()
-        await Font.loadAsync(customFonts)
         await AsyncStorage.clear()
       } catch (e) {
-        console.warn(e)
+        console.log(e)
       } finally {
         dispatch(setAppIsReady(true))
       }
