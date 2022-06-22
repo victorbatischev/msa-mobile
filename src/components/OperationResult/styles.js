@@ -6,8 +6,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 17,
     paddingTop: 30,
     paddingBottom: 40,
-    borderBottomWidth: 4,
-    borderBottomColor: '#00000020',
+    borderBottomWidth: 3,
+    borderBottomColor: '#00000029',
+    elevation: 6,
+    backgroundColor: 'white',
     marginBottom: 60
   },
   resultText: {
