@@ -190,34 +190,34 @@ function Main({ route }) {
   }
 
   const finishOrder = (nextOperationId, relationId) => {
-    // axios
-    //   .put('order_worker_finish', {
-    //     order_id: activeOrder?._id,
-    //     stream_id: activeOrder?.s_id,
-    //     next_operation_id: nextOperationId,
-    //     current_operation_id: activeOrder?.operation?._id,
-    //     relation_id: relationId,
-    //     function: materialsArr
-    //   })
-    //   .then(() => {
-    //     Alert.alert('MSA Mobile', 'Your operation has been completed.', [
-    //       {
-    //         text: 'Ok',
-    //         onPress: () => {
-    //           dispatch(setModalVisible(false))
-    //           dispatch(setOrderStarted(false))
-    //         }
-    //       }
-    //     ])
-    //   })
-    //   .catch((err) => console.error(err))
-    // axios.put(
-    //   'equipment_busy',
-    //   selectedItems.map((item) => ({
-    //     _id: item,
-    //     occupied: false
-    //   }))
-    // )
+    axios
+      .put('order_worker_finish', {
+        order_id: activeOrder?._id,
+        stream_id: activeOrder?.s_id,
+        next_operation_id: nextOperationId,
+        current_operation_id: activeOrder?.operation?._id,
+        relation_id: relationId,
+        function: materialsArr
+      })
+      .then(() => {
+        Alert.alert('MSA Mobile', 'Your operation has been completed.', [
+          {
+            text: 'Ok',
+            onPress: () => {
+              dispatch(setModalVisible(false))
+              dispatch(setOrderStarted(false))
+            }
+          }
+        ])
+      })
+      .catch((err) => console.error(err))
+    axios.put(
+      'equipment_busy',
+      selectedItems.map((item) => ({
+        _id: item,
+        occupied: false
+      }))
+    )
   }
 
   useEffect(() => {
