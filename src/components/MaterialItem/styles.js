@@ -20,12 +20,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 21
   },
+  signText: {
+    fontSize: 18,
+    fontFamily: 'Montserrat',
+    color: '#000'
+  },
   input: {
     justifyContent: 'center',
     width: '30.4%',
     height: 60,
     backgroundColor: '#F2F2F2',
-    borderRadius: 30
+    borderRadius: 30,
+    fontSize: 18,
+    fontFamily: 'Montserrat',
+    color: '#000'
   }
 })
 

@@ -21,7 +21,9 @@ const MaterialItem = ({ index }) => {
     <View style={styles.container}>
       <Text style={styles.title}>{materials.path}</Text>
       <Pressable style={styles.sign} onPress={changeCondition}>
-        <Text>{materials.condition == 'minus' ? '-' : '+'}</Text>
+        <Text style={styles.signText}>
+          {materials.condition == 'minus' ? '-' : '+'}
+        </Text>
       </Pressable>
       <TextInput
         style={styles.input}
