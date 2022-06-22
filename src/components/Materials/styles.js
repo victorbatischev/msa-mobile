@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 17
+    padding: 10
   },
   okButton: {
     marginTop: 50,

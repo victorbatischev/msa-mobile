@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     marginBottom: 18
   },
   title: {
-    width: '33.33%',
+    width: '45%',
     fontSize: 14,
     fontFamily: 'Roboto'
   },
