@@ -39,6 +39,7 @@ function Auth({ navigation }) {
       try {
         await SplashScreen.preventAutoHideAsync()
         await Font.loadAsync(customFonts)
+        await AsyncStorage.clear()
         const update = await Updates.checkForUpdateAsync()
         if (update.isAvailable) {
           Alert.alert(
@@ -56,7 +57,6 @@ function Auth({ navigation }) {
             { cancelable: false }
           )
         }
-        await AsyncStorage.clear()
       } catch (e) {
         console.log(e)
       } finally {

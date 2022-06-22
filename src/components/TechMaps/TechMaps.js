@@ -71,7 +71,7 @@ const TechMaps = () => {
     )
   }
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { height: '90%' }]}>
       {mapsArr?.length > 0 ? (
         <AppIntroSlider
           keyExtractor={(item, index) => 'key' + index}

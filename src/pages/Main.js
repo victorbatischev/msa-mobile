@@ -266,7 +266,7 @@ function Main({ route }) {
   }, [activeOrder?.operation._id])
 
   return (
-    <View style={{ flex: 1, alignItems: 'center' }}>
+    <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#fff' }}>
       <StatusBar style='light' translucent={false} />
       <Header logOut={logOut} userName={route.params.userName} />
       {!activeBarCode && <Orders />}
