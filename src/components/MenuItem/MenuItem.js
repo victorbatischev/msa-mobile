@@ -6,6 +6,7 @@ import styles from '../../styles/Styles'
 
 const MenuItem = ({ item, index, carousel }) => {
   const activeIndex = useSelector((state) => state.main.activeIndex)
+  const orderStarted = useSelector((state) => state.main.orderStarted)
   return (
     <Pressable
       style={{
@@ -15,7 +16,7 @@ const MenuItem = ({ item, index, carousel }) => {
         padding: 0,
         margin: 0
       }}
-      onPress={() => carousel.snapToItem(index, true, true)}
+      onPress={() => orderStarted && carousel.snapToItem(index, true, true)}
     >
       <Text
         style={{
