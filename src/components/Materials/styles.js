@@ -5,8 +5,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 17,
     paddingTop: 30,
     paddingBottom: 19,
-    borderBottomWidth: 4,
-    borderBottomColor: '#00000020'
+    borderBottomWidth: 3,
+    borderBottomColor: '#00000029',
+    backgroundColor: '#fff',
+    elevation: 6
   },
   headerText: {
     textAlign: 'center',
@@ -32,6 +34,37 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontFamily: 'Roboto'
+  },
+  cancelButton: {
+    width: 140,
+    height: 45,
+    borderWidth: 2,
+    borderColor: '#707070',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    bottom: 30,
+    alignSelf: 'center',
+    flexDirection: 'row'
+  },
+  cancelButtonText: {
+    color: '#6C6F72',
+    fontSize: 16,
+    fontFamily: 'Roboto'
+  },
+  cross: {
+    marginRight: 10
+  },
+  line: {
+    width: 25,
+    height: 2,
+    backgroundColor: '#6C6F72'
+  },
+  upLine: {
+    transform: [{ rotate: '45deg' }, { translateY: 1.5 }]
+  },
+  downLine: {
+    transform: [{ rotate: '-45deg' }, { translateY: -1.5 }]
   }
 })
 

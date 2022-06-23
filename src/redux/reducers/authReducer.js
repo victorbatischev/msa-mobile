@@ -6,8 +6,8 @@ import {
 } from '../actionTypes'
 
 const initialState = {
-  login: '',
-  password: '',
+  login: 'brown', // Убрать логин
+  password: '102030', // Убрать пароль
   appIsReady: false,
   showError: false
 }

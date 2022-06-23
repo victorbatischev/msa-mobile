@@ -6,13 +6,20 @@ import {
   ScrollView,
   Pressable
 } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { setShowMaterialsComponent } from '../../redux/actionCreators'
 import MaterialItem from '../MaterialItem/MaterialItem'
 import styles from './styles'
 
 const Materials = ({ finishOrder }) => {
+  const dispatch = useDispatch()
   const materialsArr = useSelector((state) => state.main.materialsArr)
   const finishOrderParams = useSelector((state) => state.main.finishOrderParams)
+
+  const cancelButtonHandler = () => {
+    dispatch(setShowMaterialsComponent(false))
+  }
+
   return (
     <>
       <View style={styles.header}>
@@ -42,6 +49,13 @@ const Materials = ({ finishOrder }) => {
           </>
         )}
       </ScrollView>
+      <Pressable style={styles.cancelButton} onPress={cancelButtonHandler}>
+        <View style={styles.cross}>
+          <View style={[styles.line, styles.upLine]}></View>
+          <View style={[styles.line, styles.downLine]}></View>
+        </View>
+        <Text style={styles.cancelButtonText}>Cancel</Text>
+      </Pressable>
     </>
   )
 }
