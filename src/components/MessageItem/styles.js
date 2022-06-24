@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     width: windowWidth <= 480 ? '100%' : '80%',
     borderRadius: 14,
     paddingHorizontal: 5,
-    paddingVertical: 15,
+    paddingVertical: 10,
     marginBottom: 15
   },
   infoBlock: {
