@@ -47,29 +47,14 @@ const TechMaps = () => {
         >
           <Image
             source={{ uri: item.file_url }}
-            style={{ height: '93%' }}
-            resizeMode={'contain'}
+            style={{ height: '100%' }}
+            resizeMode='contain'
           />
         </Pressable>
       </View>
     )
   }
-  const renderNextButton = () => {
-    return (
-      <View style={styles.button}>
-        <View style={[styles.upLineNext, styles.line]} />
-        <View style={[styles.downLineNext, styles.line]} />
-      </View>
-    )
-  }
-  const renderPrevButton = () => {
-    return (
-      <View style={styles.button}>
-        <View style={[styles.upLinePrev, styles.line]} />
-        <View style={[styles.downLinePrew, styles.line]} />
-      </View>
-    )
-  }
+
   return (
     <View style={[styles.container, { height: '90%' }]}>
       {mapsArr?.length > 0 ? (
@@ -78,8 +63,6 @@ const TechMaps = () => {
           renderItem={renderItem}
           data={mapsArr}
           showNextButton={false}
-          renderNextButton={renderNextButton}
-          renderPrevButton={renderPrevButton}
           dotStyle={{ backgroundColor: '#DFDFDF' }}
           activeDotStyle={{ backgroundColor: '#009C6D' }}
         />

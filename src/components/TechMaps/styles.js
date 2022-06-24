@@ -7,31 +7,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   mapName: {
-    alignSelf: 'center'
-  },
-  button: {
-    width: 70,
-    height: 50,
-    backgroundColor: '#000',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  line: {
-    width: 20,
-    height: 3,
-    backgroundColor: '#fff'
-  },
-  upLineNext: {
-    transform: [{ rotate: '45deg' }, { translateY: -7 }]
-  },
-  downLineNext: {
-    transform: [{ rotate: '-45deg' }, { translateY: 7 }]
-  },
-  upLinePrev: {
-    transform: [{ rotate: '-45deg' }, { translateY: -7 }]
-  },
-  downLinePrew: {
-    transform: [{ rotate: '45deg' }, { translateY: 7 }]
+    alignSelf: 'center',
+    marginTop: 5
   },
   closeModalButton: {
     width: 40,
