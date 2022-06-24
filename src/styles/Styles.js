@@ -160,7 +160,8 @@ const styles = StyleSheet.create({
     borderColor: '#707070',
     borderWidth: 1,
     padding: 10,
-    width: 150
+    width: 150,
+    marginTop: 20
   },
   barCodeResult: {
     height: 40,

@@ -64,6 +64,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: 'center'
   },
+  scroll: {
+    height: '70%',
+    width: '100%'
+  },
   whatToDeliverContainer: {
     alignItems: 'center',
     width: '100%',
@@ -101,6 +105,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 20
+  },
+  okButtonText: {
+    color: '#fff',
+    fontSize: 24
   }
 })
 

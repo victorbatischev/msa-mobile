@@ -183,12 +183,12 @@ const UsersMenuModal = ({ logOut }) => {
             transparent={false}
             visible={isModalGetDetails}
           >
-            <ScrollView style={componentStyles.scrollViewStyle}>
-              <View style={componentStyles.container}>
-                <View style={componentStyles.orderContainer}>
-                  <Text style={componentStyles.orderNameText}>
-                    {tempDetail?.order?.name}
-                  </Text>
+            <View style={componentStyles.container}>
+              <View style={componentStyles.orderContainer}>
+                <Text style={componentStyles.orderNameText}>
+                  {tempDetail?.order?.name}
+                </Text>
+                <ScrollView style={componentStyles.scroll}>
                   {tempDetail.order &&
                     Object.entries(tempDetail.order.composition)
                       .sort()
@@ -209,63 +209,28 @@ const UsersMenuModal = ({ logOut }) => {
                           />
                         </View>
                       ))}
-
-                  {/* <View style={componentStyles.whatToDeliverContainer}>
-                  <Text style={componentStyles.whatToDeliverText}>
-                    What to deliver?
-                  </Text>
-                  <TextInput
-                    style={componentStyles.input}
-                    value={tempDetail?.order?.composition['What to deliver?']}
-                    onChangeText={(text) => {
-                      textInputHandler(text, 'What to deliver?')
-                    }}
+                </ScrollView>
+                <Pressable
+                  style={componentStyles.okButton}
+                  onPress={() => sendFormData()}
+                >
+                  <Text style={componentStyles.okButtonText}>OK!</Text>
+                </Pressable>
+                <Pressable
+                  style={{
+                    ...styles.center,
+                    ...styles.cancelContainer
+                  }}
+                  onPress={() => setIsModalGetDetails(false)}
+                >
+                  <Image
+                    style={componentStyles.closeIcon}
+                    source={require('../../assets/images/close.png')}
                   />
-                </View> */}
-                  {/* <View style={componentStyles.detailIdContainer}>
-                  <Text style={componentStyles.detailIdText}>Detail id</Text>
-                  <TextInput
-                    style={componentStyles.input}
-                    value={tempDetail?.order?.composition['Detail id']}
-                    onChangeText={(text) => {
-                      textInputHandler(text, 'Detail id')
-                    }}
-                  />
-                </View> */}
-                  {/* <View style={componentStyles.workplaceContainer}>
-                  <Text style={componentStyles.workplaceText}>Workplace</Text>
-                  <TextInput
-                    style={componentStyles.input}
-                    value={tempDetail?.order?.composition['Workplace']}
-                    onChangeText={(text) => {
-                      textInputHandler(text, 'Workplace')
-                    }}
-                  />
-                </View> */}
-                  <Pressable
-                    style={componentStyles.okButton}
-                    onPress={() => sendFormData()}
-                  >
-                    <Text style={{ color: '#fff', fontSize: 24 }}>OK!</Text>
-                  </Pressable>
-                  <View style={{ marginTop: 20 }}>
-                    <Pressable
-                      style={{
-                        ...styles.center,
-                        ...styles.cancelContainer
-                      }}
-                      onPress={() => setIsModalGetDetails(false)}
-                    >
-                      <Image
-                        style={{ width: 20, height: 20, marginRight: 15 }}
-                        source={require('../../assets/images/close.png')}
-                      />
-                      <Text style={componentStyles.cancelText}>Cancel</Text>
-                    </Pressable>
-                  </View>
-                </View>
+                  <Text style={componentStyles.cancelText}>Cancel</Text>
+                </Pressable>
               </View>
-            </ScrollView>
+            </View>
           </Modal>
         </Modal>
         {isCompleteWorkShiftVisible && <CompleteWorkShift logOut={logOut} />}
