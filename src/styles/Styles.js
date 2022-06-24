@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     borderRadius: 4
   },
   cancelContainer: {
-    borderRadius: 20,
+    borderRadius: 50,
     borderColor: '#707070',
     borderWidth: 1,
     padding: 10,

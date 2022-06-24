@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     height: 20,
     marginRight: 15
   },
-  cansetButtonTitle: {
+  canselButtonTitle: {
     fontFamily: 'Roboto',
     fontSize: 18,
     color: '#6C6F72'

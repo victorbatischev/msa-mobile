@@ -86,7 +86,7 @@ const OperationResult = ({ finishOrder }) => {
             style={componentStyles.closeIcon}
             source={require('../../assets/images/close.png')}
           />
-          <Text style={componentStyles.cansetButtonTitle}>Cancel</Text>
+          <Text style={componentStyles.canselButtonTitle}>Cancel</Text>
         </Pressable>
       </View>
     </View>

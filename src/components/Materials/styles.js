@@ -36,21 +36,21 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto'
   },
   cancelButton: {
-    width: 140,
-    height: 45,
-    borderWidth: 2,
-    borderColor: '#707070',
-    borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
     bottom: 30,
     alignSelf: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    borderRadius: 50,
+    borderColor: '#707070',
+    borderWidth: 1,
+    padding: 10,
+    width: 150
   },
   cancelButtonText: {
-    color: '#6C6F72',
-    fontSize: 16,
-    fontFamily: 'Roboto'
+    fontFamily: 'Roboto',
+    fontSize: 18,
+    color: '#6C6F72'
   },
   cross: {
     marginRight: 10
