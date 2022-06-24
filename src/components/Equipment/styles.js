@@ -22,8 +22,12 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: 30,
-    height: 30
+    width: 35,
+    height: 35
+  },
+  buttonIcon: {
+    width: '100%',
+    height: '100%'
   }
 })
 

@@ -16,7 +16,10 @@ const Equipment = ({ equipmentRequest }) => {
       <View style={styles.header}>
         <Text style={styles.headetText}>Choose equipment</Text>
         <Pressable style={styles.button} onPress={buttonHandler}>
-          <Image source={require('../../assets/icons/equipment.png')} />
+          <Image
+            style={styles.buttonIcon}
+            source={require('../../assets/icons/equipment.png')}
+          />
         </Pressable>
       </View>
       <ScrollView>

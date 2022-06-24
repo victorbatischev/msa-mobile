@@ -131,13 +131,18 @@ function Auth({ navigation }) {
           <Pressable
             style={{
               position: 'absolute',
+              width: 35,
+              height: 35,
               right: 0,
               top: '50%',
               transform: [{ translateY: -5 }]
             }}
             onPress={() => setIsPasswordVisible(!isPasswordVisible)}
           >
-            <Image source={require('../assets/icons/passwordVisible.png')} />
+            <Image
+              style={{ width: '100%', height: '100%' }}
+              source={require('../assets/icons/passwordVisible.png')}
+            />
           </Pressable>
         </View>
         <Pressable onPress={() => tryAuth()} style={styles.authButton}>
