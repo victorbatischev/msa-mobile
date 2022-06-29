@@ -91,6 +91,7 @@ function Main({ route }) {
   const showMaterialsComponent = useSelector(
     (state) => state.main.showMaterialsComponent
   )
+  const materialsArr = useSelector((state) => state.main.materialsArr)
   const equipmentArr = useSelector((state) => state.main.equipmentArr)
   const isEquipmentVisible = useSelector(
     (state) => state.main.isEquipmentVisible
