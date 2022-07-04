@@ -6,7 +6,7 @@ import styles from './styles'
 
 const Equipment = ({ equipmentRequest }) => {
   const equipmentArr = useSelector((state) => state.main.equipmentArr)
-  const o_id = useSelector((state) => state.main.activeOrder)
+  const o_id = useSelector((state) => state.main.activeOrder.description.o_id)
   const buttonHandler = () => {
     equipmentRequest(o_id)
   }
