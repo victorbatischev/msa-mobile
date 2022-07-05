@@ -221,7 +221,6 @@ function Main({ route }) {
   }
 
   const equipmentRequest = (operationId) => {
-    console.log(operationId)
     if (operationId) {
       axios.get(`equipment_o_id/${operationId}`).then((res) => {
         dispatch(setEquipmentArr(res.data))
@@ -231,15 +230,12 @@ function Main({ route }) {
   }
 
   useEffect(() => {
-    if (activeOrder) {
-      const appInterval = setInterval(
-        equipmentRequest,
-        5000,
-        activeOrder.description.o_id
-      )
+    let operationId = activeOrder?.description?.o_id
+    if (operationId) {
+      const appInterval = setInterval(() => equipmentRequest(operationId), 5000)
       return () => clearInterval(appInterval)
     }
-  }, [activeOrder?._id])
+  }, [activeOrder?.description?.o_id])
 
   useEffect(() => {
     async function getData() {
@@ -272,12 +268,6 @@ function Main({ route }) {
   useEffect(() => {
     if (modalVisible) dispatch(setIsConfirmation(false))
   }, [modalVisible])
-
-  // useEffect(() => {
-  //   if (activeOrder) {
-  //     equipmentRequest(activeOrder.description.o_id)
-  //   }
-  // }, [activeOrder?.description.o_id])
 
   return (
     <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#fff' }}>
