@@ -241,26 +241,12 @@ function Main({ route }) {
   }
 
   useEffect(() => {
-<<<<<<< HEAD
-    dispatch(setIsEquipmentVisible(true))
-    let appInterval
-    if (activeOrder) {
-      appInterval = setInterval(
-        equipmentRequest,
-        3000,
-        activeOrder.description.o_id
-      )
-    }
-    return () => clearInterval(appInterval)
-  }, [activeOrder?._id])
-=======
     let operationId = activeOrder?.description?.o_id
     if (operationId) {
       const appInterval = setInterval(() => equipmentRequest(operationId), 5000)
       return () => clearInterval(appInterval)
     }
   }, [activeOrder?.description?.o_id])
->>>>>>> 9d66e5658f1d438acea258db4ff34327947c2501
 
   useEffect(() => {
     async function getData() {
@@ -295,15 +281,6 @@ function Main({ route }) {
     if (modalVisible) dispatch(setIsConfirmation(false))
   }, [modalVisible])
 
-<<<<<<< HEAD
-  useEffect(() => {
-    if (activeOrder) {
-      equipmentRequest(activeOrder.description.o_id)
-    }
-  }, [activeOrder?._id])
-
-=======
->>>>>>> 9d66e5658f1d438acea258db4ff34327947c2501
   return (
     <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#fff' }}>
       <StatusBar style='light' translucent={false} />
