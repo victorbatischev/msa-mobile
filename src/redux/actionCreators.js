@@ -279,9 +279,10 @@ export const setBounds = (bounds) => {
 
 // For equipmentItemReducer
 
-export const setIsCheckedArr = () => {
+export const setIsCheckedArr = (data) => {
   return {
-    type: SET_IS_CHECKED_ARR
+    type: SET_IS_CHECKED_ARR,
+    data
   }
 }
 

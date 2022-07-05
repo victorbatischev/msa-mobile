@@ -17,7 +17,6 @@ const OperationResult = ({ finishOrder }) => {
   const activeOrder = useSelector((state) => state.main.activeOrder)
 
   const userId = useSelector((state) => state.main.user.u_id)
-  const finishOrderParams = useSelector((state) => state.main.finishOrderParams)
 
   const maretialsRequest = (index) => {
     if (activeOrder) {
@@ -55,10 +54,7 @@ const OperationResult = ({ finishOrder }) => {
               maretialsRequest(index)
               dispatch(setShowMaterialsComponent(true))
             } else {
-              finishOrder(
-                finishOrderParams?.nextOperationId,
-                finishOrderParams?.relationId
-              )
+              finishOrder(item.so_id, item._id)
             }
           }}
           key={item._id}
