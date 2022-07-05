@@ -220,6 +220,16 @@ function Main({ route }) {
     )
   }
 
+  const equipmentRequest = (operationId) => {
+    console.log(operationId)
+    if (operationId) {
+      axios.get(`equipment_o_id/${operationId}`).then((res) => {
+        dispatch(setEquipmentArr(res.data))
+        res.data.length === 0 && dispatch(setIsEquipmentEmpty(true))
+      })
+    }
+  }
+
   useEffect(() => {
     async function getData() {
       const tempUser = JSON.parse(await AsyncStorage.getItem('user'))
@@ -228,6 +238,8 @@ function Main({ route }) {
       setInterval(() => {
         getOrders(tempUser)
       }, 2000)
+
+      setInterval(equipmentRequest, 5000, activeOrder.description.o_id)
 
       let checkLogout = setInterval(async () => {
         await axios.get(`worker_logout/${tempUser.u_id}`).then(async (res) => {
@@ -252,18 +264,11 @@ function Main({ route }) {
     if (modalVisible) dispatch(setIsConfirmation(false))
   }, [modalVisible])
 
-  const equipmentRequest = (o_id) => {
-    axios.get(`equipment_o_id/${o_id}`).then((res) => {
-      dispatch(setEquipmentArr(res.data))
-      res.data.length === 0 && dispatch(setIsEquipmentEmpty(true))
-    })
-  }
-
-  useEffect(() => {
-    if (activeOrder) {
-      equipmentRequest(activeOrder.description.o_id)
-    }
-  }, [activeOrder?.description.o_id])
+  // useEffect(() => {
+  //   if (activeOrder) {
+  //     equipmentRequest(activeOrder.description.o_id)
+  //   }
+  // }, [activeOrder?.description.o_id])
 
   return (
     <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#fff' }}>
