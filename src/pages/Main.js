@@ -231,6 +231,17 @@ function Main({ route }) {
   }
 
   useEffect(() => {
+    if (activeOrder) {
+      const appInterval = setInterval(
+        equipmentRequest,
+        5000,
+        activeOrder.description.o_id
+      )
+      return () => clearInterval(appInterval)
+    }
+  }, [activeOrder?._id])
+
+  useEffect(() => {
     async function getData() {
       const tempUser = JSON.parse(await AsyncStorage.getItem('user'))
       dispatch(setUser(tempUser))
@@ -238,8 +249,6 @@ function Main({ route }) {
       setInterval(() => {
         getOrders(tempUser)
       }, 2000)
-
-      setInterval(equipmentRequest, 5000, activeOrder.description.o_id)
 
       let checkLogout = setInterval(async () => {
         await axios.get(`worker_logout/${tempUser.u_id}`).then(async (res) => {
