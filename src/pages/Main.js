@@ -263,7 +263,7 @@ function Main({ route }) {
     if (activeOrder) {
       equipmentRequest(activeOrder.description.o_id)
     }
-  }, [activeOrder?.operation._id])
+  }, [activeOrder?.description.o_id])
 
   return (
     <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#fff' }}>
