@@ -202,13 +202,11 @@ function Main({ route }) {
         function: materialsArr
       })
       .then(() => {
+        dispatch(setModalVisible(false))
+        dispatch(setOrderStarted(false))
         Alert.alert('MSA Mobile', 'Your operation has been completed.', [
           {
-            text: 'Ok',
-            onPress: () => {
-              dispatch(setModalVisible(false))
-              dispatch(setOrderStarted(false))
-            }
+            text: 'Ok'
           }
         ])
       })
@@ -227,6 +225,7 @@ function Main({ route }) {
       .then((res) => {
         dispatch(setSelectedItemsUnCheced('all'))
         dispatch(setIsCheckedArr('empty'))
+        dispatch(setIsEquipmentVisible(true))
       })
   }
 
@@ -241,17 +240,16 @@ function Main({ route }) {
   }
 
   useEffect(() => {
-    dispatch(setIsEquipmentVisible(true))
     let appInterval
     if (activeOrder) {
       appInterval = setInterval(
         equipmentRequest,
-        3000,
+        2000,
         activeOrder.description.o_id
       )
     }
     return () => clearInterval(appInterval)
-  }, [activeOrder?._id])
+  }, [activeOrder?.description.o_id])
 
   useEffect(() => {
     async function getData() {
