@@ -40,7 +40,8 @@ import {
   setIsEquipmentVisible,
   setIsEquipmentEmpty,
   setSelectedItemsUnCheced,
-  setIsCheckedArr
+  setIsCheckedArr,
+  setIsLoading
 } from '../redux/actionCreators'
 
 // Счетчик заказов
@@ -235,6 +236,7 @@ function Main({ route }) {
         dispatch(setEquipmentArr(res.data))
         res.data.length === 0 && dispatch(setIsEquipmentEmpty(true))
         res.data.length > 0 && dispatch(setIsEquipmentEmpty(false))
+        dispatch(setIsLoading(false))
       })
     }
   }
