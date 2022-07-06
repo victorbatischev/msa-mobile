@@ -4,11 +4,12 @@ import { carouselItems, windowWidth } from '../../Constants'
 import Carousel from 'react-native-snap-carousel'
 import MenuItem from '../MenuItem/MenuItem'
 import styles from './styles'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { setActiveIndex } from '../../redux/actionCreators'
 
 const CarouselComponent = () => {
   const dispatch = useDispatch()
+  const orderStarted = useSelector((state) => state.main.orderStarted)
   const carousel = useRef()
 
   const renderCarouselItem = ({ item, index }) => {
@@ -18,6 +19,7 @@ const CarouselComponent = () => {
   return (
     <View style={styles.container}>
       <Carousel
+        scrollEnabled={orderStarted}
         ref={carousel}
         firstItem={1}
         activeSlideOffset={0}
