@@ -284,6 +284,12 @@ function Main({ route }) {
     if (modalVisible) dispatch(setIsConfirmation(false))
   }, [modalVisible])
 
+  useEffect(() => {
+    if (activeOrder) {
+      equipmentRequest(activeOrder.description.o_id)
+    }
+  }, [activeOrder?.description.o_id])
+
   return (
     <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#fff' }}>
       <StatusBar style='light' translucent={false} />
