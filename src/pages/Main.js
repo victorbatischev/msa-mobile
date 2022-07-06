@@ -316,7 +316,7 @@ function Main({ route }) {
       {windowWidth <= 480 && orders.length && !activeBarCode ? (
         <View style={{ width: '100%' }}>
           <OperationContainer />
-          <View style={{ ...styles.center, height: 75 }}>
+          <View style={{ ...styles.center }}>
             <Timer />
             <StartFinishButton startOrder={startOrder} />
           </View>
