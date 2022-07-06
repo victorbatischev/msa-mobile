@@ -38,7 +38,9 @@ import {
   setIsConfirmation,
   setEquipmentArr,
   setIsEquipmentVisible,
-  setIsEquipmentEmpty
+  setIsEquipmentEmpty,
+  setSelectedItemsUnCheced,
+  setIsCheckedArr
 } from '../redux/actionCreators'
 
 // Счетчик заказов
@@ -210,14 +212,22 @@ function Main({ route }) {
           }
         ])
       })
-      .catch((err) => console.error(err))
-    axios.put(
-      'equipment_busy',
-      selectedItems.map((item) => ({
-        _id: item,
-        occupied: false
-      }))
-    )
+      .catch((err) => {
+        console.error(err)
+        console.log('Ошибка сети!')
+      })
+    axios
+      .put(
+        'equipment_busy',
+        selectedItems.map((item) => ({
+          _id: item,
+          occupied: false
+        }))
+      )
+      .then((res) => {
+        dispatch(setSelectedItemsUnCheced('all'))
+        dispatch(setIsCheckedArr('empty'))
+      })
   }
 
   const equipmentRequest = (operationId) => {
@@ -225,17 +235,23 @@ function Main({ route }) {
       axios.get(`equipment_o_id/${operationId}`).then((res) => {
         dispatch(setEquipmentArr(res.data))
         res.data.length === 0 && dispatch(setIsEquipmentEmpty(true))
+        res.data.length > 0 && dispatch(setIsEquipmentEmpty(false))
       })
     }
   }
 
   useEffect(() => {
-    let operationId = activeOrder?.description?.o_id
-    if (operationId) {
-      const appInterval = setInterval(() => equipmentRequest(operationId), 5000)
-      return () => clearInterval(appInterval)
+    dispatch(setIsEquipmentVisible(true))
+    let appInterval
+    if (activeOrder) {
+      appInterval = setInterval(
+        equipmentRequest,
+        3000,
+        activeOrder.description.o_id
+      )
     }
-  }, [activeOrder?.description?.o_id])
+    return () => clearInterval(appInterval)
+  }, [activeOrder?._id])
 
   useEffect(() => {
     async function getData() {
@@ -244,6 +260,7 @@ function Main({ route }) {
 
       setInterval(() => {
         getOrders(tempUser)
+        // equipmentRequest(activeOrder?.description.o_id)
       }, 2000)
 
       let checkLogout = setInterval(async () => {
@@ -268,6 +285,12 @@ function Main({ route }) {
   useEffect(() => {
     if (modalVisible) dispatch(setIsConfirmation(false))
   }, [modalVisible])
+
+  useEffect(() => {
+    if (activeOrder) {
+      equipmentRequest(activeOrder.description.o_id)
+    }
+  }, [activeOrder?._id])
 
   return (
     <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#fff' }}>

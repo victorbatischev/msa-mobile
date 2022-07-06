@@ -13,6 +13,7 @@ const StartFinishButton = ({ startOrder }) => {
   const isEquipmentEmpty = useSelector(
     (state) => state.startFinishButton.isEquipmentEmpty
   )
+
   return (
     <View style={componentStyles.container}>
       {isConfirmation ? (

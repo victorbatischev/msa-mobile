@@ -92,12 +92,14 @@ export default mainReducer = (state = initialState, action) => {
       copyChecked.push(action.id)
       return { ...state, selectedItems: copyChecked }
     case SET_SELECTED_ITEMS_UNCHECKED:
-      return {
-        ...state,
-        selectedItems: state.selectedItems.filter(
-          (value) => value !== action.id
-        )
-      }
+      if (action.id === 'all') return { ...state, selectedItems: [] }
+      else
+        return {
+          ...state,
+          selectedItems: state.selectedItems.filter(
+            (value) => value !== action.id
+          )
+        }
     case SET_FINISH_ORDER_PARAMS:
       return { ...state, finishOrderParams: action.data }
     default:
