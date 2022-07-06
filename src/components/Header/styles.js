@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   headerButton: {
     width: 30,
     height: '100%',
-    marginRight: 30
+    marginRight: 13
   },
   headerButtonLine: {
     backgroundColor: '#fff',
