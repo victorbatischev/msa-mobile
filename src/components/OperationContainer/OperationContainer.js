@@ -12,7 +12,7 @@ const OperationContainer = () => {
       style={{
         ...styles.operationContainer,
         paddingLeft: 10,
-        backgroundColor: windowWidth > 480 ? 'transparent' : '#F5F5F5'
+        backgroundColor: windowWidth > 480 ? 'transparent' : '#fff'
       }}
     >
       <Text style={componentStyles.operationText}>Operation</Text>

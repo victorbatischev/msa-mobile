@@ -133,17 +133,18 @@ function Main({ route }) {
   }
 
   const getOrders = (user) => {
-    axios.get(`order_worker/${user.u_id}`).then((res) => {
-      dispatch(setOrders(res.data))
-      if (res.data.length > ordersCount) {
-        dispatch(setIsPlaySound(true))
-        ordersCount = res.data.length
-      }
-      if (res.data.length) {
-        getOrderInfo(res.data[0]._id, user.u_id)
-        getPreviousOperation(user)
-      }
-    })
+    user.u_id &&
+      axios.get(`order_worker/${user.u_id}`).then((res) => {
+        dispatch(setOrders(res.data))
+        if (res.data.length > ordersCount) {
+          dispatch(setIsPlaySound(true))
+          ordersCount = res.data.length
+        }
+        if (res.data.length) {
+          getOrderInfo(res.data[0]._id, user.u_id)
+          getPreviousOperation(user)
+        }
+      })
   }
 
   const getPreviousOperation = (user) => {

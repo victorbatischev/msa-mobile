@@ -83,7 +83,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     height: 80,
     width: 260,
-    padding: 8
+    padding: 8,
+    backgroundColor: '#fff'
   },
   printButton: {
     width: 76,
@@ -111,8 +112,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.34,
     shadowRadius: 6.27,
     padding: 15,
-    backgroundColor: '#F5F5F5',
-    width: '100%'
+    backgroundColor: '#fff',
+    width: '100%',
+    borderTopWidth: 3,
+    borderTopColor: '#f2f2f2',
+    elevation: 15
   },
   shadow: {
     shadowColor: '#000',
