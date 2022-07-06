@@ -16,6 +16,7 @@ import {
   SET_IS_CHECKED_ARR,
   SET_IS_COMPLETE_WORK_SHIFT_VISIBLE,
   SET_IS_EQUIPMENT_EMPTY,
+  SET_IS_LOADING,
   SET_IS_MODAL_WORK_SHIFT_VISIBLE,
   SET_IS_USER_MENU_MODAL,
   SET_ITEM,
@@ -290,6 +291,13 @@ export const setIsChecked = (index) => {
   return {
     type: SET_IS_CHECKED,
     index
+  }
+}
+
+export const setIsLoading = (data) => {
+  return {
+    type: SET_IS_LOADING,
+    data
   }
 }
 

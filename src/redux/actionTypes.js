@@ -51,6 +51,7 @@ export const SET_BOUNDS = 'SET_BOUNDS'
 
 export const SET_IS_CHECKED_ARR = 'SET_IS_CHECKED_ARR'
 export const SET_IS_CHECKED = 'SET_IS_CHECKED'
+export const SET_IS_LOADING = 'SET_IS_LOADING'
 
 // For newMessageItemReducer
 

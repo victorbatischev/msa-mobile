@@ -40,7 +40,8 @@ import {
   setIsEquipmentVisible,
   setIsEquipmentEmpty,
   setSelectedItemsUnCheced,
-  setIsCheckedArr
+  setIsCheckedArr,
+  setIsLoading
 } from '../redux/actionCreators'
 
 // Счетчик заказов
@@ -235,6 +236,7 @@ function Main({ route }) {
         dispatch(setEquipmentArr(res.data))
         res.data.length === 0 && dispatch(setIsEquipmentEmpty(true))
         res.data.length > 0 && dispatch(setIsEquipmentEmpty(false))
+        dispatch(setIsLoading(false))
       })
     }
   }
@@ -242,6 +244,7 @@ function Main({ route }) {
   useEffect(() => {
     let appInterval
     if (activeOrder) {
+      equipmentRequest(activeOrder.description.o_id)
       appInterval = setInterval(
         equipmentRequest,
         2000,
@@ -284,12 +287,6 @@ function Main({ route }) {
     if (modalVisible) dispatch(setIsConfirmation(false))
   }, [modalVisible])
 
-  useEffect(() => {
-    if (activeOrder) {
-      equipmentRequest(activeOrder.description.o_id)
-    }
-  }, [activeOrder?.description.o_id])
-
   return (
     <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#fff' }}>
       <StatusBar style='light' translucent={false} />
@@ -321,7 +318,7 @@ function Main({ route }) {
       {windowWidth <= 480 && orders.length && !activeBarCode ? (
         <View style={{ width: '100%' }}>
           <OperationContainer />
-          <View style={{ ...styles.center, height: 75 }}>
+          <View style={{ ...styles.center }}>
             <Timer />
             <StartFinishButton startOrder={startOrder} />
           </View>
