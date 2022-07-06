@@ -5,7 +5,9 @@ const styles = StyleSheet.create({
     height: 60,
     backgroundColor: '#fff',
     borderWidth: 1,
-    borderColor: '#F5F5F5'
+    borderColor: '#F5F5F5',
+    elevation: 2,
+    borderTopWidth: 3
   }
 })
 

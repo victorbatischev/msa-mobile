@@ -45,7 +45,6 @@ const Order = ({ item, idx, icon }) => {
     <View
       style={{
         ...styles.orderContainer,
-        backgroundColor: idx === 0 ? '#F5F5F5' : '#FFFFFF',
         width: windowWidth > 480 ? 260 : windowWidth,
         borderRightWidth: windowWidth > 480 ? 0.5 : 0,
         borderRightColor: '#00000029'
