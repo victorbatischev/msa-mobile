@@ -242,6 +242,7 @@ function Main({ route }) {
   useEffect(() => {
     let appInterval
     if (activeOrder) {
+      equipmentRequest(activeOrder.description.o_id)
       appInterval = setInterval(
         equipmentRequest,
         2000,
@@ -283,12 +284,6 @@ function Main({ route }) {
   useEffect(() => {
     if (modalVisible) dispatch(setIsConfirmation(false))
   }, [modalVisible])
-
-  useEffect(() => {
-    if (activeOrder) {
-      equipmentRequest(activeOrder.description.o_id)
-    }
-  }, [activeOrder?._id])
 
   return (
     <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#fff' }}>

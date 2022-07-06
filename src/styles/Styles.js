@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.34,
     shadowRadius: 6.27,
-    padding: 5,
+    padding: 15,
     backgroundColor: '#F5F5F5',
     width: '100%'
   },
