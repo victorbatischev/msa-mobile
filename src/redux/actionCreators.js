@@ -17,7 +17,6 @@ import {
   SET_IS_COMPLETE_WORK_SHIFT_VISIBLE,
   SET_IS_EQUIPMENT_EMPTY,
   SET_IS_LOADING,
-  SET_IS_MODAL_WORK_SHIFT_VISIBLE,
   SET_IS_USER_MENU_MODAL,
   SET_ITEM,
   SET_LOGIN,
@@ -192,13 +191,6 @@ export const setFinishOrderParams = (data) => {
 }
 
 // For headerReducer
-
-export const setIsModalWorkShiftVisible = (isVisible) => {
-  return {
-    type: SET_IS_MODAL_WORK_SHIFT_VISIBLE,
-    data: isVisible
-  }
-}
 
 export const setIsUserMenuModal = (isModal) => {
   return {

@@ -1,7 +1,4 @@
-import {
-  SET_IS_MODAL_WORK_SHIFT_VISIBLE,
-  SET_IS_USER_MENU_MODAL
-} from '../actionTypes'
+import { SET_IS_USER_MENU_MODAL } from '../actionTypes'
 
 const initialState = {
   isModalWorkShiftVisible: false,
@@ -10,8 +7,6 @@ const initialState = {
 
 export default headerReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_IS_MODAL_WORK_SHIFT_VISIBLE:
-      return { ...state, isModalWorkShiftVisible: action.data }
     case SET_IS_USER_MENU_MODAL:
       return { ...state, isUserMenuModal: action.data }
     default:

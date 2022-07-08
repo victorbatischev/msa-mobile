@@ -41,7 +41,8 @@ import {
   setIsEquipmentEmpty,
   setSelectedItemsUnCheced,
   setIsCheckedArr,
-  setIsLoading
+  setIsLoading,
+  setIsUserMenuModal
 } from '../redux/actionCreators'
 
 // Счетчик заказов
@@ -79,7 +80,7 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
   return 2
 })
 
-function Main({ route }) {
+function Main({ route, navigation }) {
   const dispatch = useDispatch()
 
   const user = useSelector((state) => state.main.user)
@@ -100,6 +101,7 @@ function Main({ route }) {
     (state) => state.main.isEquipmentVisible
   )
   const selectedItems = useSelector((state) => state.main.selectedItems)
+  const orderStarted = useSelector((state) => state.main.orderStarted)
 
   // For BackgroundFetch
 
@@ -127,8 +129,23 @@ function Main({ route }) {
       })
       .then(async () => {
         await AsyncStorage.clear()
-        // navigation.navigate('Auth')
-        Updates.reloadAsync()
+        navigation.navigate('Auth')
+        // Updates.reloadAsync()
+        dispatch(setIsUserMenuModal(false))
+        dispatch(setOrderStarted(false))
+      })
+    axios
+      .put(
+        'equipment_busy',
+        selectedItems.map((item) => ({
+          _id: item,
+          occupied: false
+        }))
+      )
+      .then((res) => {
+        dispatch(setSelectedItemsUnCheced('all'))
+        dispatch(setIsCheckedArr('empty'))
+        dispatch(setIsEquipmentVisible(true))
       })
   }
 
@@ -170,18 +187,6 @@ function Main({ route }) {
       .then(() => {
         dispatch(setIsConfirmation(false))
         dispatch(setOrderStarted(true))
-        const checkCancelOrder = setInterval(async () => {
-          await axios
-            .get(`order_worker_active/${user.u_id}`)
-            .then(async (res) => {
-              if (res.data.length) {
-                clearInterval(checkCancelOrder)
-                // Alert.alert('MSA Mobile', 'Your order has been cancelled.')
-                dispatch(setOrderCancelModalVisible(true))
-                dispatch(setOrderStarted(false))
-              }
-            })
-        }, 10000)
       })
       .catch((err) => console.error(err))
     axios.put(
@@ -243,29 +248,47 @@ function Main({ route }) {
   }
 
   useEffect(() => {
+    let checkCancelOrder
+    if (orderStarted) {
+      checkCancelOrder = setInterval(async () => {
+        await axios
+          .get(`order_worker_active/${user.u_id}`)
+          .then(async (res) => {
+            if (res.data.length) {
+              clearInterval(checkCancelOrder)
+              // Alert.alert('MSA Mobile', 'Your order has been cancelled.')
+              dispatch(setOrderCancelModalVisible(true))
+              dispatch(setOrderStarted(false))
+            }
+          })
+      }, 10000)
+    }
+    return () => clearInterval(checkCancelOrder)
+  }, [orderStarted])
+
+  useEffect(() => {
     let appInterval
     if (activeOrder) {
       equipmentRequest(activeOrder.description.o_id)
-      appInterval = setInterval(
-        equipmentRequest,
-        2000,
-        activeOrder.description.o_id
-      )
+      appInterval = setInterval(() => {
+        equipmentRequest(activeOrder.description.o_id)
+      }, 2000)
     }
     return () => clearInterval(appInterval)
   }, [activeOrder?.description.o_id])
 
   useEffect(() => {
+    let getOrdersInterval
+    let checkLogout
     async function getData() {
       const tempUser = JSON.parse(await AsyncStorage.getItem('user'))
       dispatch(setUser(tempUser))
 
-      setInterval(() => {
+      getOrdersInterval = setInterval(() => {
         getOrders(tempUser)
-        // equipmentRequest(activeOrder?.description.o_id)
       }, 2000)
 
-      let checkLogout = setInterval(async () => {
+      checkLogout = setInterval(async () => {
         await axios.get(`worker_logout/${tempUser.u_id}`).then(async (res) => {
           if (res.data[0].at_work === false) {
             clearInterval(checkLogout)
@@ -282,6 +305,10 @@ function Main({ route }) {
     }
 
     getData()
+    return () => {
+      clearInterval(getOrdersInterval)
+      clearInterval(checkLogout)
+    }
   }, [])
 
   useEffect(() => {

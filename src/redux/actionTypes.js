@@ -23,7 +23,6 @@ export const SET_FINISH_ORDER_PARAMS = 'SET_FINISH_ORDER_PARAMS'
 
 // For headerReducer
 
-export const SET_IS_MODAL_WORK_SHIFT_VISIBLE = 'SET_IS_MODAL_WORK_SHIFT_VISIBLE'
 export const SET_IS_USER_MENU_MODAL = 'SET_IS_USER_MENU_MODAL'
 
 // For messagesReducer
