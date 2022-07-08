@@ -42,7 +42,8 @@ import {
   setSelectedItemsUnCheced,
   setIsCheckedArr,
   setIsLoading,
-  setIsUserMenuModal
+  setIsUserMenuModal,
+  setIsCompleteWorkShiftVisible
 } from '../redux/actionCreators'
 
 // Счетчик заказов
@@ -133,6 +134,7 @@ function Main({ route, navigation }) {
         // Updates.reloadAsync()
         dispatch(setIsUserMenuModal(false))
         dispatch(setOrderStarted(false))
+        dispatch(setIsCompleteWorkShiftVisible(false))
       })
     axios
       .put(
