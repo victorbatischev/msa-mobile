@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Pressable, Image, Text, Alert } from 'react-native'
+import { View, TouchableOpacity, Image, Text, Alert } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { setModalVisible, setIsConfirmation } from '../../redux/actionCreators'
 import styles from '../../styles/Styles'
@@ -18,7 +18,8 @@ const StartFinishButton = ({ startOrder }) => {
     <View style={componentStyles.container}>
       {isConfirmation ? (
         <View style={componentStyles.okCloseButtonsContainer}>
-          <Pressable
+          <TouchableOpacity
+            activeOpacity={0.5}
             style={[
               componentStyles.buttonContainer,
               { backgroundColor: orderStarted ? '#029C6E' : '#0080FF' }
@@ -33,8 +34,9 @@ const StartFinishButton = ({ startOrder }) => {
               source={require('../../assets/images/ok.png')}
               style={componentStyles.okIcon}
             />
-          </Pressable>
-          <Pressable
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.5}
             style={[
               componentStyles.buttonContainer,
               { backgroundColor: '#2D2D2D' }
@@ -45,10 +47,11 @@ const StartFinishButton = ({ startOrder }) => {
               source={require('../../assets/images/close.png')}
               style={componentStyles.closeIcon}
             />
-          </Pressable>
+          </TouchableOpacity>
         </View>
       ) : (
-        <Pressable
+        <TouchableOpacity
+          activeOpacity={0.5}
           style={{
             ...styles.container,
             backgroundColor: orderStarted
@@ -68,7 +71,7 @@ const StartFinishButton = ({ startOrder }) => {
           <Text style={componentStyles.titleText}>
             {orderStarted ? 'FINISH' : 'START'}
           </Text>
-        </Pressable>
+        </TouchableOpacity>
       )}
     </View>
   )

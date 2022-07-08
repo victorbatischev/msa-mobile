@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image, Pressable } from 'react-native'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
 
 import styles from '../../styles/Styles'
 import componentStyles from './styles'
@@ -24,14 +24,15 @@ const Header = ({ logOut, userName }) => {
         />
         <Text style={styles.headerName}>{userName}</Text>
       </View>
-      <Pressable
+      <TouchableOpacity
+        activeOpacity={0.5}
         style={componentStyles.headerButton}
         onPress={() => dispatch(setIsUserMenuModal(true))}
         hitSlop={10}
       >
         <View style={componentStyles.headerButtonLine}></View>
         <View style={componentStyles.headerButtonLine}></View>
-      </Pressable>
+      </TouchableOpacity>
       {isModalWorkShiftVisible && <CompleteWorkShift logOut={logOut} />}
       {isUserMenuModal && <UsersMenuModal logOut={logOut} />}
     </View>

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, Text, Image, ScrollView, Pressable } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
 import JSONTree from 'react-native-json-tree'
 import componentStyles from './styles'
 
@@ -90,7 +90,8 @@ const ActiveOrder = ({ schedulePushNotification }) => {
             </ScrollView>
           ) : (
             <>
-              <Pressable
+              <TouchableOpacity
+                activeOpacity={0.5}
                 style={{}}
                 onPress={() => {
                   dispatch(setActiveBarCode(true))
@@ -100,7 +101,7 @@ const ActiveOrder = ({ schedulePushNotification }) => {
                   style={componentStyles.qrcodeIcon}
                   source={require('../../assets/images/qrcodeIcon.png')}
                 />
-              </Pressable>
+              </TouchableOpacity>
               <Text style={componentStyles.mainText}>
                 Complete order information will appear after clicking "START"
               </Text>

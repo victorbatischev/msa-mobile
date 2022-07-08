@@ -1,6 +1,12 @@
 import axios from 'axios'
 import React from 'react'
-import { View, Pressable, TextInput, Image, Keyboard } from 'react-native'
+import {
+  View,
+  TouchableOpacity,
+  TextInput,
+  Image,
+  Keyboard
+} from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNewMessage } from '../../redux/actionCreators'
 import sendButton from '../../assets/images/send.png'
@@ -29,12 +35,13 @@ const NewMessagesItem = ({ orderId, userId }) => {
         value={newMessage}
         onChangeText={(text) => dispatch(setNewMessage(text))}
       />
-      <Pressable
+      <TouchableOpacity
+        activeOpacity={0.5}
         style={styles.sendButton}
         onPress={() => newMessage && buttonHendler()} // отправка сообщения только если тело сообщения не пустое
       >
         <Image source={sendButton} style={styles.sendButtonImage} />
-      </Pressable>
+      </TouchableOpacity>
     </View>
   )
 }

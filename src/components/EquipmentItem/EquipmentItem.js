@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, Text, Image, Pressable } from 'react-native'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   setSelectedItemsCheced,
@@ -40,7 +40,11 @@ const EquipmentItem = ({ index }) => {
   }
 
   return (
-    <Pressable style={styles.container} onPress={itemHandler}>
+    <TouchableOpacity
+      activeOpacity={0.5}
+      style={styles.container}
+      onPress={itemHandler}
+    >
       <View
         style={[
           styles.checkIcon,
@@ -58,7 +62,7 @@ const EquipmentItem = ({ index }) => {
       <View style={[styles.busy, { opacity: isBusy ? 1 : 0 }]}>
         <Text style={styles.busyText}>busy</Text>
       </View>
-    </Pressable>
+    </TouchableOpacity>
   )
 }
 

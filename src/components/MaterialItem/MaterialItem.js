@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Pressable, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   setMaterialsCondition,
@@ -20,11 +20,15 @@ const MaterialItem = ({ index }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{materials.path}</Text>
-      <Pressable style={styles.sign} onPress={changeCondition}>
+      <TouchableOpacity
+        activeOpacity={0.5}
+        style={styles.sign}
+        onPress={changeCondition}
+      >
         <Text style={styles.signText}>
           {materials.condition == 'minus' ? '-' : '+'}
         </Text>
-      </Pressable>
+      </TouchableOpacity>
       <TextInput
         style={styles.input}
         keyboardType='numeric'

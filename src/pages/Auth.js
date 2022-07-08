@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useRef, useState } from 'react'
-import { View, Text, Pressable, Image, Alert } from 'react-native'
+import { View, Text, Image, Alert, TouchableOpacity } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Animatable from 'react-native-animatable'
 import { TextInput } from 'react-native-paper'
@@ -128,7 +128,8 @@ function Auth({ navigation }) {
             secureTextEntry={!isPasswordVisible}
             ref={passwordTextInput}
           />
-          <Pressable
+          <TouchableOpacity
+            activeOpacity={0.5}
             style={{
               position: 'absolute',
               width: 35,
@@ -143,11 +144,15 @@ function Auth({ navigation }) {
               style={{ width: '100%', height: '100%' }}
               source={require('../assets/icons/passwordVisible.png')}
             />
-          </Pressable>
+          </TouchableOpacity>
         </View>
-        <Pressable onPress={() => tryAuth()} style={styles.authButton}>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => tryAuth()}
+          style={styles.authButton}
+        >
           <Text style={styles.authText}>Sign in</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
 
       {showError && (

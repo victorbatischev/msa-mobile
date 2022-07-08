@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react'
-import { View, Text, Pressable, Image } from 'react-native'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
 import { windowWidth } from '../../Constants'
 import axios from 'axios'
@@ -51,7 +51,8 @@ const Order = ({ item, idx, icon }) => {
       }}
     >
       <View style={componentStyles.qrItemName}>
-        <Pressable
+        <TouchableOpacity
+          activeOpacity={0.5}
           onPress={() => {
             dispatch(setActiveBarCode(!activeBarCode))
           }}
@@ -61,7 +62,7 @@ const Order = ({ item, idx, icon }) => {
           ) : (
             <Image source={icon} style={componentStyles.iconStyle}></Image>
           )}
-        </Pressable>
+        </TouchableOpacity>
         <View style={componentStyles.itemIdName}>
           <Text style={componentStyles.itemIdText}>{item._id}</Text>
           <Text
@@ -74,12 +75,12 @@ const Order = ({ item, idx, icon }) => {
         </View>
       </View>
       {windowWidth <= 480 && (
-        <Pressable onPress={() => print()}>
+        <TouchableOpacity activeOpacity={0.5} onPress={() => print()}>
           <Image
             style={componentStyles.printIcon}
             source={require('../../assets/images/print.png')}
           />
-        </Pressable>
+        </TouchableOpacity>
       )}
     </View>
   )

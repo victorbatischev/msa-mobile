@@ -3,7 +3,7 @@ import {
   View,
   Text,
   Modal,
-  Pressable,
+  TouchableOpacity,
   Image,
   TextInput,
   ScrollView
@@ -102,21 +102,24 @@ const UsersMenuModal = ({ logOut }) => {
     <Modal animationType='slide' transparent={true} visible={true}>
       <View style={componentStyles.container}>
         <View style={componentStyles.menuItemBlock}>
-          <Pressable
+          <TouchableOpacity
+            activeOpacity={0.5}
             style={componentStyles.menuItem}
             onPress={() => getNewOrder()}
           >
             <Text style={componentStyles.menuItemText}>New order</Text>
-          </Pressable>
-          <Pressable
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.5}
             style={componentStyles.menuItem}
             onPress={() => dispatch(setIsCompleteWorkShiftVisible(true))}
           >
             <Text style={componentStyles.menuItemText}>Logout</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
         <View style={componentStyles.closeButtomContainer}>
-          <Pressable
+          <TouchableOpacity
+            activeOpacity={0.5}
             style={{
               ...styles.center,
               ...styles.cancelContainer
@@ -128,7 +131,7 @@ const UsersMenuModal = ({ logOut }) => {
               source={require('../../assets/images/close.png')}
             />
             <Text style={componentStyles.cancelText}>Cancel</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
         <Text style={styles.versionText}>
           Version: {Application.nativeApplicationVersion}
@@ -151,7 +154,8 @@ const UsersMenuModal = ({ logOut }) => {
               <View style={componentStyles.menuItemBlock}>
                 {orders.map((item, index) => {
                   return (
-                    <Pressable
+                    <TouchableOpacity
+                      activeOpacity={0.5}
                       style={componentStyles.menuItem}
                       key={index}
                       onPress={() => menuItemHandler(item)}
@@ -159,12 +163,13 @@ const UsersMenuModal = ({ logOut }) => {
                       <Text style={componentStyles.menuItemText}>
                         {item?.order?.name || ''}
                       </Text>
-                    </Pressable>
+                    </TouchableOpacity>
                   )
                 })}
               </View>
             </View>
-            <Pressable
+            <TouchableOpacity
+              activeOpacity={0.5}
               style={{
                 ...styles.center,
                 ...styles.cancelContainer
@@ -176,7 +181,7 @@ const UsersMenuModal = ({ logOut }) => {
                 source={require('../../assets/images/close.png')}
               />
               <Text style={componentStyles.cancelText}>Cancel</Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
           <Modal
             animationType='slider'
@@ -210,13 +215,15 @@ const UsersMenuModal = ({ logOut }) => {
                         </View>
                       ))}
                 </ScrollView>
-                <Pressable
+                <TouchableOpacity
+                  activeOpacity={0.5}
                   style={componentStyles.okButton}
                   onPress={() => sendFormData()}
                 >
                   <Text style={componentStyles.okButtonText}>OK!</Text>
-                </Pressable>
-                <Pressable
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.5}
                   style={{
                     ...styles.center,
                     ...styles.cancelContainer
@@ -228,7 +235,7 @@ const UsersMenuModal = ({ logOut }) => {
                     source={require('../../assets/images/close.png')}
                   />
                   <Text style={componentStyles.cancelText}>Cancel</Text>
-                </Pressable>
+                </TouchableOpacity>
               </View>
             </View>
           </Modal>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Pressable } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
 import { useDispatch, useSelector } from 'react-redux'
 import { setActiveBarCode } from '../../redux/actionCreators'
@@ -24,7 +24,8 @@ const ActiveOrderHeader = () => {
       }}
     >
       <View style={{ flexDirection: 'row' }}>
-        <Pressable
+        <TouchableOpacity
+          activeOpacity={0.5}
           onPress={() => {
             activeBarCode
               ? dispatch(setActiveBarCode(false))
@@ -32,7 +33,7 @@ const ActiveOrderHeader = () => {
           }}
         >
           <QRCode value={item._id} size={40} logoMargin={2} />
-        </Pressable>
+        </TouchableOpacity>
         <View style={{ flexDirection: 'column', paddingLeft: 10 }}>
           <Text
             style={{ fontFamily: 'Roboto', fontSize: 16 }}
@@ -46,20 +47,6 @@ const ActiveOrderHeader = () => {
           </Text>
         </View>
       </View>
-      {/* <Pressable onPress={() => print()}>
-        <View
-          style={{
-            width: 76,
-            height: 36,
-            backgroundColor: '#F5F5F5',
-            borderRadius: 20,
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          <Text style={{ fontSize: 15 }}>print</Text>
-        </View>
-      </Pressable> */}
     </View>
   )
 }

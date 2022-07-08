@@ -4,7 +4,7 @@ import {
   View,
   Text,
   Image,
-  Pressable,
+  TouchableOpacity,
   ActivityIndicator
 } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
@@ -29,12 +29,16 @@ const Equipment = ({ equipmentRequest }) => {
         {isLoading ? (
           <ActivityIndicator size='large' color='#A9A9A9' />
         ) : (
-          <Pressable style={styles.button} onPress={buttonHandler}>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={styles.button}
+            onPress={buttonHandler}
+          >
             <Image
               style={styles.buttonIcon}
               source={require('../../assets/icons/equipment.png')}
             />
-          </Pressable>
+          </TouchableOpacity>
         )}
       </View>
       <ScrollView>

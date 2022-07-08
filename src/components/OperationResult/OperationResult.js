@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Pressable, Image } from 'react-native'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
 import styles from '../../styles/Styles'
 import axios from 'axios'
 import componentStyles from './styles'
@@ -42,7 +42,8 @@ const OperationResult = ({ finishOrder }) => {
         <Text style={componentStyles.resultText}>Operation result</Text>
       </View>
       {activeOrder?.operation.relation.map((item, index) => (
-        <Pressable
+        <TouchableOpacity
+          activeOpacity={0.5}
           onPress={() => {
             dispatch(
               setFinishOrderParams({
@@ -69,10 +70,11 @@ const OperationResult = ({ finishOrder }) => {
             style={componentStyles.arrowIcon}
             source={require('../../assets/images/arrow_white.png')}
           />
-        </Pressable>
+        </TouchableOpacity>
       ))}
       <View style={componentStyles.canselButtonContainer}>
-        <Pressable
+        <TouchableOpacity
+          activeOpacity={0.5}
           style={{ ...styles.center, ...styles.cancelContainer }}
           onPress={() => {
             dispatch(setModalVisible(false))
@@ -83,7 +85,7 @@ const OperationResult = ({ finishOrder }) => {
             source={require('../../assets/images/close.png')}
           />
           <Text style={componentStyles.canselButtonTitle}>Cancel</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
     </View>
   )

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Modal, Pressable, Image } from 'react-native'
+import { View, Text, Modal, TouchableOpacity, Image } from 'react-native'
 import done from '../../assets/images/ok.png'
 import cancel from '../../assets/images/no.png'
 import styles from './styles'
@@ -15,20 +15,22 @@ const CompleteWorkShift = ({ logOut }) => {
           Do you really want to complete your work shift?
         </Text>
         <View style={styles.buttonBlock}>
-          <Pressable
+          <TouchableOpacity
+            activeOpacity={0.5}
             style={[styles.button, styles.greenButton]}
             onPress={() => logOut()}
           >
             <Image source={done} style={styles.okButton} />
             <Text style={styles.buttonText}>Yes</Text>
-          </Pressable>
-          <Pressable
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.5}
             style={[styles.button, styles.redButton]}
             onPress={() => dispatch(setIsModalWorkShiftVisible(false))}
           >
             <Image source={cancel} style={noButton} />
             <Text style={styles.buttonText}>No</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </View>
     </Modal>

@@ -4,7 +4,7 @@ import {
   View,
   Text,
   ScrollView,
-  Pressable
+  TouchableOpacity
 } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { setShowMaterialsComponent } from '../../redux/actionCreators'
@@ -35,7 +35,8 @@ const Materials = ({ finishOrder }) => {
             {materialsArr.map((item, index) => {
               return <MaterialItem key={item._id} index={index} />
             })}
-            <Pressable
+            <TouchableOpacity
+              activeOpacity={0.5}
               style={styles.okButton}
               onPress={() =>
                 finishOrder(
@@ -45,17 +46,21 @@ const Materials = ({ finishOrder }) => {
               }
             >
               <Text style={styles.okButtonText}>Ok</Text>
-            </Pressable>
+            </TouchableOpacity>
           </>
         )}
       </ScrollView>
-      <Pressable style={styles.cancelButton} onPress={cancelButtonHandler}>
+      <TouchableOpacity
+        activeOpacity={0.5}
+        style={styles.cancelButton}
+        onPress={cancelButtonHandler}
+      >
         <View style={styles.cross}>
           <View style={[styles.line, styles.upLine]}></View>
           <View style={[styles.line, styles.downLine]}></View>
         </View>
         <Text style={styles.cancelButtonText}>Cancel</Text>
-      </Pressable>
+      </TouchableOpacity>
     </>
   )
 }

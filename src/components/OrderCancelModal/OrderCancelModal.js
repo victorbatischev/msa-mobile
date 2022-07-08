@@ -1,5 +1,11 @@
 import React from 'react'
-import { View, Text, Modal, Pressable, ActivityIndicator } from 'react-native'
+import {
+  View,
+  Text,
+  Modal,
+  TouchableOpacity,
+  ActivityIndicator
+} from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { setOrderCancelModalVisible } from '../../redux/actionCreators'
 import styles from './styles'
@@ -21,12 +27,13 @@ const OrderCancelModal = () => {
             <ActivityIndicator size={'large'} color={'#000'} />
           )}
 
-          <Pressable
+          <TouchableOpacity
+            activeOpacity={0.5}
             style={styles.button}
             onPress={() => dispatch(setOrderCancelModalVisible(false))}
           >
             <Text style={styles.buttonText}>OK!</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </View>
     </Modal>

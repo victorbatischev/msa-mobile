@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, Pressable } from 'react-native'
+import { Text, TouchableOpacity } from 'react-native'
 import { useSelector } from 'react-redux'
 
 import styles from '../../styles/Styles'
@@ -8,7 +8,8 @@ const MenuItem = ({ item, index, carousel }) => {
   const activeIndex = useSelector((state) => state.main.activeIndex)
   const orderStarted = useSelector((state) => state.main.orderStarted)
   return (
-    <Pressable
+    <TouchableOpacity
+      activeOpacity={0.5}
       style={{
         ...styles.container,
         backgroundColor: 'transparent',
@@ -27,7 +28,7 @@ const MenuItem = ({ item, index, carousel }) => {
       >
         {item.title}
       </Text>
-    </Pressable>
+    </TouchableOpacity>
   )
 }
 

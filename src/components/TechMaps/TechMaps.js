@@ -5,7 +5,7 @@ import {
   View,
   Text,
   Image,
-  Pressable,
+  TouchableOpacity,
   Modal,
   Dimensions
 } from 'react-native'
@@ -39,7 +39,8 @@ const TechMaps = () => {
     return (
       <View style={styles.container}>
         <Text style={styles.mapName}>{item.name}</Text>
-        <Pressable
+        <TouchableOpacity
+          activeOpacity={0.5}
           onPress={() => {
             dispatch(setItem(item))
             dispatch(setModalVisibleTechMaps(true))
@@ -50,7 +51,7 @@ const TechMaps = () => {
             style={{ height: '100%' }}
             resizeMode='contain'
           />
-        </Pressable>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -70,7 +71,8 @@ const TechMaps = () => {
         <ActivityIndicator size='large' color='#000088' />
       )}
       <Modal visible={modalVisible} transparent={false}>
-        <Pressable
+        <TouchableOpacity
+          activeOpacity={0.5}
           style={styles.closeModalButton}
           onPress={() => {
             dispatch(setModalVisibleTechMaps(false))
@@ -88,7 +90,7 @@ const TechMaps = () => {
               styles.closeModalButtonLine
             ]}
           />
-        </Pressable>
+        </TouchableOpacity>
         {/* {item?.file_name.split('.').pop() == 'jpg' && ( */}
         <ImageZoom
           cropWidth={Dimensions.get('window').width}
