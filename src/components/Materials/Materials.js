@@ -32,9 +32,9 @@ const Materials = ({ finishOrder }) => {
           <ActivityIndicator size='large' color='#000088' />
         ) : (
           <>
-            {materialsArr.map((item, index) => {
-              return <MaterialItem key={item._id} index={index} />
-            })}
+            {materialsArr.map((item, index) => (
+              <MaterialItem key={item._id} index={index} />
+            ))}
             <TouchableOpacity
               activeOpacity={0.5}
               style={styles.okButton}

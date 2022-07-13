@@ -221,7 +221,6 @@ function Main({ route, navigation }) {
       })
       .catch((err) => {
         console.error(err)
-        console.log('Ошибка сети!')
       })
     axios
       .put(

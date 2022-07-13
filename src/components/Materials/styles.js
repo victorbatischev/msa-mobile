@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat'
   },
   container: {
-    flex: 1,
     backgroundColor: '#fff',
     padding: 10
   },
@@ -27,7 +26,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#009C6D',
     borderRadius: 4,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginBottom: 10
   },
   okButtonText: {
     color: '#fff',
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   cancelButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    bottom: 30,
+    marginVertical: 10,
     alignSelf: 'center',
     flexDirection: 'row',
     borderRadius: 50,
