@@ -1,50 +1,17 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
 import JSONTree from 'react-native-json-tree'
 import componentStyles from './styles'
 
 import styles from '../../styles/Styles'
 import { windowWidth, jsonTreeTheme, windowHeight } from '../../Constants'
-import { Audio } from 'expo-av'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  setIsPlaySound,
-  setActiveBarCode,
-  setSound
-} from '../../redux/actionCreators'
+import { setActiveBarCode } from '../../redux/actionCreators'
 
 const ActiveOrder = ({ schedulePushNotification }) => {
   const dispatch = useDispatch()
-  const isPlaySound = useSelector((state) => state.main.isPlaySound)
   const orderStarted = useSelector((state) => state.main.orderStarted)
   const order = useSelector((state) => state.main.activeOrder)
-  const sound = useSelector((state) => state.activeOrder?.sound)
-
-  async function playSound() {
-    const { sound } = await Audio.Sound.createAsync(
-      require('../../assets/sounds/sound.mp3')
-    )
-    dispatch(setSound(sound))
-    await sound.playAsync()
-  }
-
-  useEffect(() => {
-    if (isPlaySound) {
-      ;(async () => {
-        await playSound()
-        dispatch(setIsPlaySound(false))
-        await schedulePushNotification()
-      })()
-    }
-  }, [isPlaySound])
-
-  useEffect(() => {
-    return sound
-      ? () => {
-          sound.unloadAsync()
-        }
-      : undefined
-  }, [sound])
 
   return (
     <ScrollView>

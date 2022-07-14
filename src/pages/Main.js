@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, Alert, Modal, Text } from 'react-native'
+import { View, Alert, Modal, Text, Pressable } from 'react-native'
 import Carousel from '../components/Carousel/CarouselComponent'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
@@ -25,6 +25,7 @@ import * as Notifications from 'expo-notifications'
 import Timer from '../components/Timer/Timer'
 import StartFinishButton from '../components/StartFinishButton/StartFinishButton'
 import OperationResult from '../components/OperationResult/OperationResult'
+import { Audio } from 'expo-av'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   setOrders,
@@ -43,7 +44,8 @@ import {
   setIsCheckedArr,
   setIsLoading,
   setIsUserMenuModal,
-  setIsCompleteWorkShiftVisible
+  setIsCompleteWorkShiftVisible,
+  setSound
 } from '../redux/actionCreators'
 
 // Счетчик заказов
@@ -74,15 +76,17 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
   axios.get(`order_worker/${user?.u_id}`).then((res) => {
     if (res.data.length > ordersCount) {
       schedulePushNotification()
-      ordersCount = res.data.length
     }
+    ordersCount = res.data.length
   })
-
   return 2
 })
 
 function Main({ route, navigation }) {
   const dispatch = useDispatch()
+
+  const isPlaySound = useSelector((state) => state.main.isPlaySound)
+  const sound = useSelector((state) => state.activeOrder?.sound)
 
   const user = useSelector((state) => state.main.user)
   const orders = useSelector((state) => state.main.orders)
@@ -122,6 +126,30 @@ function Main({ route, navigation }) {
     })
   }
 
+  async function playSound() {
+    const { sound } = await Audio.Sound.createAsync(
+      require('../assets/sounds/sound.mp3')
+    )
+    dispatch(setSound(sound))
+    await sound?.playAsync()
+  }
+
+  useEffect(() => {
+    if (isPlaySound) {
+      playSound()
+      dispatch(setIsPlaySound(false))
+      schedulePushNotification()
+    }
+  }, [isPlaySound])
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          sound.unloadAsync()
+        }
+      : undefined
+  }, [sound])
+
   const logOut = async () => {
     axios
       .put('worker_in', {
@@ -157,8 +185,8 @@ function Main({ route, navigation }) {
         dispatch(setOrders(res.data))
         if (res.data.length > ordersCount) {
           dispatch(setIsPlaySound(true))
-          ordersCount = res.data.length
         }
+        ordersCount = res.data.length
         if (res.data.length) {
           getOrderInfo(res.data[0]._id, user.u_id)
           getPreviousOperation(user)
