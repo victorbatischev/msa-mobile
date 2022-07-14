@@ -2,7 +2,11 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 import { View, Text, ScrollView } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import { setMessages } from '../../redux/actionCreators'
+import {
+  setMessages,
+  setErrorMessage,
+  setIsErrorComponentVisible
+} from '../../redux/actionCreators'
 import MessageItem from '../MessageItem/MessageItem'
 import NewMessagesItem from '../NewMessageItem/NewMessageItem'
 import styles from './styles'
@@ -15,9 +19,16 @@ const Messages = () => {
 
   useEffect(() => {
     const getMessage = setInterval(() => {
-      axios.get(`order_worker_message/${orderId}`).then((res) => {
-        dispatch(setMessages(res.data))
-      })
+      axios
+        .get(`order_worker_message/${orderId}`)
+        .then((res) => {
+          dispatch(setMessages(res.data))
+        })
+        .catch((err) => {
+          console.log('Network error when receiving messages ' + err)
+          dispatch(setErrorMessage('when receiving messages ' + err))
+          dispatch(setIsErrorComponentVisible(true))
+        })
     }, 1000)
     return () => {
       clearInterval(getMessage)

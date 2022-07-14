@@ -8,8 +8,11 @@ import {
   setModalVisible,
   setMaterialsArr,
   setShowMaterialsComponent,
-  setFinishOrderParams
+  setFinishOrderParams,
+  setErrorMessage,
+  setIsErrorComponentVisible
 } from '../../redux/actionCreators'
+import ErrorComponent from '../ErrorComponent/ErrorComponent'
 
 const OperationResult = ({ finishOrder }) => {
   const dispatch = useDispatch()
@@ -17,6 +20,10 @@ const OperationResult = ({ finishOrder }) => {
   const activeOrder = useSelector((state) => state.main.activeOrder)
 
   const userId = useSelector((state) => state.main.user.u_id)
+
+  const isErrorComponentVisible = useSelector(
+    (state) => state.error.isErrorComponentVisible
+  )
 
   const maretialsRequest = (index) => {
     if (activeOrder) {
@@ -27,6 +34,11 @@ const OperationResult = ({ finishOrder }) => {
             setMaterialsArr(res.data[0].operation.relation[index].function)
           )
         )
+        .catch((err) => {
+          console.log('Network error when receiving materials ' + err)
+          dispatch(setErrorMessage('when receiving materials ' + err))
+          dispatch(setIsErrorComponentVisible(true))
+        })
     }
   }
 
@@ -87,6 +99,7 @@ const OperationResult = ({ finishOrder }) => {
           <Text style={componentStyles.canselButtonTitle}>Cancel</Text>
         </TouchableOpacity>
       </View>
+      {isErrorComponentVisible && <ErrorComponent />}
     </View>
   )
 }

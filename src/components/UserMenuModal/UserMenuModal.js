@@ -19,9 +19,12 @@ import {
   setIsCompleteWorkShiftVisible,
   setUserMenuOrders,
   setTempDetail,
-  setCreatedOrderId
+  setCreatedOrderId,
+  setIsErrorComponentVisible,
+  setErrorMessage
 } from '../../redux/actionCreators'
 import { useDispatch, useSelector } from 'react-redux'
+import ErrorComponent from '../ErrorComponent/ErrorComponent'
 
 const UsersMenuModal = ({ logOut }) => {
   const [isModalNewOrder, setIsModalNewOrder] = useState(false)
@@ -35,6 +38,10 @@ const UsersMenuModal = ({ logOut }) => {
   const tempDetail = useSelector((state) => state.usersMenuModal.tempDetail)
   const createdOrderId = useSelector(
     (state) => state.usersMenuModal.createdOrderId
+  )
+
+  const isErrorComponentVisible = useSelector(
+    (state) => state.error.isCompleteWorkShiftVisible
   )
 
   const textInputHandler = (text, key) => {
@@ -54,10 +61,21 @@ const UsersMenuModal = ({ logOut }) => {
   }
 
   const getNewOrder = async () => {
-    axios.get('deskbook_info/61f5b6541f1d04747fffe837').then((res) => {
-      dispatch(setUserMenuOrders(Object.values(res.data[0].value)))
-      setIsModalNewOrder(true)
-    })
+    axios
+      .get('deskbook_info/61f5b6541f1d04747fffe837')
+      .then((res) => {
+        dispatch(setUserMenuOrders(Object.values(res.data[0].value)))
+        setIsModalNewOrder(true)
+      })
+      .catch((err) => {
+        console.log(
+          'Network error when receiving orders in the user menu ' + err
+        )
+        dispatch(
+          setErrorMessage('when receiving orders in the user menu ' + err)
+        )
+        dispatch(setIsErrorComponentVisible(true))
+      })
   }
 
   const sendingOrderForExecution = () => {
@@ -72,6 +90,11 @@ const UsersMenuModal = ({ logOut }) => {
         }
       })
       .then(() => dispatch(setIsUserMenuModal(false)))
+      .catch((err) => {
+        console.log('Network error when sending an order for execution ' + err)
+        dispatch(setErrorMessage('when sending an order for execution ' + err))
+        dispatch(setIsErrorComponentVisible(true))
+      })
   }
 
   const sendFormData = () => {
@@ -91,7 +114,9 @@ const UsersMenuModal = ({ logOut }) => {
         dispatch(setCreatedOrderId(res.data))
       })
       .catch((err) => {
-        console.log(err)
+        console.log('Network error when sending form data ' + err)
+        dispatch(setErrorMessage('when sending form data ' + err))
+        dispatch(setIsErrorComponentVisible(true))
       })
       .finally(() => {
         setIsModalGetDetails(false)
@@ -241,7 +266,9 @@ const UsersMenuModal = ({ logOut }) => {
           </Modal>
         </Modal>
         {isCompleteWorkShiftVisible && <CompleteWorkShift logOut={logOut} />}
+        {isErrorComponentVisible && <ErrorComponent />}
       </View>
+      {isErrorComponentVisible && <ErrorComponent />}
     </Modal>
   )
 }

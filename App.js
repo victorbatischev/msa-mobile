@@ -11,6 +11,7 @@ import { Provider } from 'react-redux'
 import store from './src/redux/store'
 import * as ScreenOrientation from 'expo-screen-orientation'
 import { windowWidth } from './src/Constants'
+import ErrorComponent from './src/components/ErrorComponent/ErrorComponent'
 
 const Stack = createNativeStackNavigator()
 

@@ -9,12 +9,14 @@ import {
   SET_CREATED_ORDER_ID,
   SET_EQUIPMENT_ARR,
   SET_EQUIPMENT_VISIBLE,
+  SET_ERROR_MESSAGE,
   SET_FINISH_ORDER_PARAMS,
   SET_HAS_PERMISSION,
   SET_IMG_TAG,
   SET_IS_CHECKED,
   SET_IS_CHECKED_ARR,
   SET_IS_COMPLETE_WORK_SHIFT_VISIBLE,
+  SET_IS_ERROR_COMPONENT_VISIBLE,
   SET_IS_EQUIPMENT_EMPTY,
   SET_IS_LOADING,
   SET_IS_USER_MENU_MODAL,
@@ -372,11 +374,27 @@ export const setShowError = (data) => {
   }
 }
 
-// For startFinishButton
+// For startFinishButtonReduser
 
 export const setIsEquipmentEmpty = (data) => {
   return {
     type: SET_IS_EQUIPMENT_EMPTY,
+    data
+  }
+}
+
+// For ErrorReduser
+
+export const setIsErrorComponentVisible = (data) => {
+  return {
+    type: SET_IS_ERROR_COMPONENT_VISIBLE,
+    data
+  }
+}
+
+export const setErrorMessage = (data) => {
+  return {
+    type: SET_ERROR_MESSAGE,
     data
   }
 }

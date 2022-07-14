@@ -11,6 +11,7 @@ import orderReducer from './reducers/orderReducer'
 import usersMenuModalReducer from './reducers/usersMenuModalReducer'
 import authReducer from './reducers/authReducer'
 import startFinishButtonReducer from './reducers/startFinishButtonReducer'
+import errorReduser from './reducers/errorReduser'
 
 export default rootReducer = combineReducers({
   main: mainReducer,
@@ -24,5 +25,6 @@ export default rootReducer = combineReducers({
   order: orderReducer,
   usersMenuModal: usersMenuModalReducer,
   auth: authReducer,
-  startFinishButton: startFinishButtonReducer
+  startFinishButton: startFinishButtonReducer,
+  error: errorReduser
 })

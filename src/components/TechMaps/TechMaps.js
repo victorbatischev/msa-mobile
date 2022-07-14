@@ -17,7 +17,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   setMapsArr,
   setModalVisibleTechMaps,
-  setItem
+  setItem,
+  setErrorMessage,
+  setIsErrorComponentVisible
 } from '../../redux/actionCreators'
 
 const TechMaps = () => {
@@ -30,9 +32,16 @@ const TechMaps = () => {
   const item = useSelector((state) => state.TechMaps.item)
 
   useEffect(() => {
-    axios.get(`order_worker_techmap/${operationId}`).then((response) => {
-      dispatch(setMapsArr(response.data[0].technical_maps))
-    })
+    axios
+      .get(`order_worker_techmap/${operationId}`)
+      .then((response) => {
+        dispatch(setMapsArr(response.data[0].technical_maps))
+      })
+      .catch((err) => {
+        console.log('Network error when receiving technical maps ' + err)
+        dispatch(setErrorMessage('when receiving technical maps ' + err))
+        dispatch(setIsErrorComponentVisible(true))
+      })
   }, [])
 
   const renderItem = ({ item }) => {

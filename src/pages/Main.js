@@ -45,8 +45,11 @@ import {
   setIsLoading,
   setIsUserMenuModal,
   setIsCompleteWorkShiftVisible,
-  setSound
+  setSound,
+  setIsErrorComponentVisible,
+  setErrorMessage
 } from '../redux/actionCreators'
+import ErrorComponent from '../components/ErrorComponent/ErrorComponent'
 
 // Счетчик заказов
 
@@ -108,6 +111,10 @@ function Main({ route, navigation }) {
   const selectedItems = useSelector((state) => state.main.selectedItems)
   const orderStarted = useSelector((state) => state.main.orderStarted)
 
+  const isErrorComponentVisible = useSelector(
+    (state) => state.error.isErrorComponentVisible
+  )
+
   // For BackgroundFetch
 
   useEffect(() => {
@@ -150,6 +157,22 @@ function Main({ route, navigation }) {
       : undefined
   }, [sound])
 
+  const equipmentBusy = (isBusy) => {
+    axios
+      .put(
+        'equipment_busy',
+        selectedItems.map((item) => ({
+          _id: item,
+          occupied: isBusy
+        }))
+      )
+      .catch((err) => {
+        console.log('Network error when releasing equipment ' + err)
+        dispatch(setErrorMessage('when releasing equipment ' + err))
+        dispatch(setIsErrorComponentVisible(true))
+      })
+  }
+
   const logOut = async () => {
     axios
       .put('worker_in', {
@@ -164,46 +187,64 @@ function Main({ route, navigation }) {
         dispatch(setOrderStarted(false))
         dispatch(setIsCompleteWorkShiftVisible(false))
       })
-    axios
-      .put(
-        'equipment_busy',
-        selectedItems.map((item) => ({
-          _id: item,
-          occupied: false
-        }))
-      )
-      .then((res) => {
-        dispatch(setSelectedItemsUnCheced('all'))
-        dispatch(setIsCheckedArr('empty'))
-        dispatch(setIsEquipmentVisible(true))
+      .catch((err) => {
+        console.log('Network error when logging out ' + err)
+        dispatch(setErrorMessage('when logging out ' + err))
+        dispatch(setIsErrorComponentVisible(true))
       })
+    equipmentBusy(false)
   }
 
   const getOrders = (user) => {
     user.u_id &&
-      axios.get(`order_worker/${user.u_id}`).then((res) => {
-        dispatch(setOrders(res.data))
-        if (res.data.length > ordersCount) {
-          dispatch(setIsPlaySound(true))
-        }
-        ordersCount = res.data.length
-        if (res.data.length) {
-          getOrderInfo(res.data[0]._id, user.u_id)
-          getPreviousOperation(user)
-        }
-      })
+      axios
+        .get(`order_worker/${user.u_id}`)
+        .then((res) => {
+          dispatch(setOrders(res.data))
+          if (res.data.length > ordersCount) {
+            dispatch(setIsPlaySound(true))
+          }
+          ordersCount = res.data.length
+          if (res.data.length) {
+            getOrderInfo(res.data[0]._id, user.u_id)
+            getPreviousOperation(user)
+          }
+        })
+        .catch((err) => {
+          console.log('Network error when receiving orders ' + err)
+          dispatch(setErrorMessage('when receiving orders ' + err))
+          dispatch(setIsErrorComponentVisible(true))
+        })
   }
 
   const getPreviousOperation = (user) => {
-    axios.get(`order_prev_operation/${user.u_id}`).then((res) => {
-      dispatch(setPreviousOperation(res.data))
-    })
+    axios
+      .get(`order_prev_operation/${user.u_id}`)
+      .then((res) => {
+        dispatch(setPreviousOperation(res.data))
+      })
+      .catch((err) => {
+        console.log(
+          'Network error when receiving the previous operation ' + err
+        )
+        dispatch(
+          setErrorMessage('when receiving the previous operation ' + err)
+        )
+        dispatch(setIsErrorComponentVisible(true))
+      })
   }
 
   const getOrderInfo = (activeOrderId, userId) => {
-    axios.get(`order_id_worker/${activeOrderId}/${userId}`).then((res) => {
-      dispatch(setActiveOrder(res.data[0]))
-    })
+    axios
+      .get(`order_id_worker/${activeOrderId}/${userId}`)
+      .then((res) => {
+        dispatch(setActiveOrder(res.data[0]))
+      })
+      .catch((err) => {
+        console.log('Network error when receiving an active order ' + err)
+        dispatch(setErrorMessage('when receiving an active order ' + err))
+        dispatch(setIsErrorComponentVisible(true))
+      })
   }
 
   const startOrder = () => {
@@ -218,14 +259,12 @@ function Main({ route, navigation }) {
         dispatch(setIsConfirmation(false))
         dispatch(setOrderStarted(true))
       })
-      .catch((err) => console.error(err))
-    axios.put(
-      'equipment_busy',
-      selectedItems.map((item) => ({
-        _id: item,
-        occupied: true
-      }))
-    )
+      .catch((err) => {
+        console.log('Network error at the start of the operation ' + err)
+        dispatch(setErrorMessage('at the start of the operation ' + err))
+        dispatch(setIsErrorComponentVisible(true))
+      })
+    equipmentBusy(true)
   }
 
   const finishOrder = (nextOperationId, relationId) => {
@@ -248,15 +287,11 @@ function Main({ route, navigation }) {
         ])
       })
       .catch((err) => {
-        console.error(err)
+        console.log('Network error at the end of the operation ' + err)
+        dispatch(setErrorMessage('at the end of the operation ' + err))
+        dispatch(setIsErrorComponentVisible(true))
       })
-    axios.put(
-      'equipment_busy',
-      selectedItems.map((item) => ({
-        _id: item,
-        occupied: false
-      }))
-    )
+    equipmentBusy(false)
     dispatch(setSelectedItemsUnCheced('all'))
     dispatch(setIsCheckedArr('empty'))
     dispatch(setIsEquipmentVisible(true))
@@ -264,12 +299,19 @@ function Main({ route, navigation }) {
 
   const equipmentRequest = (operationId) => {
     if (operationId) {
-      axios.get(`equipment_o_id/${operationId}`).then((res) => {
-        dispatch(setEquipmentArr(res.data))
-        res.data.length === 0 && dispatch(setIsEquipmentEmpty(true))
-        res.data.length > 0 && dispatch(setIsEquipmentEmpty(false))
-        dispatch(setIsLoading(false))
-      })
+      axios
+        .get(`equipment_o_id/${operationId}`)
+        .then((res) => {
+          dispatch(setEquipmentArr(res.data))
+          res.data.length === 0 && dispatch(setIsEquipmentEmpty(true))
+          res.data.length > 0 && dispatch(setIsEquipmentEmpty(false))
+          dispatch(setIsLoading(false))
+        })
+        .catch((err) => {
+          console.log('Network error when receiving equipment ' + err)
+          dispatch(setErrorMessage('when receiving equipment ' + err))
+          dispatch(setIsErrorComponentVisible(true))
+        })
     }
   }
 
@@ -286,6 +328,11 @@ function Main({ route, navigation }) {
               dispatch(setOrderCancelModalVisible(true))
               dispatch(setOrderStarted(false))
             }
+          })
+          .catch((err) => {
+            console.log('Network error when checking order activity ' + err)
+            dispatch(setErrorMessage('when checking order activity ' + err))
+            dispatch(setIsErrorComponentVisible(true))
           })
       }, 10000)
     }
@@ -315,18 +362,32 @@ function Main({ route, navigation }) {
       }, 2000)
 
       checkLogout = setInterval(async () => {
-        await axios.get(`worker_logout/${tempUser.u_id}`).then(async (res) => {
-          if (res.data[0].at_work === false) {
-            clearInterval(checkLogout)
-            await AsyncStorage.clear()
-            // navigation.navigate('Auth')
-            Updates.reloadAsync()
-            Alert.alert(
-              'MSA Mobile',
-              'You have been logged out by the administrator.'
+        await axios
+          .get(`worker_logout/${tempUser.u_id}`)
+          .then(async (res) => {
+            if (res.data[0].at_work === false) {
+              clearInterval(checkLogout)
+              await AsyncStorage.clear()
+              // navigation.navigate('Auth')
+              Updates.reloadAsync()
+              Alert.alert(
+                'MSA Mobile',
+                'You have been logged out by the administrator.'
+              )
+            }
+          })
+          .catch((err) => {
+            console.log(
+              'Network error when checking for logging out by the administrator ' +
+                err
             )
-          }
-        })
+            dispatch(
+              setErrorMessage(
+                'when checking for logging out by the administrator ' + err
+              )
+            )
+            dispatch(setIsErrorComponentVisible(true))
+          })
       }, 10000)
     }
 
@@ -391,6 +452,7 @@ function Main({ route, navigation }) {
           <OperationResult finishOrder={finishOrder} />
         )}
       </Modal>
+      {isErrorComponentVisible && <ErrorComponent />}
     </View>
   )
 }

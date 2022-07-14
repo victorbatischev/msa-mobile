@@ -8,7 +8,11 @@ import {
   Keyboard
 } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { setNewMessage } from '../../redux/actionCreators'
+import {
+  setNewMessage,
+  setErrorMessage,
+  setIsErrorComponentVisible
+} from '../../redux/actionCreators'
 import sendButton from '../../assets/images/send.png'
 import styles from './styles'
 
@@ -25,6 +29,11 @@ const NewMessagesItem = ({ orderId, userId }) => {
         message: newMessage
       })
       .then(() => dispatch(setNewMessage('')))
+      .catch((err) => {
+        console.log('Network error when sending a message ' + err)
+        dispatch(setErrorMessage('when sending a message ' + err))
+        dispatch(setIsErrorComponentVisible(true))
+      })
   }
 
   return (

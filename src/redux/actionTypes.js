@@ -75,6 +75,11 @@ export const SET_PASSWORD = 'SET_PASSWORD'
 export const SET_APP_IS_READY = 'SET_APP_IS_READY'
 export const SET_SHOW_ERROR = 'SET_SHOW_ERROR'
 
-// For startFinishButton
+// For startFinishButtonReducer
 
 export const SET_IS_EQUIPMENT_EMPTY = 'SET_IS_EQUIPMENT_EMPTY'
+
+// For errorReduser
+
+export const SET_IS_ERROR_COMPONENT_VISIBLE = 'SET_IS_ERROR_COMPONENT_VISIBLE'
+export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
