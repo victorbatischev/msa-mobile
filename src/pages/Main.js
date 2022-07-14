@@ -222,19 +222,16 @@ function Main({ route, navigation }) {
       .catch((err) => {
         console.error(err)
       })
-    axios
-      .put(
-        'equipment_busy',
-        selectedItems.map((item) => ({
-          _id: item,
-          occupied: false
-        }))
-      )
-      .then((res) => {
-        dispatch(setSelectedItemsUnCheced('all'))
-        dispatch(setIsCheckedArr('empty'))
-        dispatch(setIsEquipmentVisible(true))
-      })
+    axios.put(
+      'equipment_busy',
+      selectedItems.map((item) => ({
+        _id: item,
+        occupied: false
+      }))
+    )
+    dispatch(setSelectedItemsUnCheced('all'))
+    dispatch(setIsCheckedArr('empty'))
+    dispatch(setIsEquipmentVisible(true))
   }
 
   const equipmentRequest = (operationId) => {
