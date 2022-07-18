@@ -466,13 +466,22 @@ function Main({ route, navigation }) {
         visible={modalVisible}
         onRequestClose={() => dispatch(setModalVisible(false))}
       >
-        <Modal
-          animationType='slide'
-          transparent={true}
-          visible={operationFinishLoading}
-        >
-          <ActivityIndicator style={{ flex: 1 }} size='large' color='#000088' />
-        </Modal>
+        {operationFinishLoading && (
+          <View
+            style={{
+              position: 'absolute',
+              alignSelf: 'center',
+              top: '50%',
+              zIndex: 1
+            }}
+          >
+            <ActivityIndicator
+              style={{ flex: 1 }}
+              size='large'
+              color='#000088'
+            />
+          </View>
+        )}
         {showMaterialsComponent ? (
           <Materials finishOrder={finishOrder} />
         ) : (
