@@ -475,11 +475,7 @@ function Main({ route, navigation }) {
               zIndex: 1
             }}
           >
-            <ActivityIndicator
-              style={{ flex: 1 }}
-              size='large'
-              color='#000088'
-            />
+            <ActivityIndicator size='large' color='#000088' />
           </View>
         )}
         {showMaterialsComponent ? (
