@@ -68,7 +68,7 @@ const UsersMenuModal = ({ logOut }) => {
   }
 
   useEffect(() => {
-    if (createdOrderId) sendingOrderForExecution()
+    if (createdOrderId && tempDetail.stream) sendingOrderForExecution()
     return () => dispatch(setCreatedOrderId(null))
   }, [createdOrderId])
 
