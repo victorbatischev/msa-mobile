@@ -48,6 +48,25 @@ const UsersMenuModal = ({ logOut }) => {
     dispatch(setTempDetail(text, key))
   }
 
+  const sendingOrderForExecution = () => {
+    axios
+      .post('worker_order_execution', {
+        _id: createdOrderId,
+        s_id: tempDetail.stream
+        // worker: {
+        //   o_id: tempDetail.worker.o_id,
+        //   w_id: tempDetail.order.composition['Worker id'],
+        //   name: tempDetail.order.composition['Worker']
+        // }
+      })
+      .then(() => dispatch(setIsUserMenuModal(false)))
+      .catch((err) => {
+        console.log('Network error when sending an order for execution ' + err)
+        dispatch(setErrorMessage('when sending an order for execution ' + err))
+        dispatch(setIsErrorComponentVisible(true))
+      })
+  }
+
   useEffect(() => {
     if (createdOrderId) sendingOrderForExecution()
   }, [createdOrderId])
@@ -74,25 +93,6 @@ const UsersMenuModal = ({ logOut }) => {
         dispatch(
           setErrorMessage('when receiving orders in the user menu ' + err)
         )
-        dispatch(setIsErrorComponentVisible(true))
-      })
-  }
-
-  const sendingOrderForExecution = () => {
-    axios
-      .post('worker_order_execution', {
-        _id: createdOrderId,
-        s_id: tempDetail.stream,
-        worker: {
-          o_id: tempDetail.worker.o_id,
-          w_id: tempDetail.order.composition['Worker id'],
-          name: tempDetail.order.composition['Worker']
-        }
-      })
-      .then(() => dispatch(setIsUserMenuModal(false)))
-      .catch((err) => {
-        console.log('Network error when sending an order for execution ' + err)
-        dispatch(setErrorMessage('when sending an order for execution ' + err))
         dispatch(setIsErrorComponentVisible(true))
       })
   }

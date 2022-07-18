@@ -1,12 +1,5 @@
-import React, { useEffect } from 'react'
-import {
-  View,
-  Alert,
-  Modal,
-  Text,
-  Pressable,
-  ActivityIndicator
-} from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, Alert, Modal, ActivityIndicator } from 'react-native'
 import Carousel from '../components/Carousel/CarouselComponent'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
@@ -126,6 +119,8 @@ function Main({ route, navigation }) {
     (state) => state.error.isErrorComponentVisible
   )
 
+  const [operationFinishLoading, setOperationFinishLoading] = useState(false)
+
   // For BackgroundFetch
 
   useEffect(() => {
@@ -204,6 +199,7 @@ function Main({ route, navigation }) {
         dispatch(setIsErrorComponentVisible(true))
       })
     equipmentBusy(false)
+    ordersCount = 0
   }
 
   const getOrders = (user) => {
@@ -279,6 +275,7 @@ function Main({ route, navigation }) {
   }
 
   const finishOrder = (nextOperationId, relationId) => {
+    setOperationFinishLoading(true)
     axios
       .put('order_worker_finish', {
         order_id: activeOrder?._id,
@@ -289,6 +286,7 @@ function Main({ route, navigation }) {
         function: materialsArr
       })
       .then(() => {
+        setOperationFinishLoading(false)
         dispatch(setModalVisible(false))
         dispatch(setOrderStarted(false))
         Alert.alert('MSA Mobile', 'Your operation has been completed.', [
@@ -464,6 +462,13 @@ function Main({ route, navigation }) {
         visible={modalVisible}
         onRequestClose={() => dispatch(setModalVisible(false))}
       >
+        <Modal
+          animationType='slide'
+          transparent={true}
+          visible={operationFinishLoading}
+        >
+          <ActivityIndicator style={{ flex: 1 }} size='large' color='#000088' />
+        </Modal>
         {showMaterialsComponent ? (
           <Materials finishOrder={finishOrder} />
         ) : (
