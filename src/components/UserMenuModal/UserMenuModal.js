@@ -59,6 +59,7 @@ const UsersMenuModal = ({ logOut }) => {
           name: tempDetail.order.composition['Worker']
         }
       })
+      .then((res) => dispatch(setIsUserMenuModal(false)))
       .catch((err) => {
         console.log('Network error when sending an order for execution ' + err)
         dispatch(setErrorMessage('when sending an order for execution ' + err))
@@ -68,6 +69,7 @@ const UsersMenuModal = ({ logOut }) => {
 
   useEffect(() => {
     if (createdOrderId) sendingOrderForExecution()
+    return () => dispatch(setCreatedOrderId(null))
   }, [createdOrderId])
 
   const menuItemHandler = async (item) => {
