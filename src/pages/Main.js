@@ -1,5 +1,12 @@
 import React, { useEffect } from 'react'
-import { View, Alert, Modal, Text, Pressable } from 'react-native'
+import {
+  View,
+  Alert,
+  Modal,
+  Text,
+  Pressable,
+  ActivityIndicator
+} from 'react-native'
 import Carousel from '../components/Carousel/CarouselComponent'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
@@ -38,6 +45,7 @@ import {
   setPreviousOperation,
   setIsConfirmation,
   setEquipmentArr,
+  setIsEquipmentLoading,
   setIsEquipmentVisible,
   setIsEquipmentEmpty,
   setSelectedItemsUnCheced,
@@ -105,6 +113,9 @@ function Main({ route, navigation }) {
   )
   const materialsArr = useSelector((state) => state.main.materialsArr)
   const equipmentArr = useSelector((state) => state.main.equipmentArr)
+  const isEquipmentLoading = useSelector(
+    (state) => state.main.isEquipmentLoading
+  )
   const isEquipmentVisible = useSelector(
     (state) => state.main.isEquipmentVisible
   )
@@ -306,6 +317,7 @@ function Main({ route, navigation }) {
           res.data.length === 0 && dispatch(setIsEquipmentEmpty(true))
           res.data.length > 0 && dispatch(setIsEquipmentEmpty(false))
           dispatch(setIsLoading(false))
+          isEquipmentLoading && dispatch(setIsEquipmentLoading(false))
         })
         .catch((err) => {
           console.log('Network error when receiving equipment ' + err)
@@ -416,7 +428,13 @@ function Main({ route, navigation }) {
           {activeIndex === 1 && orders.length && !activeBarCode ? (
             <>
               {windowWidth > 480 && <ActiveOrderHeader />}
-              {equipmentArr.length === 0 || !isEquipmentVisible ? (
+              {isEquipmentLoading ? (
+                <ActivityIndicator
+                  style={{ flex: 1 }}
+                  size='large'
+                  color='#000088'
+                />
+              ) : equipmentArr.length === 0 || !isEquipmentVisible ? (
                 <ActiveOrder
                   schedulePushNotification={schedulePushNotification}
                 />

@@ -6,6 +6,7 @@ import {
   SET_EQUIPMENT_ARR,
   SET_EQUIPMENT_VISIBLE,
   SET_FINISH_ORDER_PARAMS,
+  SET_IS_EQUIPMENT_LOADING,
   SET_MATERIALS_ARR,
   SET_MATERIALS_CONDITION,
   SET_MATERIALS_VALUE,
@@ -36,6 +37,7 @@ const initialState = {
   materialsArr: [],
   showMaterialsComponent: false,
   equipmentArr: [],
+  isEquipmentLoading: true,
   isEquipmentVisible: true,
   selectedItems: [],
   finishOrderParams: null
@@ -85,6 +87,8 @@ export default mainReducer = (state = initialState, action) => {
       return { ...state, showMaterialsComponent: action.data }
     case SET_EQUIPMENT_ARR:
       return { ...state, equipmentArr: action.data }
+    case SET_IS_EQUIPMENT_LOADING:
+      return { ...state, isEquipmentLoading: action.data }
     case SET_EQUIPMENT_VISIBLE:
       return { ...state, isEquipmentVisible: action.data }
     case SET_SELECTED_ITEMS_CHECKED:

@@ -44,7 +44,8 @@ import {
   SET_SOUND,
   SET_TEMP_DETAIL,
   SET_USER,
-  SET_USER_MENU_ORDERS
+  SET_USER_MENU_ORDERS,
+  SET_IS_EQUIPMENT_LOADING
 } from './actionTypes'
 
 // For mainReducer
@@ -160,6 +161,13 @@ export const setShowMaterialsComponent = (data) => {
 export const setEquipmentArr = (data) => {
   return {
     type: SET_EQUIPMENT_ARR,
+    data
+  }
+}
+
+export const setIsEquipmentLoading = (data) => {
+  return {
+    type: SET_IS_EQUIPMENT_LOADING,
     data
   }
 }
