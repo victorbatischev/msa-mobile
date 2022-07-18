@@ -52,14 +52,13 @@ const UsersMenuModal = ({ logOut }) => {
     axios
       .post('worker_order_execution', {
         _id: createdOrderId,
-        s_id: tempDetail.stream
-        // worker: {
-        //   o_id: tempDetail.worker.o_id,
-        //   w_id: tempDetail.order.composition['Worker id'],
-        //   name: tempDetail.order.composition['Worker']
-        // }
+        s_id: tempDetail.stream,
+        worker: {
+          o_id: tempDetail.worker.o_id,
+          w_id: tempDetail.order.composition['Worker id'],
+          name: tempDetail.order.composition['Worker']
+        }
       })
-      .then(() => dispatch(setIsUserMenuModal(false)))
       .catch((err) => {
         console.log('Network error when sending an order for execution ' + err)
         dispatch(setErrorMessage('when sending an order for execution ' + err))
@@ -110,9 +109,7 @@ const UsersMenuModal = ({ logOut }) => {
           'Worker id': tempDetail.order.composition['Worker id']
         }
       })
-      .then((res) => {
-        dispatch(setCreatedOrderId(res.data))
-      })
+      .then((res) => dispatch(setCreatedOrderId(res.data)))
       .catch((err) => {
         console.log('Network error when sending form data ' + err)
         dispatch(setErrorMessage('when sending form data ' + err))
@@ -120,6 +117,7 @@ const UsersMenuModal = ({ logOut }) => {
       })
       .finally(() => {
         setIsModalGetDetails(false)
+        setIsModalNewOrder(false)
       })
   }
 
@@ -130,7 +128,7 @@ const UsersMenuModal = ({ logOut }) => {
           <TouchableOpacity
             activeOpacity={0.5}
             style={componentStyles.menuItem}
-            onPress={() => getNewOrder()}
+            onPress={getNewOrder}
           >
             <Text style={componentStyles.menuItemText}>New order</Text>
           </TouchableOpacity>

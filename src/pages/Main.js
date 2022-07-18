@@ -48,7 +48,9 @@ import {
   setIsCompleteWorkShiftVisible,
   setSound,
   setIsErrorComponentVisible,
-  setErrorMessage
+  setErrorMessage,
+  setShowMaterialsComponent,
+  setMaterialsArr
 } from '../redux/actionCreators'
 import ErrorComponent from '../components/ErrorComponent/ErrorComponent'
 
@@ -219,8 +221,8 @@ function Main({ route, navigation }) {
         })
         .catch((err) => {
           console.log('Network error when receiving orders ' + err)
-          dispatch(setErrorMessage('when receiving orders ' + err))
-          dispatch(setIsErrorComponentVisible(true))
+          // dispatch(setErrorMessage('when receiving orders ' + err))
+          // dispatch(setIsErrorComponentVisible(true))
         })
   }
 
@@ -289,6 +291,8 @@ function Main({ route, navigation }) {
         setOperationFinishLoading(false)
         dispatch(setModalVisible(false))
         dispatch(setOrderStarted(false))
+        dispatch(setMaterialsArr([]))
+        dispatch(setShowMaterialsComponent(false))
         Alert.alert('MSA Mobile', 'Your operation has been completed.', [
           {
             text: 'Ok'
